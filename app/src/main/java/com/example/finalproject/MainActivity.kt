@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         testText = findViewById(R.id.test_text)
     }
     private fun moveActivity() {
-        val intent = Intent(this,QuizActivity::class.java)
+        val intent = Intent(this,RegisterActivity::class.java)
         startActivity(intent)
 
     }

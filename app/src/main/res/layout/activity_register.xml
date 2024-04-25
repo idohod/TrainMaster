@@ -1,0 +1,152 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/quiz_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Registration"
+        android:textColor="@color/black"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/quiz_title"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_name"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter your name"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- Email -->
+    <LinearLayout
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/line1"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="50dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_email"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/email_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter your email"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- Password -->
+    <LinearLayout
+        android:id="@+id/line3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/line2"
+        android:layout_marginTop="0dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_password"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/password_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="your password"
+            android:inputType="textPassword"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- Confirm Password -->
+    <LinearLayout
+        android:id="@+id/line4"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_below="@id/line3"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="50dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_confirm_password"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confirm_password_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="your password"
+            android:inputType="textPassword"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:text="Register" />
+
+</RelativeLayout>

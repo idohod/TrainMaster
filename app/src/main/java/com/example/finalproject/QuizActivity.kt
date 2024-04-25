@@ -6,6 +6,7 @@ import android.widget.Toast
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
+import com.google.firebase.auth.FirebaseAuth
 
 class QuizActivity : AppCompatActivity() {
 
@@ -13,7 +14,6 @@ class QuizActivity : AppCompatActivity() {
     private lateinit var theName : MaterialTextView
     private lateinit var fieldName : TextInputEditText
     private lateinit var saveButton : MaterialButton
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.reg_quiz)

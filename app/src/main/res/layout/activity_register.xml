@@ -139,12 +139,103 @@
             android:textSize="20sp" />
 
     </LinearLayout>
+    <!-- Height -->
+    <LinearLayout
+        android:id="@+id/line5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/line4"
+        android:layout_marginTop="0dp">
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_height"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Height"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/height_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter your height"
+            android:inputType="numberDecimal"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- Weight -->
+    <LinearLayout
+        android:id="@+id/line6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/line5"
+        android:layout_marginTop="0dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_weight"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="Weight"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/weight_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter your weight"
+            android:inputType="numberDecimal"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+    <!-- rol
+    <LinearLayout
+        android:id="@+id/line7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@id/line6"
+        android:layout_marginTop="0dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/user_role"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="role"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/role_field"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Enter your role"
+            android:textColor="@color/gray200"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/register_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/line4"
+        android:layout_below="@id/line6"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:text="Register" />

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:backgroundTint="@color/white"
+    android:layout_margin="5dp"
+    app:cardElevation="8dp"
+    app:cardCornerRadius="8dp"
+    android:layout_height="120dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/exercise_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="exercise_name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+              />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/the_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="name"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+               />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/set_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="sets"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+              />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/set_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="_0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+               />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/repetitions_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="reps"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+               />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/repetitions_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="_0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+
+                />
+
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weight_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="weight"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weight_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="_0"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+              />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

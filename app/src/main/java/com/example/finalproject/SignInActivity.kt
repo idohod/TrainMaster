@@ -36,4 +36,19 @@ class SignInActivity : AppCompatActivity() {
             }
         }
     }
-}
+
+}/* private fun singIn(email: String, password: String, name: String) {
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { signInTask ->
+                if (signInTask.isSuccessful) {
+                     //exist user
+                    moveToMainActivity(name)
+                } else {
+                    // cant singIn
+                  Toast.makeText(this, "Password incorrect", Toast.LENGTH_LONG).show()
+
+                }
+            }
+    }
+    */

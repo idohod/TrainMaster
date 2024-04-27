@@ -29,10 +29,6 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var weight: MaterialTextView
     private lateinit var weightField: TextInputEditText
 
-    //private lateinit var role: MaterialTextView
-   // private lateinit var roleField: TextInputEditText
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -77,7 +73,7 @@ class RegisterActivity : AppCompatActivity() {
                     moveToQuizActivity()
                 }
                 else{
-                    singIn(email,password,name)
+                    //singIn(email,password,name)
                 }
             }
     }
@@ -99,29 +95,9 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-    private fun singIn(email: String, password: String, name: String) {
-
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { signInTask ->
-                if (signInTask.isSuccessful) {
-                     //exist user
-                    moveToMainActivity(name)
-                } else {
-                    // cant singIn
-                  Toast.makeText(this, "Password incorrect", Toast.LENGTH_LONG).show()
-
-                }
-            }
-    }
     private fun moveToQuizActivity() {
         val i = Intent(this,HealthQuizActivity::class.java)
         startActivity(i)
-    }
-
-    private fun moveToMainActivity(name: String) {
-        val intent = Intent(this,MainActivity::class.java)
-        intent.putExtra("userName",name)
-        startActivity(intent)
     }
 }
 

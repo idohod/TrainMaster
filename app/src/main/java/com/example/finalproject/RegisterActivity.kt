@@ -72,9 +72,7 @@ class RegisterActivity : AppCompatActivity() {
                     // new user
                     moveToQuizActivity()
                 }
-                else{
-                    //singIn(email,password,name)
-                }
+
             }
     }
 

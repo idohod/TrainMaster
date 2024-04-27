@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        findViews()
         getUserName()
 
 
@@ -25,10 +24,6 @@ class MainActivity : AppCompatActivity() {
         val temp = i.getStringExtra("userName")
         val newTitle = "hello $temp!"
         testText.text = newTitle
-    }
-    private fun findViews(){
-        testButton = findViewById(R.id.test_button)
-        testText = findViewById(R.id.test_text)
     }
     private fun moveActivity() {
         val intent = Intent(this,RegisterActivity::class.java)

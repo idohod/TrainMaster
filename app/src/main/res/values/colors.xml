@@ -16,5 +16,6 @@
     <color name="orange_200">#D57500</color>
     <color name="gray_200">#969A9C</color>
     <color name="gray200">#3F3E3E</color>
+    <color name="colorPrimary">#181212</color>
 
 </resources>

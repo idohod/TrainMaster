@@ -3,4 +3,5 @@
     <color name="blue_200" />
     <color name="yellow_200">#FFD43A</color>
     <color name="gray200">#3F3E3E</color>
+    <color name="colorPrimary">#181212</color>
 </resources>

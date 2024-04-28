@@ -56,7 +56,8 @@ class SignInActivity : AppCompatActivity() {
     private fun moveToMainActivity(email: String, password: String) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { signInTask ->
-                if (signInTask.isSuccessful) {                    val intent = Intent(
+                if (signInTask.isSuccessful) {
+                    val intent = Intent(
                         this,
                         MainActivity::class.java
                     ) // Replace with your target activity after successful sign in

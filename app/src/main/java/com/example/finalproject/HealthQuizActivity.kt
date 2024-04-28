@@ -50,6 +50,7 @@ class HealthQuizActivity : AppCompatActivity() {
 
         displayQuestion(currentQuestionIndex)
 
+
         submitButton.setOnClickListener {
             val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
 

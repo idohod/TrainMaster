@@ -1,3 +1,5 @@
+
+package com.example.finalproject
 class Exercise(
     private var name: String,
     private var numOfSets: String,
@@ -37,6 +39,7 @@ class Exercise(
         this.weight = weight
     }
 
+
     override fun toString(): String {
         return "Exercise{" +
                 "name='" + name + '\'' +
@@ -45,4 +48,5 @@ class Exercise(
                 ", weight=" + weight +
                 '}'
     }
+
 }

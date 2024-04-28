@@ -3,12 +3,14 @@ package com.example.finalproject
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -28,6 +30,10 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var heightField: TextInputEditText
     private lateinit var weight: MaterialTextView
     private lateinit var weightField: TextInputEditText
+
+    //private lateinit var role: MaterialTextView
+   // private lateinit var roleField: TextInputEditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +57,8 @@ class RegisterActivity : AppCompatActivity() {
         heightField = findViewById(R.id.height_field)
         weight = findViewById(R.id.user_weight)
         weightField = findViewById(R.id.weight_field)
+      //  role = findViewById(R.id.user_role)
+       // roleField = findViewById(R.id.role_field)
 
     }
 
@@ -59,10 +67,8 @@ class RegisterActivity : AppCompatActivity() {
         val email = emailField.text.toString()
         val password = passwordField.text.toString()
         val confirmPassword = confirmPasswordField.text.toString()
-        val height = heightField.text.toString()
-        val weight = weightField.text.toString()
 
-        if (!checkInput(name,email,password,confirmPassword,height,weight))
+        if (!checkInput(name,email,password,confirmPassword))
             return
 
         FirebaseAuth.getInstance()
@@ -72,33 +78,52 @@ class RegisterActivity : AppCompatActivity() {
                     // new user
                     moveToQuizActivity()
                 }
-                else
-                    Toast.makeText(this, "you already registered!", Toast.LENGTH_SHORT).show()
-
-
+                else{
+                    singIn(email,password,name)
+                }
             }
     }
 
-    private fun checkInput(name: String, email: String, password: String, confirmPassword: String,height:String,weight:String) : Boolean{
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| confirmPassword.isEmpty()||height.isEmpty()||weight.isEmpty()) {
-            Toast.makeText(this, "some data is missing", Toast.LENGTH_SHORT).show()
+    private fun checkInput(name: String, email: String, password: String, confirmPassword: String) : Boolean{
+        if (name.isEmpty() || email.isEmpty() || password.isEmpty()|| confirmPassword.isEmpty()) {
+            Toast.makeText(this, "some data is missing", Toast.LENGTH_LONG).show()
             return false
         }
         if(password.length < 6){
-            Toast.makeText(this, "password must be least 6 characters", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "password must be least 6 characters", Toast.LENGTH_LONG).show()
             return false
         }
 
         if (password != confirmPassword) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show()
             return false
         }
         return true
     }
 
+    private fun singIn(email: String, password: String, name: String) {
+
+        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { signInTask ->
+                if (signInTask.isSuccessful) {
+                     //exist user
+                    moveToMainActivity(name)
+                } else {
+                    // cant singIn
+                  Toast.makeText(this, "Password incorrect", Toast.LENGTH_LONG).show()
+
+                }
+            }
+    }
     private fun moveToQuizActivity() {
         val i = Intent(this,HealthQuizActivity::class.java)
         startActivity(i)
+    }
+
+    private fun moveToMainActivity(name: String) {
+        val intent = Intent(this,MainActivity::class.java)
+        intent.putExtra("userName",name)
+        startActivity(intent)
     }
 }
 

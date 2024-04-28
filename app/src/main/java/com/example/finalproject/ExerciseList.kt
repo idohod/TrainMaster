@@ -1,7 +1,5 @@
 package com.example.finalproject
 
-import Exercise
-
 class ExerciseList {
     private var allExercises: ArrayList<Exercise>
 

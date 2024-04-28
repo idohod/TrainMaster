@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
+
 import com.google.firebase.auth.FirebaseAuth
 
 class SignInActivity : AppCompatActivity() {
@@ -16,7 +17,10 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_sing_in)
+
+        setContentView(R.layout.activity_sign_in)
 
         emailField = findViewById(R.id.email_field)
         passwordField = findViewById(R.id.password_field)
@@ -50,17 +54,18 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun moveToMainActivity(email: String, password: String) {
-
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { signInTask ->
-                if (signInTask.isSuccessful) {
-                    //exist user
-                    startActivity(Intent(this,MainActivity::class.java))
-                } else {
-                    // cant singIn
-                    Toast.makeText(this, "Password or email incorrect", Toast.LENGTH_LONG).show()
+                if (signInTask.isSuccessful) {                    val intent = Intent(
+                        this,
+                        MainActivity::class.java
+                    ) // Replace with your target activity after successful sign in
+                    startActivity(intent)
+                } else{
+                    Toast.makeText(this, " email or password in correct", Toast.LENGTH_SHORT).show()
 
                 }
+
             }
     }
 

@@ -17,10 +17,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
+        getUserName()
+
 
         testButton.setOnClickListener{moveActivity()}
     }
-
+    private fun getUserName()
+    {
+        val i = intent
+        val temp = i.getStringExtra("userName")
+        val newTitle = "hello $temp!"
+        testText.text = newTitle
+    }
     private fun findViews(){
         testButton = findViewById(R.id.test_button)
         testText = findViewById(R.id.test_text)

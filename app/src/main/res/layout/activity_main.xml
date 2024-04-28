@@ -1,54 +1,38 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_200"
-    tools:context="MainActivity">
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    tools:context=".MainActivity">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/title"
+        android:id="@+id/test_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="your_plan"
+        android:text="Hello World!"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="40sp" android:textStyle="bold" android:textColor="@color/yellow_200"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/exercises_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/title"
-        android:layout_above="@+id/change_user_button"
-        android:layout_marginTop="10dp" android:layout_marginBottom="5dp"/>
+        android:layout_marginTop="50dp"
+        android:textSize="30sp"
+         />
+
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/change_user_button"
-        android:layout_width="165dp"
+        android:id="@+id/test_button"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/blue_500"
-        android:textColor="@color/white"
-        android:text="change_user"
-        android:textSize="20sp"
-        tools:ignore="RtlHardcoded"/>
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/add_exercise_button"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/blue_500"
-        android:text="add_exercise"
+        android:layout_marginBottom="50dp"
+        android:backgroundTint="@color/black"
+        android:text="test"
         android:textColor="@color/white"
         android:textSize="20sp"
-        tools:ignore="RelativeOverlap,RtlHardcoded"/>
+        android:textStyle="bold"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true">
+
+
+    </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
+
 </RelativeLayout>
+

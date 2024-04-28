@@ -18,19 +18,17 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_sing_in)
-
         setContentView(R.layout.activity_sign_in)
 
         emailField = findViewById(R.id.email_field)
         passwordField = findViewById(R.id.password_field)
         signInButton = findViewById(R.id.sign_in_button)
 
-        signInButton.setOnClickListener { singIn() }
+        signInButton.setOnClickListener { signIn() }
 
     }
 
-    private fun singIn() {
+    private fun signIn() {
         val email = emailField.text.toString()
         val password = passwordField.text.toString()
 

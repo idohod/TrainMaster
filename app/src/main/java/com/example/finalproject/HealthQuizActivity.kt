@@ -1,5 +1,6 @@
 package com.example.finalproject
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.RadioButton
@@ -14,6 +15,7 @@ class HealthQuizActivity : AppCompatActivity() {
     private lateinit var questionRadioGroup: RadioGroup
     private lateinit var submitButton: Button
     private var currentQuestionIndex = 0
+    private lateinit var userName:String
 
     // Define your list of questions here
     private val questions = listOf(
@@ -47,7 +49,7 @@ class HealthQuizActivity : AppCompatActivity() {
         questionTextView = findViewById(R.id.question_text_view)
         questionRadioGroup = findViewById(R.id.question_radio_group)
         submitButton = findViewById(R.id.submit_button)
-
+        getUserName()
         displayQuestion(currentQuestionIndex)
 
 
@@ -91,8 +93,22 @@ class HealthQuizActivity : AppCompatActivity() {
         } else {
             // Quiz completed, you can add your completion logic here
             Toast.makeText(this, "Quiz completed", Toast.LENGTH_SHORT).show()
-            // You might want to navigate to another activity or display quiz results here
+            moveToMainActivity(userName)
         }
+    }
+
+    private fun moveToMainActivity(userName: String) {
+        val i = Intent(this,MainActivity::class.java)
+        i.putExtra("userName",userName)
+        startActivity(i)
+
+    }
+
+    private fun getUserName(){
+        val i = intent
+        userName= i.getStringExtra("userName").toString()
+
+
     }
 
     data class Question(val questionText: String, val options: List<String>, val correctAnswer: String)

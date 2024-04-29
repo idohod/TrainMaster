@@ -70,7 +70,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener { createUserTask ->
                 if (createUserTask.isSuccessful) {
                     // new user
-                    moveToQuizActivity()
+                    moveToQuizActivity(name)
                 } else {
                     Toast.makeText(this, "you already registered", Toast.LENGTH_SHORT).show()
                 }
@@ -100,8 +100,9 @@ class RegisterActivity : AppCompatActivity() {
         return true
     }
 
-    private fun moveToQuizActivity() {
+    private fun moveToQuizActivity(name: String) {
         val i = Intent(this, HealthQuizActivity::class.java)
+        i.putExtra("userName",name)
         startActivity(i)
     }
 }

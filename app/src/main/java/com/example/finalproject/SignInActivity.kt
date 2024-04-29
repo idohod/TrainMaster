@@ -61,7 +61,7 @@ class SignInActivity : AppCompatActivity() {
                     ) // Replace with your target activity after successful sign in
                     startActivity(intent)
                 } else{
-                    Toast.makeText(this, " email or password in correct", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, " email or password incorrect", Toast.LENGTH_SHORT).show()
 
                 }
 

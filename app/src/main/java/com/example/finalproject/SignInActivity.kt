@@ -8,6 +8,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class SignInActivity : AppCompatActivity() {
 
@@ -35,8 +37,7 @@ class SignInActivity : AppCompatActivity() {
         if (checkInput(email, password)) {
             moveToMainActivity(email, password)
 
-        }
-        else {
+        } else {
             Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
             return
         }
@@ -55,15 +56,39 @@ class SignInActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { signInTask ->
                 if (signInTask.isSuccessful) {
-                    val intent = Intent(
-                        this,
-                        MainActivity::class.java
-                    ) // Replace with your target activity after successful sign in
-                    startActivity(intent)
-                } else{
+                    loadUserData()
+
+
+                } else {
                     Toast.makeText(this, " email or password incorrect", Toast.LENGTH_SHORT).show()
 
                 }
+
+            }
+    }
+
+    private fun moveActivity(name: String) {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("userName",name)
+        startActivity(intent)
+    }
+
+    private fun loadUserData() {
+        val db = Firebase.firestore
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = db.collection("user").document(userId)
+
+        ref.get().addOnSuccessListener {
+            if (it != null) {
+                val name = it.data?.get("name")?.toString()
+           //     val email = it.data?.get("email")?.toString()
+
+                if (name != null)
+                    moveActivity(name)
+            }
+        }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
 
             }
     }

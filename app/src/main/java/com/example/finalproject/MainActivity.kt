@@ -1,5 +1,6 @@
 package com.example.finalproject
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -29,13 +30,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
-        Log.d("debug","findViews")
         getUserName()
-        Log.d("debug","getUserName")
-      //  allExercises = ExerciseList()
         loadExercisesFromDb()
-        Log.d("debug","loadExercisesFromDb")
-
     }
 
     private fun findViews() {
@@ -51,10 +47,12 @@ class MainActivity : AppCompatActivity() {
         allExercises = arrayListOf<Exercise>()
 
     }
+@SuppressLint("SetTextI18n")
 private fun getUserName(){
-    val i =intent
 
+    val i =intent
     userName = i.getStringExtra("userName").toString()
+    title.text = "$userName's plan"
 }
 
 
@@ -62,7 +60,6 @@ private fun getUserName(){
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
 
-        Log.d("debug",exercisesRef.toString())
         exercisesRef.addValueEventListener(object : ValueEventListener {
 
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -77,7 +74,6 @@ private fun getUserName(){
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.d("ALL",error.message)
             }
         })
     }

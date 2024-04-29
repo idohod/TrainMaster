@@ -9,6 +9,8 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -70,6 +72,7 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener { createUserTask ->
                 if (createUserTask.isSuccessful) {
                     // new user
+                    saveUserData(name,email)
                     moveToQuizActivity(name)
                 } else {
                     Toast.makeText(this, "you already registered", Toast.LENGTH_SHORT).show()
@@ -104,6 +107,31 @@ class RegisterActivity : AppCompatActivity() {
         val i = Intent(this, HealthQuizActivity::class.java)
         i.putExtra("userName",name)
         startActivity(i)
+    }
+
+    private fun saveUserData(name:String, email:String){
+
+        val sName = name.trim()
+        val sEmail = email.trim()
+
+        val userMap = hashMapOf(
+
+            "name" to sName,
+            "email" to sEmail
+
+        )
+
+        val userId =FirebaseAuth.getInstance().currentUser!!.uid
+        val db = Firebase.firestore
+
+        db.collection("user").document(userId).set(userMap).addOnSuccessListener {
+            nameField.text?.clear()
+            emailField.text?.clear()
+            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+        }
+            .addOnFailureListener{
+                Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
+            }
     }
 }
 

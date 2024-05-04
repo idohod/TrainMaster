@@ -1,4 +1,33 @@
 <resources>
     <string name="app_name">finalProject</string>
-    <string name="your_plan" />
+
+    <!--main activity-->
+    <string name="your_plan">your plan</string>
+    <string name="change_user">change user</string>
+    <string name="add_exercise">add exercise</string>
+
+
+    <!--recycle view-->
+    <string name="exercise_name">exercise name: </string>
+    <string name="name">name</string>
+    <string name="_0">0</string>
+    <string name="sets">sets: </string>
+    <string name="reps">repetitions: </string>
+    <string name="weight">weight: </string>
+    <string name="edit">edit</string>
+    <string name="remove">remove</string>
+
+    <!--timer-->
+    <string name="exercise_timer">exercise timer</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="start">start</string>
+    <string name="finish">finish</string>
+
+    <!--data activity-->
+    <string name="exercise_data">enter exercise data</string>
+    <string name="save">save</string>
+    <string name="nameField">name</string>
+    <string name="back">back</string>
+    <string name="todo">TODO</string>
+
 </resources>

@@ -80,6 +80,7 @@ class HealthQuizActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: String) {
         val currentQuestion = questions[currentQuestionIndex]
+
         if (userAnswer == currentQuestion.correctAnswer) {
             Toast.makeText(this, "Correct!", Toast.LENGTH_SHORT).show()
         } else {
@@ -107,8 +108,6 @@ class HealthQuizActivity : AppCompatActivity() {
     private fun getUserName(){
         val i = intent
         userName= i.getStringExtra("userName").toString()
-
-
     }
 
     data class Question(val questionText: String, val options: List<String>, val correctAnswer: String)

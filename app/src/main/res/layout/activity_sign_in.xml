@@ -17,7 +17,7 @@
             android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -33,7 +33,7 @@
             android:id="@+id/password_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Password"
+            android:hint="@string/password"
             android:inputType="textPassword" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -45,6 +45,6 @@
         android:layout_below="@id/password_input_layout"
         android:layout_marginTop="16dp"
         android:layout_centerInParent="true"
-        android:text="Sign In" />
+        android:text="@string/sign_in" />
 
 </RelativeLayout>

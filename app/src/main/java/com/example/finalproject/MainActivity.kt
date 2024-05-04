@@ -3,9 +3,8 @@ package com.example.finalproject
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
+
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -22,33 +21,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var title: MaterialTextView
     private lateinit var userName: String
 
-    private lateinit var exerciseCallback: ExerciseCallback
-
     private lateinit var recyclerView: RecyclerView
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercises: ArrayList<Exercise>
     //  private var backgroundImage: AppCompatImageView? = null
 
-    private fun moveActivity() {
-        startActivity(Intent(this,TimerActivity::class.java))
-    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
         getUserName()
-        loadExercisesFromDb()
         initViews()
-        exerciseCallback = object : ExerciseCallback {
-            override fun itemClick(exercise: Exercise?, position: Int) {
-                val intent = Intent(applicationContext, TimerActivity::class.java)
-                // Add intent extras if needed
-                startActivity(intent)
-                finish()
-            }
-        }
-        addExerciseButton.setOnClickListener{moveActivity()}
+        loadExercisesFromDb()
     }
 
     private fun findViews() {
@@ -57,23 +43,13 @@ class MainActivity : AppCompatActivity() {
         changeUserButton = findViewById(R.id.change_user_button)
         addExerciseButton = findViewById(R.id.add_exercise_button)
         recyclerView = findViewById(R.id.exercises_list)
+
     }
 
-    private fun initViews(){
+    private fun initViews() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-
-        allExercises = arrayListOf<Exercise>()
-
-
-
-        exerciseAdapter = ExerciseAdapter(allExercises)
-        exerciseAdapter.setExerciseCallback(exerciseCallback)
-        recyclerView.adapter = exerciseAdapter
-
-
-
-
+        allExercises = arrayListOf()
 
     }
 
@@ -98,15 +74,29 @@ class MainActivity : AppCompatActivity() {
                         val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                         allExercises.add(exercise!!)
                     }
-                    recyclerView.adapter = ExerciseAdapter(allExercises)
-
+                    exerciseAdapter = ExerciseAdapter(allExercises)
+                    recyclerView.adapter = exerciseAdapter
+                    exerciseAdapter.setOnItemClickListener(object :
+                        ExerciseAdapter.OnItemClickListener {
+                        override fun itemClick(exercise: Exercise) {
+                            moveToTimerActivity(exercise)
+                        }
+                    })
                 }
             }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
+    private fun  moveToTimerActivity(exercise: Exercise){
+        val intent = Intent(applicationContext, TimerActivity::class.java)
 
+        intent.putExtra("exName",exercise.name)
+        intent.putExtra("exSet",exercise.numOfSets)
+        intent.putExtra("exRep",exercise.numOfReps)
+        intent.putExtra("exWeight",exercise.weight)
 
+        intent.putExtra("userName",userName)
+        startActivity(intent)
+        finish()
+    }
 }

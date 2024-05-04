@@ -20,7 +20,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="your_plan"
+        android:text="@string/your_plan"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textSize="40sp"
@@ -50,7 +50,7 @@
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/blue_500"
         android:textColor="@color/white"
-        android:text="change_user"
+        android:text="@string/change_user"
         android:textSize="20sp"
         tools:ignore="RtlHardcoded" />
 
@@ -63,7 +63,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/blue_500"
-        android:text="add_exercise"
+        android:text="@string/add_exercise"
         android:textColor="@color/white"
         android:textSize="20sp"
 

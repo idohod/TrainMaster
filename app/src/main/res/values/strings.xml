@@ -29,5 +29,24 @@
     <string name="nameField">name</string>
     <string name="back">back</string>
     <string name="todo">TODO</string>
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="registration">Registration</string>
+    <string name="Name">Name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="Email">Email</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="Password">Password</string>
+    <string name="your_password">your password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="height">Height</string>
+    <string name="enter_your_height">Enter your height</string>
+    <string name="Weight">Weight</string>
+    <string name="enter_your_weight">Enter your weight</string>
+    <string name="Register">Register</string>
+    <string name="question">Question</string>
+    <string name="submit">Submit</string>
 
 </resources>

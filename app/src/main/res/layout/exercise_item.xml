@@ -24,7 +24,7 @@
                 android:id="@+id/exercise_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="exercise_name: "
+                android:text="@string/exercise_name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />
@@ -33,7 +33,7 @@
                 android:id="@+id/the_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="name"
+                android:text="@string/name"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />
@@ -49,7 +49,7 @@
                 android:id="@+id/set_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="sets: "
+                android:text="@string/sets"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />
@@ -75,7 +75,7 @@
                 android:id="@+id/repetitions_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="reps: "
+                android:text="@string/reps"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />
@@ -102,7 +102,7 @@
                 android:id="@+id/weight_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="weight: "
+                android:text="@string/weight"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 />

@@ -23,21 +23,18 @@
     <string name="start">start</string>
     <string name="finish">finish</string>
 
-    <!--data activity-->
-    <string name="exercise_data">enter exercise data</string>
-    <string name="save">save</string>
-    <string name="nameField">name</string>
-    <string name="back">back</string>
-    <string name="todo">TODO</string>
+    <!--start page -->
     <string name="sign_in">Sign In</string>
     <string name="register">Register</string>
+
+    <!--register and sign in-->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="registration">Registration</string>
     <string name="Name">Name</string>
     <string name="enter_your_name">Enter your name</string>
     <string name="Email">Email</string>
-    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_email">name@gmail.com</string>
     <string name="Password">Password</string>
     <string name="your_password">your password</string>
     <string name="confirm_password">Confirm Password</string>
@@ -46,7 +43,23 @@
     <string name="Weight">Weight</string>
     <string name="enter_your_weight">Enter your weight</string>
     <string name="Register">Register</string>
+
+    <!--data activity-->
+    <string name="exercise_data">enter exercise data</string>
+    <string name="save">save</string>
+    <string name="nameField">name</string>
+    <string name="back">back</string>
+    <string name="todo">TODO</string>
+
+    <!--quiz activity-->
+
     <string name="question">Question</string>
     <string name="submit">Submit</string>
+    <string name="trainee">trainee</string>
+
+    <!--coach activity-->
+    <string name="coach">coach</string>
+    <string name="show_plan">show plan</string>
+    <string name="select_user">Select User</string>
 
 </resources>

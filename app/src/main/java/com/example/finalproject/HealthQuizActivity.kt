@@ -53,16 +53,19 @@ class HealthQuizActivity : AppCompatActivity() {
         displayQuestion(currentQuestionIndex)
 
 
-        submitButton.setOnClickListener {
-            val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
+        submitButton.setOnClickListener { selectAnswer()}
+    }
 
-            if (selectedRadioButtonId != -1) {
-                val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
-                val answer = selectedRadioButton.text.toString()
-                checkAnswer(answer)
-            } else {
-                Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
-            }
+    private fun selectAnswer() {
+        val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
+
+        if (selectedRadioButtonId != -1) {
+            val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
+            val answer = selectedRadioButton.text.toString()
+            checkAnswer(answer)
+        } else {
+            Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
+            return
         }
     }
 

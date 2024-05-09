@@ -26,16 +26,16 @@ class SignInActivity : AppCompatActivity() {
         passwordField = findViewById(R.id.password_field)
         signInButton = findViewById(R.id.sign_in_button)
 
-        signInButton.setOnClickListener { signIn() }
+        signInButton.setOnClickListener { start() }
 
     }
 
-    private fun signIn() {
+    private fun start() {
         val email = emailField.text.toString()
         val password = passwordField.text.toString()
 
         if (checkInput(email, password)) {
-            moveToMainActivity(email, password)
+            singIn(email, password)
 
         } else {
             Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
@@ -52,25 +52,26 @@ class SignInActivity : AppCompatActivity() {
         return true
     }
 
-    private fun moveToMainActivity(email: String, password: String) {
+    private fun singIn(email: String, password: String) {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { signInTask ->
                 if (signInTask.isSuccessful) {
                     loadUserData()
-
-
                 } else {
                     Toast.makeText(this, " email or password incorrect", Toast.LENGTH_SHORT).show()
-
                 }
-
             }
     }
 
-    private fun moveActivity(name: String) {
-        val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("userName",name)
-        startActivity(intent)
+    private fun moveActivity(name: String, role: String) {
+        if (role == "trainee") {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("userName", name)
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, CoachActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadUserData() {
@@ -81,10 +82,10 @@ class SignInActivity : AppCompatActivity() {
         ref.get().addOnSuccessListener {
             if (it != null) {
                 val name = it.data?.get("name")?.toString()
-           //     val email = it.data?.get("email")?.toString()
+                val role = it.data?.get("role")?.toString()
 
-                if (name != null)
-                    moveActivity(name)
+                if (name != null && role != null)
+                    moveActivity(name, role)
             }
         }
             .addOnFailureListener {
@@ -92,5 +93,4 @@ class SignInActivity : AppCompatActivity() {
 
             }
     }
-
 }

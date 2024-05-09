@@ -10,6 +10,8 @@ class StartPage : AppCompatActivity() {
     private lateinit var registerButton: MaterialButton
     private lateinit var signInButton: MaterialButton
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_page)
@@ -26,5 +28,6 @@ class StartPage : AppCompatActivity() {
             val intent = Intent(this, SignInActivity::class.java)
             startActivity(intent)
         }
+
     }
 }

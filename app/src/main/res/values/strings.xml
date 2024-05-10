@@ -42,6 +42,8 @@
     <string name="enter_your_height">Enter your height</string>
     <string name="Weight">Weight</string>
     <string name="enter_your_weight">Enter your weight</string>
+    <string name="role">Role</string>
+
     <string name="Register">Register</string>
 
     <!--data activity-->

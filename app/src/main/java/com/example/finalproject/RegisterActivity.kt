@@ -43,7 +43,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViews()
-        registerButton.setOnClickListener { singUp() }
+        registerButton.setOnClickListener { signUp() }
     }
 
     private fun findViews() {
@@ -84,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun singUp() {
+    private fun signUp() {
         val name = nameField.text.toString()
         val email = emailField.text.toString()
         val password = passwordField.text.toString()
@@ -184,6 +184,7 @@ class RegisterActivity : AppCompatActivity() {
         db.collection("user").document(userId).set(userMap).addOnSuccessListener {
             nameField.text?.clear()
             emailField.text?.clear()
+
             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
         }
             .addOnFailureListener{

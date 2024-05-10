@@ -212,7 +212,7 @@
             android:id="@+id/user_role"
             android:layout_width="120dp"
             android:layout_height="wrap_content"
-            android:text="role"
+            android:text="@string/role"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textStyle="bold" />

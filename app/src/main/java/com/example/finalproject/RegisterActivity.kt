@@ -178,6 +178,7 @@ class RegisterActivity : AppCompatActivity() {
 
         )
 
+
         val userId =FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 

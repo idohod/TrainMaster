@@ -105,13 +105,18 @@ class TimerActivity : AppCompatActivity() {
     }
     private fun getLinkFromDB() {
         val db = FirebaseFirestore.getInstance()
-        val exercisesCollection = db.collection("exercises").document("biceps1")
+        val exercisesCollection = db.collection("exercises")
         exercisesCollection.get()
             .addOnSuccessListener {
-                if (it != null) {
-                    val link = it.data?.get("link")?.toString()
-                    uploadImage(link)
+                    result ->
+                for (document in result) {
+                    val name = document.getString("exercise_name")
+                    val link = document.getString("link")
+                    if(name != null && link != null )
+                        uploadImage(name , link)
+
                 }
+
             }
 
             .addOnFailureListener {
@@ -119,16 +124,16 @@ class TimerActivity : AppCompatActivity() {
             }
     }
 
-    private fun uploadImage(link: String?) {
-        if (link != null) {
-            imageLink = link.toString()
+    private fun uploadImage(name: String,link: String) {
+
+        if (name ==  theNameTextView.text)
             Glide
                 .with(this)
-                .load(imageLink)
+                .load(link)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(imageView)
-        }
+
 
     }
 

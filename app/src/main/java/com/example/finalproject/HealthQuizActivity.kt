@@ -19,7 +19,10 @@ class HealthQuizActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private var currentQuestionIndex = 0
     private lateinit var userName:String
+    private lateinit var allExercises: ArrayList<Exercise>
+
     private var score = 0
+
 
     // Define your list of questions here
     private val questions = listOf(
@@ -50,6 +53,7 @@ class HealthQuizActivity : AppCompatActivity() {
         questionRadioGroup = findViewById(R.id.question_radio_group)
         submitButton = findViewById(R.id.submit_button)
         getUserName()
+        allExercises = arrayListOf()
         displayQuestion(currentQuestionIndex)
 
 
@@ -128,27 +132,37 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun addExercise(score: Int, level: Long, name: String,type :Long) {
+        val db = FirebaseDatabase.getInstance()
+        val exercisesRef = db.reference.child("users").child(userName).child("exercises")
 
         if (score in 4..6){ //easy
-            if (level == 1L)
+            if (level == 1L) {
+                val ex = Exercise(name, "3", "10", "0");
+                allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
-
+            }
         }else if(score in 7..9){ //mid
-            if(level == 2L)
+            if(level == 2L){
+                val ex = Exercise(name, "3", "10", "0");
+                allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
+            }
 
         }else if(score in 10..11){ //HARD
-            if (level == 3L)
+            if (level == 3L){
+                val ex = Exercise(name, "3", "10", "0");
+                allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
+            }
 
         }else{ //expert
-            if(level >= 4L)
-                  Log.d("EX", "$name l = $level t = $type")
+            if(level >= 4L){
+                val ex = Exercise(name, "3", "10", "0");
+                allExercises.add(ex)
+                Log.d("EX", "$name l = $level t = $type")
+            }
         }
-
-        // val db = FirebaseDatabase.getInstance()
-        //  val exercisesRef = db.reference.child("users").child(userName).child("exercises")
-        // exercisesRef.setValue(allExercises)
+         exercisesRef.setValue(allExercises)
     }
 
     private fun moveToMainActivity(userName: String) {

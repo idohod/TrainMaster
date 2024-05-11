@@ -109,8 +109,11 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun loadExercises(score: Int) {
-        val db = FirebaseFirestore.getInstance()
-        val exercisesCollection = db.collection("exercises")
+        val firestore = FirebaseFirestore.getInstance()
+        val exercisesCollection = firestore.collection("exercises")
+
+        val database = FirebaseDatabase.getInstance()
+        val exercisesRef = database.reference.child("users").child(userName).child("exercises")
 
         exercisesCollection.get()
             .addOnSuccessListener { result ->
@@ -124,6 +127,8 @@ class HealthQuizActivity : AppCompatActivity() {
                         addExercise(score, level, name, type)
 
                 }
+                exercisesRef.setValue(allExercises)
+
             }
             .addOnFailureListener { exception ->
                 Log.w("debug", "Error getting documents.", exception)
@@ -132,8 +137,7 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun addExercise(score: Int, level: Long, name: String,type :Long) {
-        val db = FirebaseDatabase.getInstance()
-        val exercisesRef = db.reference.child("users").child(userName).child("exercises")
+
 
         if (score in 4..6){ //easy
             if (level == 1L) {
@@ -162,7 +166,7 @@ class HealthQuizActivity : AppCompatActivity() {
                 Log.d("EX", "$name l = $level t = $type")
             }
         }
-         exercisesRef.setValue(allExercises)
+
     }
 
     private fun moveToMainActivity(userName: String) {

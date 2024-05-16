@@ -1,8 +1,9 @@
-package com.example.finalproject
+package models
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject.R
 import com.google.android.material.button.MaterialButton
 
 class StartPage : AppCompatActivity() {

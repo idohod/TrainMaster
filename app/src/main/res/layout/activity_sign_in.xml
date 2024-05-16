@@ -4,14 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInActivity">
+    tools:context="models.SignInActivity">
 
+    <!-- Email Input Layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_field"
@@ -22,12 +25,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Password Input Layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/email_input_layout"
-        android:layout_marginTop="16dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_field"
@@ -38,13 +44,21 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <!-- Sign In Button -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/sign_in_button"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/password_input_layout"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_centerInParent="true"
-        android:text="@string/sign_in" />
+        android:layout_marginEnd="32dp"
+        android:text="@string/sign_in"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:textStyle="bold"
+        app:cornerRadius="8dp"
+        app:rippleColor="@color/colorPrimaryDark"
+        style="@style/Widget.MaterialComponents.Button.TextButton" />
 
 </RelativeLayout>

@@ -1,5 +1,5 @@
 
-package com.example.finalproject
+package utilities
 data class Exercise(
      var name: String ?=null ,
      var numOfSets: String ?=null ,

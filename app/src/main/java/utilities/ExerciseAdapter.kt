@@ -1,8 +1,9 @@
-package com.example.finalproject
+package utilities
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.google.android.material.textview.MaterialTextView
 
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :

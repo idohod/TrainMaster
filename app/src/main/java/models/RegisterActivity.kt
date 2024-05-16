@@ -1,5 +1,5 @@
 
-package com.example.finalproject
+package models
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,12 +7,14 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.lang.Exception
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -74,13 +76,13 @@ class RegisterActivity : AppCompatActivity() {
 
     }
 
-    private fun roleSelected():  String{
+    private fun roleSelected(): String {
 
         val checkedRadioButtonId = radioGroup.checkedRadioButtonId
         if (checkedRadioButtonId != -1)
             return findViewById<RadioButton>(checkedRadioButtonId).text.toString()
 
-       return ""
+        return ""
 
     }
 
@@ -94,7 +96,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val role = roleSelected()
 
-        if (!checkInput(name, email, password, confirmPassword, height, weight,role))
+        if (!checkInput(name, email, password, confirmPassword, height, weight, role))
             return
 
         FirebaseAuth.getInstance()
@@ -102,23 +104,25 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener { createUserTask ->
                 if (createUserTask.isSuccessful) {
                     // new user
-                    saveUserData(name,email,role)
-                    moveActivity(name,role)
+                    saveUserData(name, email, role)
+                    moveActivity(name, role)
                 } else {
-                    myError()
+
+                    val exception = createUserTask.exception
+                    myError(exception)
 
                 }
             }
     }
 
-    private fun myError() {
-        Toast.makeText(this, "you already registered", Toast.LENGTH_SHORT).show()
+    private fun myError(exception: Exception?) {
+        Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
         return
     }
 
     private fun checkInput(
         name: String, email: String, password: String, confirmPassword: String,
-        height: String, weight: String , role: String
+        height: String, weight: String, role: String
 
     ): Boolean {
         if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
@@ -128,7 +132,7 @@ class RegisterActivity : AppCompatActivity() {
             return false
         }
 
-        if(!email.endsWith("@gmail.com")) {
+        if (!email.endsWith("@gmail.com")) {
             Toast.makeText(this, "illegal gmail", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -141,30 +145,29 @@ class RegisterActivity : AppCompatActivity() {
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
             return false
         }
-        if(role =="")
+        if (role == "")
             return false
 
         return true
     }
 
-    private fun moveActivity(name: String,role:String) {
-        if (role =="coach"){
+    private fun moveActivity(name: String, role: String) {
+        if (role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
             startActivity(i)
-        }
-        else if(role =="trainee"){
+        } else if (role == "trainee") {
             val i = Intent(this, HealthQuizActivity::class.java)
-            i.putExtra("userName",name)
+            i.putExtra("userName", name)
             startActivity(i)
-        }
-        else{
+            finish()
+        } else {
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
             return
         }
 
     }
 
-    private fun saveUserData(name:String, email:String,role: String){
+    private fun saveUserData(name: String, email: String, role: String) {
 
         val sName = name.trim()
         val sEmail = email.trim()
@@ -179,7 +182,7 @@ class RegisterActivity : AppCompatActivity() {
         )
 
 
-        val userId =FirebaseAuth.getInstance().currentUser!!.uid
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 
         db.collection("user").document(userId).set(userMap).addOnSuccessListener {
@@ -188,7 +191,7 @@ class RegisterActivity : AppCompatActivity() {
 
             Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
         }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
             }
     }

@@ -15,25 +15,25 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
-            android:name=".CoachActivity"
+            android:name="models.CoachActivity"
             android:exported="false" />
         <activity
-            android:name=".TimerActivity"
+            android:name="models.TimerActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name="models.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".SignInActivity"
+            android:name="models.SignInActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name="models.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".HealthQuizActivity"
+            android:name="models.HealthQuizActivity"
             android:exported="false" />
         <activity
-            android:name=".StartPage"
+            android:name="models.StartPage"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

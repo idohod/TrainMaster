@@ -1,4 +1,4 @@
-package com.example.finalproject
+package models
 
 import android.content.Intent
 import android.os.Bundle
@@ -9,8 +9,11 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.finalproject.R
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import utilities.Exercise
+import utilities.Question
 
 class HealthQuizActivity : AppCompatActivity() {
 
@@ -49,15 +52,18 @@ class HealthQuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_healthquiz)
 
+        initViews()
+        getUserName()
+        displayQuestion(currentQuestionIndex)
+
+        submitButton.setOnClickListener { selectAnswer()}
+    }
+
+    private fun initViews() {
         questionTextView = findViewById(R.id.question_text_view)
         questionRadioGroup = findViewById(R.id.question_radio_group)
         submitButton = findViewById(R.id.submit_button)
-        getUserName()
         allExercises = arrayListOf()
-        displayQuestion(currentQuestionIndex)
-
-
-        submitButton.setOnClickListener { selectAnswer()}
     }
 
     private fun selectAnswer() {
@@ -96,13 +102,11 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun moveQuestion() {
-        // Move to the next question or finish the quiz
         currentQuestionIndex++
         if (currentQuestionIndex < questions.size) {
             displayQuestion(currentQuestionIndex)
         } else {
-            // Quiz completed, you can add your completion logic here
-            Toast.makeText(this, "Quiz completed", Toast.LENGTH_SHORT).show()
+            // Quiz completed
             loadExercises(score)
             moveToMainActivity(userName)
         }
@@ -141,27 +145,27 @@ class HealthQuizActivity : AppCompatActivity() {
 
         if (score in 4..6){ //easy
             if (level == 1L) {
-                val ex = Exercise(name, "3", "10", "0");
+                val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
         }else if(score in 7..9){ //mid
             if(level == 2L){
-                val ex = Exercise(name, "3", "10", "0");
+                val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
 
         }else if(score in 10..11){ //HARD
             if (level == 3L){
-                val ex = Exercise(name, "3", "10", "0");
+                val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
 
         }else{ //expert
             if(level >= 4L){
-                val ex = Exercise(name, "3", "10", "0");
+                val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
@@ -170,9 +174,10 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun moveToMainActivity(userName: String) {
-        val i = Intent(this,MainActivity::class.java)
+        val i = Intent(this, MainActivity::class.java)
         i.putExtra("userName",userName)
         startActivity(i)
+        finish()
 
     }
 

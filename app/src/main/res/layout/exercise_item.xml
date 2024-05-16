@@ -3,118 +3,127 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:backgroundTint="@color/white"
-    android:layout_margin="5dp"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
     app:cardElevation="8dp"
-    app:cardCornerRadius="8dp"
-    android:layout_height="120dp"
-    android:clickable="true"
-    >
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="@color/white"
+    android:clickable="true">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Exercise Name and The Name -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/exercise_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/exercise_name"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"/>
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/the_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/name"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
+
         </LinearLayout>
 
+
+
+        <!-- Set -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/set_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sets"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"/>
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/set_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_0"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
+        <!-- Repetitions -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/repetitions_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/reps"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"/>
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/repetitions_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_0"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-
-                />
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
 
         </LinearLayout>
 
+        <!-- Weight -->
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/weight_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/weight"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_gravity="center_vertical"/>
 
-            <com.google.android.material.textview.MaterialTextView
+            <TextView
                 android:id="@+id/weight_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/_0"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                />
+                android:textSize="16sp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
+
         </LinearLayout>
 
     </LinearLayout>

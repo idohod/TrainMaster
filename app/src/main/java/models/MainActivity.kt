@@ -1,4 +1,4 @@
-package com.example.finalproject
+package models
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -7,12 +7,15 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.finalproject.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import utilities.Exercise
+import utilities.ExerciseAdapter
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,7 +38,15 @@ class MainActivity : AppCompatActivity() {
         getUserName()
         initViews()
         loadExercisesFromDb()
+
+        changeUserButton.setOnClickListener{changeUser()}
     }
+
+    private fun changeUser() {
+        val intent = Intent(this, StartPage::class.java)
+        startActivity(intent)
+    }
+
 
     private fun findViews() {
         // backgroundImage = findViewById(R.id.background)
@@ -88,7 +99,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
     private fun  moveToTimerActivity(exercise: Exercise){
-        val intent = Intent(applicationContext, TimerActivity::class.java)
+        val intent = Intent(this, TimerActivity::class.java)
 
         intent.putExtra("exName",exercise.name)
         intent.putExtra("exSet",exercise.numOfSets)

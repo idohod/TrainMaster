@@ -1,4 +1,4 @@
-package com.example.finalproject
+package models
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.example.finalproject.R
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,7 +25,6 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var weightNumberTextView: MaterialTextView
 
     private lateinit var imageView: ImageView
-    private  lateinit var imageLink :String
 
     private lateinit var startButton: ExtendedFloatingActionButton
     private lateinit var finishButton: ExtendedFloatingActionButton
@@ -46,7 +46,14 @@ class TimerActivity : AppCompatActivity() {
 
         startButton.setOnClickListener{startTimer()}
         finishButton.setOnClickListener{stopTimer()}
+        backButton.setOnClickListener { backToPlan() }
 
+    }
+
+    private fun backToPlan() {
+        val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("userName",userName)
+        startActivity(intent)
     }
 
     private fun stopTimer() {
@@ -143,5 +150,6 @@ class TimerActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("userName",userName)
         startActivity(intent)
+        finish()
     }
 }

@@ -3,49 +3,64 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context="models.StartPage">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="16dp"  >
-
-        <ImageView
+    <!-- Background Image -->
+    <ImageView
         android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/your_image"  />
+        android:src="@drawable/your_image" />
+
+    <!-- Card View Container -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:orientation="vertical"
-            android:layout_marginTop="100dp"  android:paddingBottom="100dp">
+            android:padding="16dp">
 
+            <!-- Register Button -->
             <com.google.android.material.button.MaterialButton
-            android:id="@+id/register_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:textStyle="bold"
-            app:cornerRadius="8dp"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"  />
+                android:id="@+id/register_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/register"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@color/colorPrimary"
+                android:layout_marginBottom="16dp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:rippleColor="@color/colorPrimaryDark"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
+            <!-- Sign In Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sign_in_button"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in"
-                app:cornerRadius="8dp"  style="@style/Widget.MaterialComponents.Button.OutlinedButton"  />
-
-
+                android:textColor="@color/colorPrimary"
+                android:backgroundTint="@android:color/transparent"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/colorPrimary"
+                app:strokeWidth="2dp"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
         </LinearLayout>
-
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

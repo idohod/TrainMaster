@@ -1,73 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout
-
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue_200"
+    android:background="@color/white"
     tools:context="models.MainActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:scaleType="centerCrop"
+        android:src="@drawable/background_image" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/your_plan"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:textSize="40sp"
+        android:layout_marginTop="16dp"
+        android:text="@string/your_plan"
+        android:textSize="36sp"
         android:textStyle="bold"
-        android:textColor="@color/yellow_200"
-
-        />
+        android:textColor="@color/black" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/exercises_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:layout_below="@id/title"
-        android:layout_above="@+id/change_user_button"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        />
+        android:layout_above="@+id/button_container"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp" />
 
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/change_user_button"
-        android:layout_width="165dp"
+    <LinearLayout
+        android:id="@+id/button_container"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/blue_500"
-        android:textColor="@color/white"
-        android:text="@string/change_user"
-        android:textSize="20sp"
-        tools:ignore="RtlHardcoded" />
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center">
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/add_exercise_button"
-        android:layout_width="170dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/blue_500"
-        android:text="@string/add_exercise"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/change_user_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/blue_500"
+            android:text="@string/change_user"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
-        tools:ignore="RelativeOverlap,RtlHardcoded" />
-
-
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/add_exercise_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/blue_500"
+            android:text="@string/add_exercise"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 </RelativeLayout>

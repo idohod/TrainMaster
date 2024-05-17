@@ -2,4 +2,5 @@
 <resources>
     <drawable name="your_image" />
     <drawable name="background_image" />
+    <drawable name="button_background" />
 </resources>

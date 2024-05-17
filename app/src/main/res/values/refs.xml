@@ -3,4 +3,5 @@
     <drawable name="your_image" />
     <drawable name="background_image" />
     <drawable name="button_background" />
+    <drawable name="ic_arrow_back" />
 </resources>

@@ -25,14 +25,10 @@ class HealthQuizActivity : AppCompatActivity() {
     private lateinit var allExercises: ArrayList<Exercise>
 
     private var score = 0
-
+    private var temp = 0
 
     // Define your list of questions here
     private val questions = listOf(
-        Question(
-            "How many times a week do you work out?",
-            listOf("0-1", "2-3", "4+")
-        ),
         Question(
             "How many hours of sleep do you get per night?",
             listOf("Less than 6", "6-8", "More than 8")
@@ -44,8 +40,49 @@ class HealthQuizActivity : AppCompatActivity() {
         Question(
             "How often do you eat fast food?",
             listOf("Daily", "Weekly", "Rarely")
+        ),
+        Question(
+            "How many servings of fruits and vegetables do you eat per day?",
+            listOf("0-1", "2-3", "4+"),
+        ),
+        Question(
+            "How often do you engage in mindfulness or relaxation activities (e.g., meditation, yoga)?",
+            listOf("Rarely", "Weekly", "Daily")
+        ),
+        Question(
+            "How many liters of water do you drink per day?",
+            listOf("Less than 1", "1-2", "More than 2")
+        ),
+        Question(
+            "How often do you eat breakfast?",
+            listOf("Rarely", "Sometimes", "Daily")
+        ),
+        Question(
+            "How often do you consume alcohol?",
+            listOf("Never", "Occasionally", "Regularly")
+        ),
+        Question(
+            "How often do you experience symptoms like headaches, fatigue, or digestive issues?",
+            listOf("Rarely", "Sometimes", "Often")
+        ),
+
+        Question(
+            "How many times a week do you engage in strength training exercises?",
+            listOf("0", "1-2", "3+")
+        ),
+        Question(
+            "How would you rate your current level of physical fitness?",
+            listOf("Poor", "Average", "Excellent")
+        ),
+        Question(
+            "How often do you stretch or perform flexibility exercises?",
+            listOf("Rarely", "Weekly", "Daily")
+        ),
+        Question(
+            "How motivated are you to maintain a regular fitness routine?",
+            listOf("Not motivated", "Somewhat motivated", "Very motivated")
         )
-        // Add more questions here
+        //13 question
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,9 +104,12 @@ class HealthQuizActivity : AppCompatActivity() {
     }
 
     private fun selectAnswer() {
+
         val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
 
-        if (selectedRadioButtonId != -1) {
+
+        if (selectedRadioButtonId - temp > 0) {
+            temp = selectedRadioButtonId
             val selectedRadioButton = findViewById<RadioButton>(selectedRadioButtonId)
             val answer = selectedRadioButton.text.toString()
             checkAnswer(answer)
@@ -95,8 +135,7 @@ class HealthQuizActivity : AppCompatActivity() {
         var id = questionRadioGroup.checkedRadioButtonId
         id -=  currentQuestionIndex * 3
         score += id
-// score 4 - 12
-
+// score 13 - 39
         moveQuestion()
 
     }
@@ -143,20 +182,20 @@ class HealthQuizActivity : AppCompatActivity() {
     private fun addExercise(score: Int, level: Long, name: String,type :Long) {
 
 
-        if (score in 4..6){ //easy
+        if (score in 13..19){ //easy
             if (level == 1L) {
                 val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
-        }else if(score in 7..9){ //mid
+        }else if(score in 20..26){ //mid
             if(level == 2L){
                 val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
 
-        }else if(score in 10..11){ //HARD
+        }else if(score in 27..32){ //HARD
             if (level == 3L){
                 val ex = Exercise(name, "3", "10", "0")
                 allExercises.add(ex)

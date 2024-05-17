@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.Exception
+import kotlin.math.round
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -99,6 +100,15 @@ class RegisterActivity : AppCompatActivity() {
         if (!checkInput(name, email, password, confirmPassword, height, weight, role))
             return
 
+        val myBMI = calculateBMI(height,weight)
+
+        if(myBMI == 0.0)
+            return
+        else
+            Toast.makeText(this, "your BMI: $myBMI", Toast.LENGTH_SHORT).show()
+
+
+
         FirebaseAuth.getInstance()
             .createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { createUserTask ->
@@ -113,6 +123,20 @@ class RegisterActivity : AppCompatActivity() {
 
                 }
             }
+    }
+    private fun calculateBMI(heightInput: String, weightInput: String): Double {
+
+        var height = heightInput.toDoubleOrNull()
+        val weight = weightInput.toDoubleOrNull()
+
+        if (weight != null && height != null) {
+            if (height > 100)
+                height /= 100
+            return round(weight / (height * height))
+        }
+
+        return 0.0
+
     }
 
     private fun myError(exception: Exception?) {
@@ -147,6 +171,12 @@ class RegisterActivity : AppCompatActivity() {
         }
         if (role == "")
             return false
+
+        if(height <= 0.toString() || weight <= 0.toString()){
+            Toast.makeText(this, "must be positive number", Toast.LENGTH_SHORT).show()
+            return false
+
+        }
 
         return true
     }

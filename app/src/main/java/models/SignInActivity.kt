@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.finalproject.R
@@ -17,7 +18,7 @@ class SignInActivity : AppCompatActivity() {
     private lateinit var emailField: TextInputEditText
     private lateinit var passwordField: TextInputEditText
     private lateinit var signInButton: MaterialButton
-
+    private lateinit var backButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -26,9 +27,11 @@ class SignInActivity : AppCompatActivity() {
         emailField = findViewById(R.id.email_field)
         passwordField = findViewById(R.id.password_field)
         signInButton = findViewById(R.id.sign_in_button)
-
+        backButton = findViewById(R.id.back_button)
         signInButton.setOnClickListener { start() }
-
+        backButton.setOnClickListener {
+            finish() // Close SignInActivity and go back
+        }
     }
 
     private fun start() {
@@ -47,10 +50,7 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun checkInput(email: String, password: String): Boolean {
-        if (email.isEmpty() || password.isEmpty()) {
-            return false
-        }
-        return true
+        return !(email.isEmpty() || password.isEmpty())
     }
 
     private fun singIn(email: String, password: String) {

@@ -3,6 +3,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
@@ -40,17 +41,24 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var coachButton: RadioButton
     private lateinit var traineeButton: RadioButton
-
+    private lateinit var backButton: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViews()
+        backButton = findViewById(R.id.back_button_button) // Use correct ID from XML
+
+        // Set click listener for the back button
+        backButton.setOnClickListener {
+            finish() // Close the RegisterActivity and return to the previous one
+        }
         registerButton.setOnClickListener { signUp() }
     }
 
     private fun findViews() {
         quizTitle = findViewById(R.id.quiz_title)
+        backButton = findViewById(R.id.back_button_button)
         userName = findViewById(R.id.user_name)
         nameField = findViewById(R.id.name_field)
 
@@ -226,11 +234,3 @@ class RegisterActivity : AppCompatActivity() {
             }
     }
 }
-
-
-
-
-
-
-
-

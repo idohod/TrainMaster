@@ -184,33 +184,34 @@ class HealthQuizActivity : AppCompatActivity() {
 
         if (score in 13..19){ //easy
             if (level == 1L) {
-                val ex = Exercise(name, "3", "10", "0")
+                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
         }else if(score in 20..26){ //mid
             if(level == 2L){
-                val ex = Exercise(name, "3", "10", "0")
+                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
 
         }else if(score in 27..32){ //HARD
             if (level == 3L){
-                val ex = Exercise(name, "3", "10", "0")
+                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
 
         }else{ //expert
             if(level >= 4L){
-                val ex = Exercise(name, "3", "10", "0")
+                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
                 allExercises.add(ex)
                 Log.d("EX", "$name l = $level t = $type")
             }
         }
 
     }
+
 
     private fun moveToMainActivity(userName: String) {
         val i = Intent(this, MainActivity::class.java)

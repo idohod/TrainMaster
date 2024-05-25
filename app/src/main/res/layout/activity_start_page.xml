@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_Grey"
+    android:background="@drawable/blues"
     tools:context="models.StartPage">
 
     <!-- Background Image -->
@@ -56,15 +56,17 @@
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="60dp"
         app:cardBackgroundColor="#C5C2C2"
-        app:cardCornerRadius="16dp"
+        app:cardCornerRadius="20dp"
         app:cardElevation="8dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="10dp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_button"

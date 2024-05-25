@@ -4,11 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blues"
+    android:background="@drawable/pullups"
     tools:context="models.StartPage">
 
     <!-- Background Image -->
-    <!-- Card View Container -->
 
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
@@ -30,7 +29,6 @@
         android:textSize="45sp"
         android:fontFamily="@font/base05"/>
 
-
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,50 +49,31 @@
         android:textSize="45sp"
         android:fontFamily="@font/base05"/>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_container"
-        android:layout_width="350dp"
+    <!-- Register Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/register_button"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="60dp"
-        app:cardBackgroundColor="#C5C2C2"
-        app:cardCornerRadius="20dp"
-        app:cardElevation="8dp">
+        android:layout_marginBottom="90dp"
+        android:backgroundTint="@color/background_Grey"
+        android:text="@string/register"
+        android:textColor="@color/white" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/register_button"
-                style="@style/Widget.MaterialComponents.Button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:backgroundTint="#16215C"
-                android:text="@string/register"
-                android:textColor="@color/white" />
-
-            <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/background_image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:src="@drawable/your_image" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/sign_in_button"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/sign_in"
-                android:textColor="@color/colorPrimary"
-                app:strokeColor="@color/colorPrimary" />
-
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    <!-- Sign In Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/sign_in_button"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/white"
+        android:text="@string/sign_in"
+        android:textColor="@color/black"
+        app:strokeColor="@color/white" />
 
 </RelativeLayout>

@@ -47,7 +47,7 @@ class RegisterActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViews()
-        backButton = findViewById(R.id.back_button_button) // Use correct ID from XML
+        backButton = findViewById(R.id.back_button) // Use correct ID from XML
 
         // Set click listener for the back button
         backButton.setOnClickListener {
@@ -58,7 +58,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun findViews() {
         quizTitle = findViewById(R.id.quiz_title)
-        backButton = findViewById(R.id.back_button_button)
+        backButton = findViewById(R.id.back_button)
         userName = findViewById(R.id.user_name)
         nameField = findViewById(R.id.name_field)
 
@@ -190,7 +190,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun moveActivity(name: String, role: String) {
-        if (role == "coach") {
+        if(role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
             startActivity(i)
         } else if (role == "trainee") {
@@ -200,7 +200,6 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         } else {
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-            return
         }
 
     }

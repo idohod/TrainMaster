@@ -64,8 +64,9 @@
     <string name="show_plan">show plan</string>
     <string name="select_user">Select User</string>
     <string name="background_image_desc" />
+    <string name="fit_life_is_better">Fit life is better</string>
 
-        <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
             <!-- Primary brand color. -->
             <item name="colorPrimary">@color/primary</item>
             <item name="colorPrimaryVariant">@color/primaryVariant</item>

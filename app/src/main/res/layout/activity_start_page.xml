@@ -4,23 +4,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_Grey"
     tools:context="models.StartPage">
 
     <!-- Background Image -->
-    <ImageView
+    <!-- Card View Container -->
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:gravity="left"
+        android:text="FIT"
+        android:textColor="@color/white"
+        android:textSize="45sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_marginLeft="60dp"
+        android:text="LIFE"
+        android:textColor="@color/white"
+        android:textSize="45sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginLeft="140dp"
+        android:text="HAPPY"
+        android:textColor="@color/white"
+        android:textSize="45sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
+        android:gravity="right"
+        android:text="LIFE"
+        android:textColor="@color/white"
+        android:textSize="45sp" />
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/background_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
         android:src="@drawable/your_image" />
 
-    <!-- Card View Container -->
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/card_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="200dp"
+        android:layout_marginTop="400dp"
         android:layout_marginEnd="32dp"
         app:cardBackgroundColor="#FFFFFF"
         app:cardCornerRadius="16dp"

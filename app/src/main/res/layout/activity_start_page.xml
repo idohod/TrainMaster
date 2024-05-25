@@ -13,9 +13,31 @@
     <com.google.android.material.textfield.TextInputEditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="0dp"
+        android:text="@string/fit"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:fontFamily="@font/base05"/>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="@string/life"
+        android:textColor="@color/white"
+        android:textSize="45sp"
+        android:fontFamily="@font/base05"/>
+
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="130dp"
         android:layout_marginTop="100dp"
-        android:gravity="left"
-        android:text="FIT"
+        android:fontFamily="@font/base05"
+        android:text="@string/happier"
         android:textColor="@color/white"
         android:textSize="45sp" />
 
@@ -23,45 +45,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
-        android:layout_marginLeft="60dp"
-        android:text="LIFE"
+        android:layout_marginLeft="300dp"
+        android:text="@string/life"
         android:textColor="@color/white"
-        android:textSize="45sp" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_marginLeft="140dp"
-        android:text="HAPPY"
-        android:textColor="@color/white"
-        android:textSize="45sp" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:gravity="right"
-        android:text="LIFE"
-        android:textColor="@color/white"
-        android:textSize="45sp" />
-    <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/background_image"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/your_image" />
-
-
+        android:textSize="45sp"
+        android:fontFamily="@font/base05"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_container"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="400dp"
-        android:layout_marginEnd="32dp"
-        app:cardBackgroundColor="#FFFFFF"
+        android:layout_centerInParent="true"
+        app:cardBackgroundColor="#C5C2C2"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp">
 
@@ -69,35 +64,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="24dp">
 
-            <!-- Register Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/register_button"
+                style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/register"
-                android:textColor="@android:color/white"
-                android:backgroundTint="@color/colorPrimary"
                 android:layout_marginBottom="16dp"
-                android:textStyle="bold"
-                app:cornerRadius="8dp"
-                app:rippleColor="@color/colorPrimaryDark"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                android:backgroundTint="#16215C"
+                android:text="@string/register"
+                android:textColor="@color/white" />
 
-            <!-- Sign In Button -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/background_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/your_image" />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/sign_in_button"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/sign_in"
                 android:textColor="@color/colorPrimary"
-                android:backgroundTint="@android:color/transparent"
-                android:textStyle="bold"
-                app:cornerRadius="8dp"
-                app:strokeColor="@color/colorPrimary"
-                app:strokeWidth="2dp"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+                app:strokeColor="@color/colorPrimary" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>

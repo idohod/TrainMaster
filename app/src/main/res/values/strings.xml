@@ -65,6 +65,9 @@
     <string name="select_user">Select User</string>
     <string name="background_image_desc" />
     <string name="fit_life_is_better">Fit life is better</string>
+    <string name="fit">FIT</string>
+    <string name="life">LIFE</string>
+    <string name="happier">HAPPIER </string>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
             <!-- Primary brand color. -->

@@ -73,6 +73,7 @@ class TimerActivity : AppCompatActivity() {
                 timerTextView.text = time
                 secondsElapsed++
                 handler.postDelayed(this, 1000)
+
             }
         })
     }

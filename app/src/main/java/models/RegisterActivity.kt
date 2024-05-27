@@ -3,6 +3,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
 import android.widget.RadioGroup
@@ -16,7 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.Exception
-import kotlin.math.round
+
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -43,22 +44,25 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var traineeButton: RadioButton
     private lateinit var backButton: Button
 
+    private  var isVisible: Boolean = true
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViews()
-        backButton = findViewById(R.id.back_button_button) // Use correct ID from XML
 
-        // Set click listener for the back button
-        backButton.setOnClickListener {
-            finish() // Close the RegisterActivity and return to the previous one
+        backButton.setOnClickListener {finish()}
+        registerButton.setOnClickListener {signUp()}
+
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val selectedRole = findViewById<RadioButton>(checkedId).text.toString()
+            isVisible = checkRole(selectedRole)
         }
-        registerButton.setOnClickListener { signUp() }
     }
 
     private fun findViews() {
         quizTitle = findViewById(R.id.quiz_title)
-        backButton = findViewById(R.id.back_button_button)
+        backButton = findViewById(R.id.back_button)
         userName = findViewById(R.id.user_name)
         nameField = findViewById(R.id.name_field)
 
@@ -82,7 +86,7 @@ class RegisterActivity : AppCompatActivity() {
         traineeButton = findViewById(R.id.coach_button)
 
         registerButton = findViewById(R.id.register_button)
-
+        backButton = findViewById(R.id.back_button)
     }
 
     private fun roleSelected(): String {
@@ -108,13 +112,14 @@ class RegisterActivity : AppCompatActivity() {
         if (!checkInput(name, email, password, confirmPassword, height, weight, role))
             return
 
-        val myBMI = calculateBMI(height,weight)
+        if (isVisible) {
+            val myBMI = calculateBMI(height, weight)
 
-        if(myBMI == 0.0)
-            return
-        else
-            Toast.makeText(this, "your BMI: $myBMI", Toast.LENGTH_SHORT).show()
-
+            if (myBMI == 0.0)
+                return
+            else
+                makeToast("your BMI: $myBMI")
+        }
 
 
         FirebaseAuth.getInstance()
@@ -132,6 +137,24 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
     }
+
+    private fun checkRole(role: String): Boolean {
+        if (role == "coach") {
+            height.visibility = View.INVISIBLE
+            heightField.visibility = View.INVISIBLE
+            weight.visibility = View.INVISIBLE
+            weightField.visibility = View.INVISIBLE
+            return false
+
+        } else {
+            height.visibility = View.VISIBLE
+            heightField.visibility = View.VISIBLE
+            weight.visibility = View.VISIBLE
+            weightField.visibility = View.VISIBLE
+            return true
+        }
+    }
+
     private fun calculateBMI(heightInput: String, weightInput: String): Double {
 
         var height = heightInput.toDoubleOrNull()
@@ -140,7 +163,7 @@ class RegisterActivity : AppCompatActivity() {
         if (weight != null && height != null) {
             if (height > 100)
                 height /= 100
-            return round(weight / (height * height))
+            return weight / (height * height)
         }
 
         return 0.0
@@ -157,36 +180,56 @@ class RegisterActivity : AppCompatActivity() {
         height: String, weight: String, role: String
 
     ): Boolean {
-        if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
-            || height.isEmpty() || weight.isEmpty()
-        ) {
-            Toast.makeText(this, "some data is missing", Toast.LENGTH_SHORT).show()
-            return false
+
+        if (!isVisible) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
+
+            ) {
+                makeToast("some data is missing")
+                return false
+            }
+
         }
 
+        if (isVisible) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || height.isEmpty() || weight.isEmpty()) {
+                makeToast("some data is missing")
+                return false
+            }
+        }
+
+
+
+
+
         if (!email.endsWith("@gmail.com")) {
-            Toast.makeText(this, "illegal gmail", Toast.LENGTH_SHORT).show()
+            makeToast("illegal gmail")
             return false
         }
         if (password.length < 6) {
-            Toast.makeText(this, "password must be least 6 characters", Toast.LENGTH_SHORT).show()
+            makeToast("password must be least 6 character")
             return false
         }
 
         if (password != confirmPassword) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show()
+            makeToast("Passwords do not match")
             return false
         }
-        if (role == "")
+        if (role == "") {
+            makeToast("no role selected")
             return false
+        }
 
-        if(height <= 0.toString() || weight <= 0.toString()){
-            Toast.makeText(this, "must be positive number", Toast.LENGTH_SHORT).show()
+        if (isVisible && (height <= 0.toString() || weight <= 0.toString())) {
+            makeToast("must be positive number")
             return false
-
         }
 
         return true
+    }
+
+    private fun makeToast(message :String){
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
     private fun moveActivity(name: String, role: String) {
@@ -227,10 +270,10 @@ class RegisterActivity : AppCompatActivity() {
             nameField.text?.clear()
             emailField.text?.clear()
 
-            Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show()
+            makeToast("Success")
         }
             .addOnFailureListener {
-                Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
+                makeToast("Failure")
             }
     }
 }

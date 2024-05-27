@@ -14,6 +14,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import utilities.Exercise
 import utilities.Question
+import kotlin.random.Random
 
 class HealthQuizActivity : AppCompatActivity() {
 
@@ -21,12 +22,12 @@ class HealthQuizActivity : AppCompatActivity() {
     private lateinit var questionRadioGroup: RadioGroup
     private lateinit var submitButton: Button
     private var currentQuestionIndex = 0
-    private lateinit var userName:String
+    private lateinit var userName: String
     private lateinit var allExercises: ArrayList<Exercise>
 
     private var score = 0
     private var temp = 0
-
+    private var id =0
     // Define your list of questions here
     private val questions = listOf(
         Question(
@@ -93,7 +94,7 @@ class HealthQuizActivity : AppCompatActivity() {
         getUserName()
         displayQuestion(currentQuestionIndex)
 
-        submitButton.setOnClickListener { selectAnswer()}
+        submitButton.setOnClickListener { selectAnswer() }
     }
 
     private fun initViews() {
@@ -133,8 +134,9 @@ class HealthQuizActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: String) {
         var id = questionRadioGroup.checkedRadioButtonId
-        id -=  currentQuestionIndex * 3
+        id -= currentQuestionIndex * 3
         score += id
+
 // score 13 - 39
         moveQuestion()
 
@@ -170,7 +172,9 @@ class HealthQuizActivity : AppCompatActivity() {
                         addExercise(score, level, name, type)
 
                 }
+                setExList()
                 exercisesRef.setValue(allExercises)
+
 
             }
             .addOnFailureListener { exception ->
@@ -179,34 +183,92 @@ class HealthQuizActivity : AppCompatActivity() {
 
     }
 
-    private fun addExercise(score: Int, level: Long, name: String,type :Long) {
+
+    private fun setExList() {
+
+        val max1 = 1 ; val max2 = 2
+        var counter = 0; var index = 0
+        var curType: Long = 1 ; var preType: Long = 0
+        var isMax2: Boolean = true
+
+        val max1List = arrayOf(2L, 3L, 6L, 7L)
+        val max2List = arrayOf(1L, 4L, 5L)
+
+        val ranIndex = mutableListOf<Int>()
+        val exToRemove = ArrayList<Exercise>()
+
+        for (ex in allExercises) {
+            preType = curType
+            curType = ex.type!!
+            index = allExercises.indexOf(ex)
+
+            if (curType != preType) {
+                if (isMax2 && counter >= 2)
+                    exToRemove.add(allExercises[ranIndex.random()])
+                else if (!isMax2 && counter >= 1)
+                    exToRemove.add(allExercises[ranIndex.random()])
+
+                ranIndex.clear()
+                counter = 0
+            }
+
+            if (ex.type in max2List) {
+                isMax2 = true
+                if (counter < max2) {
+                    ranIndex.add(index)
+                    counter++
+                } else
+                    ranIndex.add(index)
+
+            } else if (ex.type in max1List) {
+                isMax2 = false
+                if (counter < max1) {
+                    ranIndex.add(index)
+                    counter++
+                } else
+                    ranIndex.add(index)
+            }
+        }
+        removeExercises(exToRemove)
+    }
+    private fun removeExercises(exToRemove : ArrayList<Exercise>) {
+        for (ex in exToRemove){
+            allExercises.remove(ex)
+        }
+
+    }
 
 
-        if (score in 13..19){ //easy
+    private fun addExercise(score: Int, level: Long, name: String, type: Long) {
+
+        if (score in 13..19) { //easy
+            Log.d("score",score.toString() + "easy")
             if (level == 1L) {
-                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
+                val ex = Exercise(name, "3", "10", "0", type, level)
                 allExercises.add(ex)
-                Log.d("EX", "$name l = $level t = $type")
             }
-        }else if(score in 20..26){ //mid
-            if(level == 2L){
-                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
+        } else if (score in 20..26) { //mid
+            Log.d("score",score.toString() + "mid")
+
+            if (level == 2L) {
+                val ex = Exercise(name, "3", "10", "0", type, level)
                 allExercises.add(ex)
-                Log.d("EX", "$name l = $level t = $type")
             }
 
-        }else if(score in 27..32){ //HARD
-            if (level == 3L){
-                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
+        } else if (score in 27..32) { //HARD
+            Log.d("score",score.toString() + "hard")
+
+            if (level == 3L) {
+                val ex = Exercise(name, "3", "10", "0", type, level)
                 allExercises.add(ex)
-                Log.d("EX", "$name l = $level t = $type")
             }
 
-        }else{ //expert
-            if(level >= 4L){
-                val ex = Exercise(name, "3", "10", "0",type.toString(),level.toString())
+        } else { //expert
+            if (level >= 4L) {
+                Log.d("score",score.toString() + "expert")
+
+                val ex = Exercise(name, "3", "10", "0", type, level)
                 allExercises.add(ex)
-                Log.d("EX", "$name l = $level t = $type")
             }
         }
 
@@ -215,16 +277,15 @@ class HealthQuizActivity : AppCompatActivity() {
 
     private fun moveToMainActivity(userName: String) {
         val i = Intent(this, MainActivity::class.java)
-        i.putExtra("userName",userName)
+        i.putExtra("userName", userName)
         startActivity(i)
         finish()
 
     }
 
-    private fun getUserName(){
+    private fun getUserName() {
         val i = intent
-        userName= i.getStringExtra("userName").toString()
+        userName = i.getStringExtra("userName").toString()
     }
-
 
 }

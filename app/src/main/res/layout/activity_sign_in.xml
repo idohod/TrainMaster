@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/trx"
     tools:context="models.SignInActivity">
 
     <!-- Email Input Layout -->
@@ -14,14 +15,16 @@
         android:layout_centerInParent="true"
         android:layout_marginStart="32dp"
         android:layout_marginTop="200dp"
-        android:layout_marginEnd="32dp">
+        android:layout_marginEnd="32dp"
+        android:textColorHint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:inputType="textEmailAddress" />
+            android:background="@color/background_Grey"
+            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -33,12 +36,14 @@
         android:layout_below="@id/email_input_layout"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="32dp">
+        android:layout_marginEnd="32dp"
+        android:textColorHint="@color/black">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/background_Grey"
             android:hint="@string/password"
             android:inputType="textPassword" />
 
@@ -50,16 +55,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/password_input_layout"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="100dp"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="@string/back" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="16dp"
+            android:text="@string/back"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/black"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/sign_in_button"
@@ -67,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="@string/sign_in"
             android:textColor="@android:color/white"
-            android:backgroundTint="@color/colorPrimary"
+            android:backgroundTint="@color/black"
             android:textStyle="bold"
             app:cornerRadius="8dp"
             app:rippleColor="@color/colorPrimaryDark" />

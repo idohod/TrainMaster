@@ -51,6 +51,8 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         findViews()
 
+        backButton = findViewById(R.id.back_button)
+
         backButton.setOnClickListener {finish()}
         registerButton.setOnClickListener {signUp()}
 
@@ -233,7 +235,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun moveActivity(name: String, role: String) {
-        if (role == "coach") {
+        if(role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
             startActivity(i)
         } else if (role == "trainee") {
@@ -243,7 +245,6 @@ class RegisterActivity : AppCompatActivity() {
             finish()
         } else {
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
-            return
         }
 
     }

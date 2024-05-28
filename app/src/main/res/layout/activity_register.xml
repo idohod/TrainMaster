@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="models.RegisterActivity">
+    tools:context="models.RegisterActivity"
+    android:background="@drawable/jumps">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/quiz_title"
@@ -41,8 +42,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_name"
-            android:textColor="@color/gray200"
-            android:textSize="20sp" />
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -71,8 +73,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_email"
-            android:textColor="@color/gray200"
-            android:textSize="20sp" />
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
+            android:textSize="16sp"/>
 
     </LinearLayout>
 
@@ -101,9 +104,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/your_password"
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
             android:inputType="textPassword"
-            android:textColor="@color/gray200"
-            android:textSize="20sp" />
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -133,7 +137,8 @@
             android:layout_height="wrap_content"
             android:hint="@string/your_password"
             android:inputType="textPassword"
-            android:textColor="@color/gray200"
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
             android:textSize="20sp" />
 
     </LinearLayout>
@@ -163,8 +168,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_height"
             android:inputType="numberDecimal"
-            android:textColor="@color/gray200"
-            android:textSize="20sp" />
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -194,8 +200,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_weight"
             android:inputType="numberDecimal"
-            android:textColor="@color/gray200"
-            android:textSize="20sp" />
+            android:textColor="@color/light_grey_FT"
+            android:textColorHint="@color/light_grey_FT"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -222,8 +229,8 @@
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
+
             <RadioButton
                 android:id="@+id/trainee_button"
                 android:layout_width="wrap_content"
@@ -256,6 +263,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
             android:text="@string/back" />
 
         <com.google.android.material.button.MaterialButton
@@ -263,6 +272,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/light_grey_FT"
             android:text="@string/Register" />
 
     </LinearLayout>

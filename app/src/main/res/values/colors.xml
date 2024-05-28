@@ -36,6 +36,8 @@
 
     <color name="secondaryColor">#090504</color>
     <color name="background_Grey">#6D6D6D</color>
+    <color name="grey_BX_Fill">#3C3B3B</color>
+    <color name="light_grey_FT">#787777</color>
 
 
 </resources>

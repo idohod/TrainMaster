@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="models.RegisterActivity"
     android:background="@drawable/jumps">
 
@@ -259,21 +260,24 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:backgroundTint="@color/gray_200"
+            android:text="@string/back"
+            android:layout_width="@dimen/button_width"
             android:textColor="@color/black"
-            android:backgroundTint="@color/white"
-            android:text="@string/back" />
+            app:cornerRadius="16dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_button"
-            android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
+            android:layout_width="@dimen/button_width"
             style="@style/Widget.MaterialComponents.Button"
             android:textColor="@color/black"
-            android:backgroundTint="@color/light_grey_FT"
+            android:backgroundTint="@color/gray200"
+            app:cornerRadius="16dp"
             android:text="@string/Register" />
 
     </LinearLayout>

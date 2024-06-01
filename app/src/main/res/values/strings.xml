@@ -6,7 +6,7 @@
     <string name="add_exercise">add exercise</string>
 
     <!--recycle view-->
-    <string name="exercise_name">exercise name: </string>
+    <string name="Exercise_name">Exercise name: </string>
     <string name="name">name</string>
     <string name="_0">0</string>
     <string name="sets">sets: </string>

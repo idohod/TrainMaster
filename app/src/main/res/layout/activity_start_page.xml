@@ -7,30 +7,29 @@
     android:background="@drawable/pullups"
     tools:context="models.StartPage">
 
-    <!-- Background Image -->
-
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="0dp"
         android:layout_marginLeft="0dp"
         android:text="@string/fit"
         android:textColor="@color/white"
-        android:textSize="45sp"
+        android:textSize="40sp"
         android:fontFamily="@font/base05"/>
 
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/base05"
         android:text="@string/life"
         android:textColor="@color/white"
-        android:textSize="45sp"
-        android:fontFamily="@font/base05"/>
+        android:textSize="40sp"
+       />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="90dp"
         android:layout_marginTop="100dp"
@@ -40,7 +39,7 @@
         android:textSize="45sp" />
 
     <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="150dp"
         android:layout_marginLeft="220dp"

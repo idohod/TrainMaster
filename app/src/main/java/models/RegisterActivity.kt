@@ -53,7 +53,6 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         findViews()
         getNumOfQuiz()
-        backButton = findViewById(R.id.back_button)
 
         backButton.setOnClickListener {finish()}
         registerButton.setOnClickListener {signUp()}
@@ -67,9 +66,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun getNumOfQuiz() {
         val i = intent
         numOfQuiz = i.getIntExtra("numOfQuiz",0)
-        Log.d("numOfQuiz","reg numOfQuiz=$numOfQuiz")
-
-
     }
 
     private fun findViews() {
@@ -189,9 +185,7 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun checkInput(
         name: String, email: String, password: String, confirmPassword: String,
-        height: String, weight: String, role: String
-
-    ): Boolean {
+        height: String, weight: String, role: String ): Boolean {
 
         if (!isVisible) {
             if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()

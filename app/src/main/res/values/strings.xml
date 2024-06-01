@@ -6,14 +6,13 @@
     <string name="add_exercise">add exercise</string>
 
     <!--recycle view-->
-    <string name="Exercise_name">Exercise name: </string>
+    <string name="exercise_name">exercise  name: </string>
     <string name="name">name</string>
     <string name="_0">0</string>
-    <string name="sets">sets: </string>
-    <string name="reps">reps: </string>
+    <string name="sets">sets:</string>
+    <string name="reps">reps:</string>
     <string name="weight">weight: </string>
-    <string name="edit">edit</string>
-    <string name="remove">remove</string>
+
 
     <!--timer-->
     <string name="exercise_timer">exercise timer</string>
@@ -69,21 +68,10 @@
     <string name="no">NO</string>
     <string name="pain">PAIN</string>
     <string name="gain">GAIN</string>
-    <string name="increase">increase</string>
-    <string name="decrease">decrease</string>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorPrimaryVariant">@color/primaryVariant</item>
-        <item name="colorOnPrimary">@color/onPrimary</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondary</item>
-        <item name="colorSecondaryVariant">@color/secondary</item>
-        <item name="colorOnSecondary">@color/onSecondary</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">@color/primaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
+    <string name="too_easy">too easy! ^</string>
+    <string name="too_hard">too hard! v</string>
+
+
 
 </resources>

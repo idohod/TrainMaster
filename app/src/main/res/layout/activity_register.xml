@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="models.RegisterActivity"
-    android:background="@drawable/yoga_matt">
+    android:background="@drawable/jumps">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/quiz_title"
@@ -16,7 +16,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:text="@string/registration"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -33,7 +33,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/Name"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -43,10 +43,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_name"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -65,7 +65,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/Email"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -75,10 +75,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_email"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="16sp"/>
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Password"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 
@@ -107,11 +107,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="@string/your_password"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
             android:inputType="textPassword"
-            android:textSize="16sp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -130,7 +130,7 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:text="@string/confirm_password"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -141,10 +141,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/your_password"
             android:inputType="textPassword"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
+            android:textSize="20sp" />
 
     </LinearLayout>
     <!-- Height -->
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:text="@string/height"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 
@@ -173,10 +173,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_height"
             android:inputType="numberDecimal"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -196,7 +196,7 @@
             android:layout_height="wrap_content"
             android:text="@string/Weight"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 
@@ -206,10 +206,10 @@
             android:layout_height="wrap_content"
             android:hint="@string/enter_your_weight"
             android:inputType="numberDecimal"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
-            android:backgroundTint="@color/white"
-            android:textSize="16sp" />
+            android:textColor="@color/grey_BX_Fill"
+            android:textColorHint="@color/grey_BX_Fill"
+            android:backgroundTint="@color/grey_BX_Fill"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -228,7 +228,7 @@
             android:layout_height="wrap_content"
             android:text="@string/role"
             android:textSize="20sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
 
@@ -243,7 +243,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/trainee"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:checked="true"/>
 
 
@@ -251,7 +251,7 @@
                 android:id="@+id/coach_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:text="@string/coach" />
 
         </RadioGroup>
@@ -284,9 +284,10 @@
             android:layout_height="wrap_content"
             android:layout_width="@dimen/button_width"
             style="@style/Widget.MaterialComponents.Button"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:backgroundTint="@color/gray200"
             app:cornerRadius="16dp"
+
             android:text="@string/Register" />
 
     </LinearLayout>

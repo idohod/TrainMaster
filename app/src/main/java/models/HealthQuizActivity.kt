@@ -101,7 +101,6 @@ class HealthQuizActivity : AppCompatActivity() {
     private fun getNumOfQuiz() {
         val i = intent
         numOfQuiz = i.getIntExtra("numOfQuiz",0)
-        Log.d("numOfQuiz","quiz numOfQuiz=$numOfQuiz")
     }
 
     private fun initViews() {

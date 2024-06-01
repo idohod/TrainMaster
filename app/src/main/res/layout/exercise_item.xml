@@ -65,18 +65,18 @@
                 android:id="@+id/set_number"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="8dp"
                 android:text="@string/_0"
                 android:textColor="@color/black"
-                android:textSize="16sp"
-                android:layout_marginStart="8dp"
-                android:layout_gravity="center_vertical"/>
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/increase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/increase"
-                android:textColor="@color/black"
+                android:text="@string/too_easy"
+                android:textColor="@color/green_500"
                 android:textSize="16sp"
                 android:layout_marginStart="50dp"
                 android:layout_gravity="center_vertical"/>
@@ -113,8 +113,8 @@
                 android:id="@+id/decrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/decrease"
-                android:textColor="@color/black"
+                android:text="@string/too_hard"
+                android:textColor="@color/red_200"
                 android:textSize="16sp"
                 android:layout_marginStart="50dp"
                 android:layout_gravity="center_vertical"/>

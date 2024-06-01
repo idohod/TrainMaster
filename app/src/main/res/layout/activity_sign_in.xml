@@ -7,11 +7,7 @@
     android:background="@drawable/stand"
     tools:context="models.SignInActivity">
 
-    <MultiAutoCompleteTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
         android:layout_width="match_parent"

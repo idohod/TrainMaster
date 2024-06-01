@@ -48,8 +48,6 @@ class MainActivity : AppCompatActivity() {
     private fun getNumOfQuiz() {
         val i = intent
         numOfQuiz = i.getIntExtra("numOfQuiz", 0)
-        Log.d("numOfQuiz", "main numOfQuiz=$numOfQuiz")
-
     }
 
     private fun changeUser() {
@@ -60,7 +58,6 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun findViews() {
-        // backgroundImage = findViewById(R.id.background)
         title = findViewById(R.id.title)
         changeUserButton = findViewById(R.id.change_user_button)
         addExerciseButton = findViewById(R.id.add_exercise_button)
@@ -157,9 +154,9 @@ class MainActivity : AppCompatActivity() {
     private fun setNewLevel(oldLevel: Long?, increase: Boolean): Long {
         if (oldLevel != null) {
 
-            if (increase && oldLevel < 7L)
+            if (increase && oldLevel < 5L)
                 return oldLevel.plus(1)
-            else if (increase && oldLevel == 7L) {
+            else if (increase && oldLevel == 5L) {
                 Toast.makeText(this, "max level!", Toast.LENGTH_SHORT).show()
                 return 0
             } else if (!increase && oldLevel > 1L)
@@ -174,17 +171,18 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun updateList(exToUpdate: ArrayList<Exercise>, exercise: Exercise) {
-        val ranIndex = mutableListOf<Int>()
-        for(e in exToUpdate)
-            ranIndex.add(exToUpdate.indexOf(e))
+        if(exToUpdate.isNotEmpty()) {
+            val ranIndex = mutableListOf<Int>()
+            for (e in exToUpdate)
+                ranIndex.add(exToUpdate.indexOf(e))
 
-        val randomIndex = ranIndex.random()
-        val newExercise = exToUpdate[randomIndex]
-        val i = allExercises.indexOf(exercise)
-        allExercises.remove(exercise)
-        allExercises.add(i,newExercise)
+            val randomIndex = ranIndex.random()
+            val newExercise = exToUpdate[randomIndex]
+            val i = allExercises.indexOf(exercise)
+            allExercises.remove(exercise)
+            allExercises.add(i, newExercise)
 
-
+        }
     }
     private fun  moveToTimerActivity(exercise: Exercise){
         val intent = Intent(this, TimerActivity::class.java)

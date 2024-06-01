@@ -10,7 +10,7 @@
     <string name="name">name</string>
     <string name="_0">0</string>
     <string name="sets">sets: </string>
-    <string name="reps">repetitions: </string>
+    <string name="reps">reps: </string>
     <string name="weight">weight: </string>
     <string name="edit">edit</string>
     <string name="remove">remove</string>

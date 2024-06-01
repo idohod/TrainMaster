@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
+    android:background="@drawable/instrument"
     tools:context="models.CoachActivity">
 
     <TextView
@@ -13,7 +15,9 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:text="@string/select_user"
-        android:textSize="24sp"
+        android:textSize="30sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
     <RadioGroup
@@ -28,13 +32,18 @@
 
     </RadioGroup>
 
-    <Button
-        android:id="@+id/button"
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+
+    android:id="@+id/button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/black"
+        android:textColor="@color/white"
+        app:cornerRadius="16dp"
+        style="@style/Widget.MaterialComponents.Button"
         android:text="@string/show_plan" />
 
 

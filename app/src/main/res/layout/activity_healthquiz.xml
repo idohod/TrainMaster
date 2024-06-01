@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/gym1"
     tools:context="models.HealthQuizActivity">
 
     <!-- Question TextView -->
@@ -13,8 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/question"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:textStyle="bold"
+        android:textColor="@color/black"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="32dp" />
 
@@ -39,8 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/submit"
-        android:textSize="18sp"
-        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textColor="@color/black"
         android:background="@drawable/button_background"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/question_radio_group"

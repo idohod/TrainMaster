@@ -47,6 +47,7 @@
         android:text="@string/life"
         android:textColor="@color/white"
         android:textSize="45sp"
+        app:cornerRadius="16dp"
         android:fontFamily="@font/base05"/>
 
     <!-- Register Button -->
@@ -58,7 +59,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="90dp"
-        android:backgroundTint="@color/background_Grey"
+        android:backgroundTint="@color/gray200"
         android:text="@string/register"
         android:textColor="@color/white" />
 

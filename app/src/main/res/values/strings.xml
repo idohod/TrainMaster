@@ -68,6 +68,9 @@
     <string name="fit">FIT</string>
     <string name="life">LIFE</string>
     <string name="happier">HAPPIER </string>
+    <string name="no">NO</string>
+    <string name="pain">PAIN</string>
+    <string name="gain">GAIN</string>
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->

@@ -4,10 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/trx"
+    android:background="@drawable/stand"
     tools:context="models.SignInActivity">
 
-    <!-- Email Input Layout -->
+    <MultiAutoCompleteTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        />
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_input_layout"
         android:layout_width="match_parent"
@@ -23,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email"
-            android:background="@color/gray_200"
+            android:background="@color/gray200"
             android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -43,7 +47,7 @@
             android:id="@+id/password_field"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/gray_200"
+            android:background="@color/gray200"
             android:hint="@string/password"
             android:inputType="textPassword" />
 

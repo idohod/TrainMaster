@@ -27,7 +27,7 @@ class HealthQuizActivity : AppCompatActivity() {
 
     private var score = 0
     private var temp = 0
-    private var id =0
+    private var numOfQuiz =0
     // Define your list of questions here
     private val questions = listOf(
         Question(
@@ -92,9 +92,16 @@ class HealthQuizActivity : AppCompatActivity() {
 
         initViews()
         getUserName()
+        getNumOfQuiz()
         displayQuestion(currentQuestionIndex)
 
         submitButton.setOnClickListener { selectAnswer() }
+    }
+
+    private fun getNumOfQuiz() {
+        val i = intent
+        numOfQuiz = i.getIntExtra("numOfQuiz",0)
+        Log.d("numOfQuiz","quiz numOfQuiz=$numOfQuiz")
     }
 
     private fun initViews() {
@@ -134,7 +141,10 @@ class HealthQuizActivity : AppCompatActivity() {
 
     private fun checkAnswer(userAnswer: String) {
         var id = questionRadioGroup.checkedRadioButtonId
+        id -= numOfQuiz*39
         id -= currentQuestionIndex * 3
+        Log.d("ID","id=$id")
+
         score += id
 
 // score 13 - 39
@@ -148,6 +158,7 @@ class HealthQuizActivity : AppCompatActivity() {
             displayQuestion(currentQuestionIndex)
         } else {
             // Quiz completed
+            numOfQuiz++
             loadExercises(score)
             moveToMainActivity(userName)
         }
@@ -278,6 +289,7 @@ class HealthQuizActivity : AppCompatActivity() {
     private fun moveToMainActivity(userName: String) {
         val i = Intent(this, MainActivity::class.java)
         i.putExtra("userName", userName)
+        i.putExtra("numOfQuiz",numOfQuiz)
         startActivity(i)
         finish()
 

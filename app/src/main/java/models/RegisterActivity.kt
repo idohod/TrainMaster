@@ -3,6 +3,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
@@ -45,12 +46,13 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var backButton: Button
 
     private  var isVisible: Boolean = true
+    private  var numOfQuiz =0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
         findViews()
-
+        getNumOfQuiz()
         backButton = findViewById(R.id.back_button)
 
         backButton.setOnClickListener {finish()}
@@ -60,6 +62,14 @@ class RegisterActivity : AppCompatActivity() {
             val selectedRole = findViewById<RadioButton>(checkedId).text.toString()
             isVisible = checkRole(selectedRole)
         }
+    }
+
+    private fun getNumOfQuiz() {
+        val i = intent
+        numOfQuiz = i.getIntExtra("numOfQuiz",0)
+        Log.d("numOfQuiz","reg numOfQuiz=$numOfQuiz")
+
+
     }
 
     private fun findViews() {
@@ -241,6 +251,7 @@ class RegisterActivity : AppCompatActivity() {
         } else if (role == "trainee") {
             val i = Intent(this, HealthQuizActivity::class.java)
             i.putExtra("userName", name)
+            i.putExtra("numOfQuiz",numOfQuiz)
             startActivity(i)
             finish()
         } else {

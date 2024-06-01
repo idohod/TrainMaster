@@ -2,6 +2,7 @@ package utilities
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.google.android.material.textview.MaterialTextView
@@ -9,9 +10,14 @@ import com.google.android.material.textview.MaterialTextView
 class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
-private lateinit var mListener: OnItemClickListener
+    private lateinit var mListener: OnItemClickListener
+    public lateinit var decrease :TextView
+    public lateinit var increase :TextView
+
     interface OnItemClickListener{
         fun itemClick(exercise: Exercise)
+        fun increase(exercise: Exercise)
+        fun decrease(exercise: Exercise)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener){
@@ -44,16 +50,25 @@ private lateinit var mListener: OnItemClickListener
     }
 
     inner class ExerciseViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
+        val increase: TextView = itemView.findViewById(R.id.increase)
+        val decrease: TextView = itemView.findViewById(R.id.decrease)
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
-                if (position != RecyclerView.NO_POSITION) {
+                if (position != RecyclerView.NO_POSITION)
                     listener.itemClick(getItem(position))
+            }
+            increase.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION)
+                    listener.increase(getItem(position))
+            }
+            decrease.setOnClickListener {
+                val position = adapterPosition
+                if (position != RecyclerView.NO_POSITION)
+                    listener.decrease(getItem(position))
                 }
             }
-        }
-
-
 
         val exerciseNameText: MaterialTextView = itemView.findViewById(R.id.exercise_name)
         val theName: MaterialTextView = itemView.findViewById(R.id.the_name)
@@ -66,7 +81,6 @@ private lateinit var mListener: OnItemClickListener
 
         val weightText: MaterialTextView = itemView.findViewById(R.id.weight_text)
         val theWeight: MaterialTextView = itemView.findViewById(R.id.weight_number)
-
     }
-}
+    }
 

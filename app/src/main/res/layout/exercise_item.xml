@@ -71,6 +71,16 @@
                 android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"/>
 
+            <TextView
+                android:id="@+id/increase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/increase"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="50dp"
+                android:layout_gravity="center_vertical"/>
+
         </LinearLayout>
 
         <!-- Repetitions -->
@@ -97,6 +107,16 @@
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/decrease"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/decrease"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_marginStart="50dp"
                 android:layout_gravity="center_vertical"/>
 
         </LinearLayout>

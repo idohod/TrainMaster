@@ -209,11 +209,6 @@ class RegisterActivity : AppCompatActivity() {
                 return false
             }
         }
-
-
-
-
-
         if (!email.endsWith("@gmail.com")) {
             makeToast("illegal gmail")
             return false

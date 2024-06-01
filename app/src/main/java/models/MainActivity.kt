@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,10 +31,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercises: ArrayList<Exercise>
 
-    private var numOfQuiz=0
-    //  private var backgroundImage: AppCompatImageView? = null
-
-
+    private var numOfQuiz = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,19 +42,19 @@ class MainActivity : AppCompatActivity() {
         initViews()
         loadExercisesFromDb()
 
-        changeUserButton.setOnClickListener{changeUser()}
+        changeUserButton.setOnClickListener { changeUser() }
     }
 
     private fun getNumOfQuiz() {
         val i = intent
-        numOfQuiz = i.getIntExtra("numOfQuiz",0)
-        Log.d("numOfQuiz","main numOfQuiz=$numOfQuiz")
+        numOfQuiz = i.getIntExtra("numOfQuiz", 0)
+        Log.d("numOfQuiz", "main numOfQuiz=$numOfQuiz")
 
     }
 
     private fun changeUser() {
         val intent = Intent(this, StartPage::class.java)
-        intent.putExtra("numOfQuiz",numOfQuiz)
+        intent.putExtra("numOfQuiz", numOfQuiz)
         startActivity(intent)
     }
 
@@ -106,13 +104,10 @@ class MainActivity : AppCompatActivity() {
                             moveToTimerActivity(exercise)
                         }
 
-                        override fun increase(exercise: Exercise) {
-                            increaseExerciseLevel(exercise)
+                        override fun update(exercise: Exercise, increase: Boolean) {
+                            updateExerciseLevel(exercise, increase)
                         }
 
-                        override fun decrease(exercise: Exercise) {
-                            decreaseExerciseLevel(exercise)
-                        }
                     })
                 }
             }
@@ -120,7 +115,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun increaseExerciseLevel(exercise: Exercise) {
+    private fun updateExerciseLevel(exercise: Exercise, increase: Boolean) {
 
         val firestore = FirebaseFirestore.getInstance()
         val exercisesCollection = firestore.collection("exercises")
@@ -129,7 +124,10 @@ class MainActivity : AppCompatActivity() {
         val exercisesRef = database.reference.child("users").child(userName).child("exercises")
 
         val oldLevel = exercise.level
-        val newLevel = oldLevel?.plus(1)
+        val newLevel = setNewLevel(oldLevel, increase)
+        if (newLevel == 0L)
+            return
+
         val type = exercise.type
 
         val exToUpdate = ArrayList<Exercise>()
@@ -143,24 +141,37 @@ class MainActivity : AppCompatActivity() {
                     val name = document.getString("exercise_name")
 
                     if (curLevel != null && name != null && curType != null)
-                        if(curLevel == newLevel && curType == type){
+                        if (curLevel == newLevel && curType == type) {
                             val newExercise = Exercise(name, "3", "10", "0", type, newLevel)
-                            val i = allExercises.indexOf(exercise)
                             exToUpdate.add(newExercise)
                         }
-
-
                 }
-                updateList(exToUpdate,exercise)
+                updateList(exToUpdate, exercise)
                 exercisesRef.setValue(allExercises)
-
-
             }
             .addOnFailureListener { exception ->
                 Log.w("debug", "Error getting documents.", exception)
             }
-
     }
+
+    private fun setNewLevel(oldLevel: Long?, increase: Boolean): Long {
+        if (oldLevel != null) {
+
+            if (increase && oldLevel < 7L)
+                return oldLevel.plus(1)
+            else if (increase && oldLevel == 7L) {
+                Toast.makeText(this, "max level!", Toast.LENGTH_SHORT).show()
+                return 0
+            } else if (!increase && oldLevel > 1L)
+                return oldLevel.minus(1)
+            else if (!increase && oldLevel == 1L) {
+                Toast.makeText(this, "min level!", Toast.LENGTH_SHORT).show()
+                return 0
+            }
+        }
+        return 0
+    }
+
 
     private fun updateList(exToUpdate: ArrayList<Exercise>, exercise: Exercise) {
         val ranIndex = mutableListOf<Int>()
@@ -175,11 +186,6 @@ class MainActivity : AppCompatActivity() {
 
 
     }
-
-    private fun decreaseExerciseLevel(exercise: Exercise) {
-
-    }
-
     private fun  moveToTimerActivity(exercise: Exercise){
         val intent = Intent(this, TimerActivity::class.java)
 

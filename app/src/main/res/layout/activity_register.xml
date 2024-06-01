@@ -48,6 +48,7 @@
             android:backgroundTint="@color/grey_BX_Fill"
             android:textSize="20sp" />
 
+
     </LinearLayout>
 
     <!-- Email -->
@@ -177,6 +178,7 @@
             android:textColorHint="@color/grey_BX_Fill"
             android:backgroundTint="@color/grey_BX_Fill"
             android:textSize="20sp" />
+
 
     </LinearLayout>
 

@@ -24,18 +24,16 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var weightTextTextView: MaterialTextView
     private lateinit var weightNumberTextView: MaterialTextView
 
-    private lateinit var imageView: ImageView
+    private lateinit var exerciseGif: ImageView
 
     private lateinit var startButton: ExtendedFloatingActionButton
     private lateinit var finishButton: ExtendedFloatingActionButton
     private lateinit var backButton: ExtendedFloatingActionButton
+
     private lateinit var timerTextView: MaterialTextView
     private var isTimerRunning = false
     private var secondsElapsed = 0
-
     private val handler = Handler(Looper.getMainLooper())
-
-    private lateinit var userName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,17 +41,20 @@ class TimerActivity : AppCompatActivity() {
         initializeViews()
         getExerciseData()
         getLinkFromDB()
+        val userName = getUserName()
 
-        startButton.setOnClickListener{startTimer()}
-        finishButton.setOnClickListener{stopTimer()}
-        backButton.setOnClickListener { backToPlan() }
+        startButton.setOnClickListener { startTimer() }
+        finishButton.setOnClickListener { stopTimer() }
+        backButton.setOnClickListener { backToPlan(userName) }
 
     }
 
-    private fun backToPlan() {
+    private fun backToPlan(userName: String) {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("userName",userName)
+        intent.putExtra("userName", userName)
         startActivity(intent)
+        finish()
+
     }
 
     private fun stopTimer() {
@@ -78,18 +79,17 @@ class TimerActivity : AppCompatActivity() {
         })
     }
 
+    private fun getUserName(): String {
+        return intent.getStringExtra("userName").toString()
+    }
 
     private fun getExerciseData() {
         val intent = intent
 
         theNameTextView.text = intent.getStringExtra("exName").toString()
-
         setNumberTextView.text = intent.getStringExtra("exSet").toString()
         repetitionsNumberTextView.text = intent.getStringExtra("exRep").toString()
         weightNumberTextView.text = intent.getStringExtra("exWeight").toString()
-
-        userName = intent.getStringExtra("userName").toString()
-
     }
 
     private fun initializeViews() {
@@ -106,50 +106,46 @@ class TimerActivity : AppCompatActivity() {
         weightNumberTextView = findViewById(R.id.weight_number)
 
         timerTextView = findViewById(R.id.timer)
-        imageView = findViewById(R.id.imageView)
+        exerciseGif = findViewById(R.id.imageView)
         startButton = findViewById(R.id.start_button)
         finishButton = findViewById(R.id.finish_button)
         backButton = findViewById(R.id.back_button)
     }
+
     private fun getLinkFromDB() {
         val db = FirebaseFirestore.getInstance()
         val exercisesCollection = db.collection("exercises")
         exercisesCollection.get()
-            .addOnSuccessListener {
-                    result ->
+            .addOnSuccessListener { result ->
                 for (document in result) {
                     val name = document.getString("exercise_name")
                     val link = document.getString("link")
-                    if(name != null && link != null )
-                        uploadImage(name , link)
-
+                    if (name != null && link != null)
+                        uploadImage(name, link)
                 }
-
             }
-
             .addOnFailureListener {
                 Log.d("debug", "Error getting documents.")
             }
     }
 
-    private fun uploadImage(name: String,link: String) {
+    private fun uploadImage(name: String, link: String) {
 
-        if (name ==  theNameTextView.text)
+        if (name == theNameTextView.text)
             Glide
                 .with(this)
                 .load(link)
                 .centerCrop()
                 .placeholder(R.drawable.ic_launcher_background)
-                .into(imageView)
-
-
+                .into(exerciseGif)
     }
 
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        intent.putExtra("userName",userName)
+        val userName = getUserName()
+        intent.putExtra("userName", userName)
         startActivity(intent)
         finish()
     }

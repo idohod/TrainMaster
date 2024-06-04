@@ -1,5 +1,4 @@
 package utilities
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +12,12 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
 
     private lateinit var mListener: OnItemClickListener
 
-
     interface OnItemClickListener{
         fun itemClick(exercise: Exercise)
         fun update(exercise: Exercise,increase:Boolean)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener){
-
         mListener =listener
     }
 
@@ -31,12 +28,11 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
         return ExerciseViewHolder(itemView, mListener)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ExerciseViewHolder, position: Int) {
         val exercise: Exercise = exerciseList[position]
 
         holder.theName.text = exercise.name
-        holder.theSet.text = exercise.numOfSets + "   "
+        "${exercise.numOfSets}   ".also { holder.theSet.text = it }
         holder.theRepetitions.text = exercise.numOfReps
         holder.theWeight.text = exercise.weight
     }
@@ -52,6 +48,7 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
     inner class ExerciseViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
         private val increase: TextView = itemView.findViewById(R.id.increase)
         private val decrease: TextView = itemView.findViewById(R.id.decrease)
+
         init {
             itemView.setOnClickListener {
                 val position = adapterPosition
@@ -69,7 +66,6 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
                     listener.update(getItem(position),false)
                 }
             }
-
         val exerciseNameText: MaterialTextView = itemView.findViewById(R.id.exercise_name)
         val theName: MaterialTextView = itemView.findViewById(R.id.the_name)
 

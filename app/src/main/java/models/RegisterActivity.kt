@@ -54,7 +54,7 @@ class RegisterActivity : AppCompatActivity() {
         findViews()
         getNumOfQuiz()
 
-        backButton.setOnClickListener {finish()}
+        backButton.setOnClickListener {backToStart()}
         registerButton.setOnClickListener {signUp()}
 
         radioGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -62,7 +62,14 @@ class RegisterActivity : AppCompatActivity() {
             isVisible = checkRole(selectedRole)
         }
     }
-
+    private fun backToStart(){
+        startActivity(Intent(this,StartPage::class.java))
+        finish()
+    }
+    override fun onBackPressed() {
+        startActivity(Intent(this,StartPage::class.java))
+        finish()
+    }
     private fun getNumOfQuiz() {
         val i = intent
         numOfQuiz = i.getIntExtra("numOfQuiz",0)

@@ -42,6 +42,8 @@ class CoachActivity : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("userName", selectedUserName)
         startActivity(intent)
+        finish()
+
     }
 
     private fun getUserNamesFromDB() {

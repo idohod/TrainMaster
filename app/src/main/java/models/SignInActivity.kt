@@ -23,15 +23,22 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_sign_in)
+        findViews()
 
+        signInButton.setOnClickListener { start() }
+        backButton.setOnClickListener { backToStart() }
+    }
+
+    private fun backToStart() {
+        startActivity(Intent(this,StartPage::class.java))
+        finish()
+    }
+
+    private fun findViews() {
         emailField = findViewById(R.id.email_field)
         passwordField = findViewById(R.id.password_field)
         signInButton = findViewById(R.id.sign_in_button)
         backButton = findViewById(R.id.back_button)
-        signInButton.setOnClickListener { start() }
-        backButton.setOnClickListener {
-            finish() // Close SignInActivity and go back
-        }
     }
 
     private fun start() {
@@ -42,6 +49,7 @@ class SignInActivity : AppCompatActivity() {
             singIn(email, password)
 
         } else {
+
             Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
             return
         }
@@ -50,7 +58,11 @@ class SignInActivity : AppCompatActivity() {
 
 
     private fun checkInput(email: String, password: String): Boolean {
-        return !(email.isEmpty() || password.isEmpty())
+        if(email.isEmpty() || password.isEmpty())
+            return false
+        if(!email.endsWith("@gmail.com"))
+            return false
+        return true
     }
 
     private fun singIn(email: String, password: String) {
@@ -69,9 +81,13 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("userName", name)
             startActivity(intent)
+            finish()
+
         } else {
             val intent = Intent(this, CoachActivity::class.java)
             startActivity(intent)
+            finish()
+
         }
     }
 
@@ -93,5 +109,10 @@ class SignInActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failure", Toast.LENGTH_SHORT).show()
 
             }
+    }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,StartPage::class.java))
+        finish()
     }
 }

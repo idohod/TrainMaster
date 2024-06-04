@@ -1,6 +1,5 @@
 package models
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,32 +24,30 @@ class MainActivity : AppCompatActivity() {
     private lateinit var addExerciseButton: ExtendedFloatingActionButton
     private lateinit var changeUserButton: ExtendedFloatingActionButton
     private lateinit var title: MaterialTextView
-    private lateinit var userName: String
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercises: ArrayList<Exercise>
 
-    private var numOfQuiz = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         findViews()
-        getUserName()
-        getNumOfQuiz()
+        val userName =getUserName()
+        val numOfQuiz = getNumOfQuiz()
         initViews()
-        loadExercisesFromDb()
+        loadExercisesFromDb(userName)
 
-        changeUserButton.setOnClickListener { changeUser() }
+        changeUserButton.setOnClickListener { changeUser(numOfQuiz) }
     }
 
-    private fun getNumOfQuiz() {
+    private fun getNumOfQuiz(): Int {
         val i = intent
-        numOfQuiz = i.getIntExtra("numOfQuiz", 0)
+        return i.getIntExtra("numOfQuiz", 0)
     }
 
-    private fun changeUser() {
+    private fun changeUser(numOfQuiz: Int) {
         val intent = Intent(this, StartPage::class.java)
         intent.putExtra("numOfQuiz", numOfQuiz)
         startActivity(intent)
@@ -72,15 +69,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun getUserName() {
+    private fun getUserName(): String {
 
         val i = intent
-        userName = i.getStringExtra("userName").toString()
-        title.text = "$userName's plan"
+        val userName = i.getStringExtra("userName").toString()
+        "$userName's plan".also { title.text = it }
+        return userName
     }
 
-    private fun loadExercisesFromDb() {
+    private fun loadExercisesFromDb(userName:String) {
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
 
@@ -98,11 +95,11 @@ class MainActivity : AppCompatActivity() {
                     exerciseAdapter.setOnItemClickListener(object :
                         ExerciseAdapter.OnItemClickListener {
                         override fun itemClick(exercise: Exercise) {
-                            moveToTimerActivity(exercise)
+                            moveToTimerActivity(exercise,userName)
                         }
 
                         override fun update(exercise: Exercise, increase: Boolean) {
-                            updateExerciseLevel(exercise, increase)
+                            updateExerciseLevel(exercise, increase,userName)
                         }
 
                     })
@@ -112,7 +109,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun updateExerciseLevel(exercise: Exercise, increase: Boolean) {
+    private fun updateExerciseLevel(exercise: Exercise, increase: Boolean,userName:String) {
 
         val firestore = FirebaseFirestore.getInstance()
         val exercisesCollection = firestore.collection("exercises")
@@ -158,6 +155,7 @@ class MainActivity : AppCompatActivity() {
                 return oldLevel.plus(1)
             else if (increase && oldLevel == 5L) {
                 Toast.makeText(this, "max level!", Toast.LENGTH_SHORT).show()
+
                 return 0
             } else if (!increase && oldLevel > 1L)
                 return oldLevel.minus(1)
@@ -184,7 +182,7 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-    private fun  moveToTimerActivity(exercise: Exercise){
+    private fun  moveToTimerActivity(exercise: Exercise,userName:String){
         val intent = Intent(this, TimerActivity::class.java)
 
         intent.putExtra("exName",exercise.name)
@@ -197,3 +195,5 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 }
+
+

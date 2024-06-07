@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.finalproject.R
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QueryDocumentSnapshot
 import utilities.Exercise
 import utilities.Question
 
@@ -100,7 +101,6 @@ class HealthQuizActivity : AppCompatActivity() {
         val i = intent
         return i.getIntExtra("numOfQuiz", 0)
     }
-
     private fun initViews() {
         questionTextView = findViewById(R.id.question_text_view)
         questionRadioGroup = findViewById(R.id.question_radio_group)
@@ -111,27 +111,21 @@ class HealthQuizActivity : AppCompatActivity() {
         val i = intent
         return i.getStringExtra("userName").toString()
     }
-
     private fun selectAnswer(numOfQuiz: Int, userName: String) {
 
         val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
-
-
         if (selectedRadioButtonId - temp > 0) {
             temp = selectedRadioButtonId
             findViewById<RadioButton>(selectedRadioButtonId)
-            //  val answer = selectedRadioButton.text.toString()
             checkAnswer(numOfQuiz, userName)
         } else {
             Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
             return
         }
     }
-
     private fun displayQuestion(questionIndex: Int) {
         val question = questions[questionIndex]
         questionTextView.text = question.questionText
-
         questionRadioGroup.removeAllViews()
         for (option in question.options) {
             val radioButton = RadioButton(this)
@@ -139,19 +133,14 @@ class HealthQuizActivity : AppCompatActivity() {
             questionRadioGroup.addView(radioButton)
         }
     }
-
     private fun checkAnswer(numOfQuiz: Int, userName: String) {
         var id = questionRadioGroup.checkedRadioButtonId
         id -= numOfQuiz * 39
         id -= currentQuestionIndex * 3
-
         score += id
-
 // score 13 - 39
         moveQuestion(numOfQuiz, userName)
-
     }
-
     private fun moveQuestion(numOfQuiz: Int, userName: String) {
         currentQuestionIndex++
         if (currentQuestionIndex < questions.size) {
@@ -173,23 +162,23 @@ class HealthQuizActivity : AppCompatActivity() {
 
         exercisesCollection.get()
             .addOnSuccessListener { result ->
-                for (document in result) {
-                    //  val doc = document.id
-                    val level = document.getLong("difficult_level")
-                    val type = document.getLong("type")
+                for (document in result)
+                    getExercisesData(document)
 
-                    val name = document.getString("exercise_name")
-                    if (level != null && name != null && type != null)
-                        addExercise(level, name, type)
-
-                }
                 setExList()
                 exercisesRef.setValue(allExercises)
             }
-            .addOnFailureListener { exception ->
-                Log.w("debug", "Error getting documents.", exception)
+            .addOnFailureListener { exception ->Log.w("debug", "Error getting documents.", exception)
             }
+    }
 
+    private fun getExercisesData(document: QueryDocumentSnapshot) {
+
+        val level = document.getLong("difficult_level")?: return
+        val type = document.getLong("type")?: return
+        val name = document.getString("exercise_name")?: return
+
+        addExercise(level, name, type)
     }
 
     private fun setExList() {
@@ -240,15 +229,14 @@ class HealthQuizActivity : AppCompatActivity() {
         removeExercises(exToRemove)
     }
     private fun removeExercises(exToRemove: ArrayList<Exercise>) {
-        for (ex in exToRemove) {
+        for (ex in exToRemove)
             allExercises.remove(ex)
-        }
     }
     private fun addExercise(level: Long, name: String, type: Long) {
 
         if (score in 13..19) { //easy
             if (level == 1L) {
-                val ex = Exercise(name, "3", "10", "0", type, level)
+                val ex = Exercise(name, "3", "8", "0", type, level)
                 allExercises.add(ex)
             }
         } else if (score in 20..26) { //mid
@@ -261,17 +249,16 @@ class HealthQuizActivity : AppCompatActivity() {
         } else if (score in 27..32) { //HARD
 
             if (level == 3L) {
-                val ex = Exercise(name, "3", "10", "0", type, level)
+                val ex = Exercise(name, "3", "12", "0", type, level)
                 allExercises.add(ex)
             }
 
         } else { //expert
             if (level >= 4L) {
-                val ex = Exercise(name, "3", "10", "0", type, level)
+                val ex = Exercise(name, "4", "12", "0", type, level)
                 allExercises.add(ex)
             }
         }
-
     }
 
     private fun moveToMainActivity(userName: String, numOfQuiz: Int) {
@@ -280,8 +267,5 @@ class HealthQuizActivity : AppCompatActivity() {
         i.putExtra("numOfQuiz", numOfQuiz)
         startActivity(i)
         finish()
-
     }
-
-
 }

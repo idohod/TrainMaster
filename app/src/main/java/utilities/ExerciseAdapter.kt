@@ -7,20 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.google.android.material.textview.MaterialTextView
 
-class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
+class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
     RecyclerView.Adapter<ExerciseAdapter.ExerciseViewHolder>() {
 
     private lateinit var mListener: OnItemClickListener
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun itemClick(exercise: Exercise)
-        fun update(exercise: Exercise,increase:Boolean)
+        fun update(exercise: Exercise, increase: Boolean)
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener){
-        mListener =listener
+    fun setOnItemClickListener(listener: OnItemClickListener) {
+        mListener = listener
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExerciseViewHolder {
         val itemView =
@@ -45,11 +44,22 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
         return exerciseList[position]
     }
 
-    inner class ExerciseViewHolder(itemView: View, listener: OnItemClickListener) : RecyclerView.ViewHolder(itemView) {
-        private val increase: TextView = itemView.findViewById(R.id.increase)
-        private val decrease: TextView = itemView.findViewById(R.id.decrease)
+    inner class ExerciseViewHolder(itemView: View, listener: OnItemClickListener) :
+        RecyclerView.ViewHolder(itemView) {
+        private lateinit var increase: TextView
+        private lateinit var decrease: TextView
+        private lateinit var exerciseNameText: MaterialTextView
+        lateinit var theName: MaterialTextView
+        private lateinit var setText: MaterialTextView
+        lateinit var theSet: MaterialTextView
+        private lateinit var repetitionsText: MaterialTextView
+        lateinit var theRepetitions: MaterialTextView
+        private lateinit var weightText: MaterialTextView
+        lateinit var theWeight: MaterialTextView
 
         init {
+            findViews()
+
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION)
@@ -58,25 +68,26 @@ class ExerciseAdapter(private val exerciseList: ArrayList<Exercise>) :
             increase.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position),true)
+                    listener.update(getItem(position), true)
             }
             decrease.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position),false)
-                }
+                    listener.update(getItem(position), false)
             }
-        val exerciseNameText: MaterialTextView = itemView.findViewById(R.id.exercise_name)
-        val theName: MaterialTextView = itemView.findViewById(R.id.the_name)
-
-        val setText: MaterialTextView = itemView.findViewById(R.id.set_text)
-        val theSet: MaterialTextView = itemView.findViewById(R.id.set_number)
-
-        val repetitionsText: MaterialTextView = itemView.findViewById(R.id.repetitions_text)
-        val theRepetitions: MaterialTextView = itemView.findViewById(R.id.repetitions_number)
-
-        val weightText: MaterialTextView = itemView.findViewById(R.id.weight_text)
-        val theWeight: MaterialTextView = itemView.findViewById(R.id.weight_number)
+        }
+        private fun findViews() {
+            increase = itemView.findViewById(R.id.increase)
+            decrease = itemView.findViewById(R.id.decrease)
+            exerciseNameText = itemView.findViewById(R.id.exercise_name)
+            theName = itemView.findViewById(R.id.the_name)
+            setText = itemView.findViewById(R.id.set_text)
+            theSet = itemView.findViewById(R.id.set_number)
+            repetitionsText = itemView.findViewById(R.id.repetitions_text)
+            theRepetitions = itemView.findViewById(R.id.repetitions_number)
+            weightText = itemView.findViewById(R.id.weight_text)
+            theWeight = itemView.findViewById(R.id.weight_number)
+        }
     }
-    }
+}
 

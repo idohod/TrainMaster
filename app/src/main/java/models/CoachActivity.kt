@@ -63,6 +63,7 @@ class CoachActivity : AppCompatActivity() {
         val name = document.getString("name")?:return
         if (role != "coach")
             addRadioButtonToRadioGroup(name)
+
     }
 
     private fun findViews() {

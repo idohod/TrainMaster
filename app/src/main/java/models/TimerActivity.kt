@@ -129,6 +129,7 @@ class TimerActivity : AppCompatActivity() {
         val link = document.getString("link") ?: return
 
         uploadImage(name, link)
+
     }
 
     private fun uploadImage(name: String, link: String) {

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.finalproject.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
-
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
@@ -51,6 +50,15 @@ class SignInActivity : AppCompatActivity() {
             singIn(email, password)
         else
             return
+        if (checkInput(email, password)) {
+            singIn(email, password)
+
+        } else {
+
+            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
+            return
+        }
+
     }
 
 
@@ -89,6 +97,7 @@ class SignInActivity : AppCompatActivity() {
             val intent = Intent(this, CoachActivity::class.java)
             startActivity(intent)
             finish()
+
         }
     }
 
@@ -109,6 +118,7 @@ class SignInActivity : AppCompatActivity() {
         val role = it.data?.get("role")?.toString() ?: return
 
         moveActivity(name, role)
+
     }
 
     override fun onBackPressed() {

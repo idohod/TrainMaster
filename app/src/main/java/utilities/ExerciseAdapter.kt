@@ -14,7 +14,7 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
 
     interface OnItemClickListener {
         fun itemClick(exercise: Exercise)
-        fun update(exercise: Exercise, increase: Boolean)
+        fun update(exercise: Exercise,position: Int, increase: Boolean)
     }
 
     fun setOnItemClickListener(listener: OnItemClickListener) {
@@ -68,12 +68,12 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
             increase.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position), true)
+                    listener.update(getItem(position),position ,true)
             }
             decrease.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position), false)
+                    listener.update(getItem(position),position,false)
             }
         }
         private fun findViews() {

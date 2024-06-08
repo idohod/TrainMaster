@@ -88,7 +88,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun moveActivity(name: String, role: String) {
         if (role == "trainee") {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, MenuActivity::class.java)
             intent.putExtra("userName", name)
             startActivity(intent)
             finish()

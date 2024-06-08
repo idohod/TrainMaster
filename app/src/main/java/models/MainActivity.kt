@@ -122,12 +122,12 @@ class MainActivity : AppCompatActivity() {
             override fun itemClick(exercise: Exercise) {
                 moveToTimerActivity(exercise, userName)
             }
-            override fun update(exercise: Exercise, increase: Boolean) {
-                updateExerciseLevel(exercise, increase, userName)
+            override fun update(exercise: Exercise, position: Int, increase: Boolean) {
+                updateExerciseLevel(exercise,position, increase, userName)
             }
         })
     }
-    private fun updateExerciseLevel(exercise: Exercise, increase: Boolean, userName: String) {
+    private fun updateExerciseLevel(exercise: Exercise,position: Int,increase: Boolean,userName: String) {
 
         val firestore = FirebaseFirestore.getInstance()
         val exercisesCollection = firestore.collection("exercises")
@@ -146,7 +146,7 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result)
                     getExercises(document,newLevel,type,exercise,increase,exToUpdate)
-                updateList(exToUpdate, exercise)
+                updateList(exToUpdate, exercise,position)
                 exercisesRef.setValue(allExercises)
             }
             .addOnFailureListener {}
@@ -160,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         val name = document.getString("exercise_name") ?: return
 
         if (curLevel == newLevel && curType == type) {
-            val newExercise = setNewExercise(exercise, name, type, newLevel, increase)
+            val newExercise = setNewExercise(exercise, name, curType, curLevel, increase)
             exToUpdate.add(newExercise)
         }
     }
@@ -216,9 +216,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
-    private fun updateList(exToUpdate: ArrayList<Exercise>, exercise: Exercise) {
+    private fun updateList(exToUpdate: ArrayList<Exercise>, exercise: Exercise, position: Int) {
 
-          if (exToUpdate.isNotEmpty()) {
+        if (exToUpdate.isNotEmpty()) {
             val ranIndex = mutableListOf<Int>()
             for (e in exToUpdate)
                 ranIndex.add(exToUpdate.indexOf(e))
@@ -226,11 +226,9 @@ class MainActivity : AppCompatActivity() {
             val randomIndex = ranIndex.random()
             val newExercise = exToUpdate[randomIndex]
 
-            val i = allExercises.indexOf(exercise)
             allExercises.remove(exercise)
-            allExercises.add(i, newExercise)
-
-            isUpdate=true
+            allExercises.add(position, newExercise)
+            isUpdate = true
         }
     }
     private fun moveToTimerActivity(exercise: Exercise, userName: String) {

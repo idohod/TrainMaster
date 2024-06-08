@@ -15,6 +15,9 @@
         android:theme="@style/Theme.FinalProject"
         tools:targetApi="31">
         <activity
+            android:name="models.MenuActivity"
+            android:exported="false" />
+        <activity
             android:name="models.CoachActivity"
             android:exported="false" />
         <activity

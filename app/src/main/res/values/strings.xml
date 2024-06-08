@@ -4,6 +4,13 @@
     <string name="your_plan">your plan</string>
     <string name="change_user">change user</string>
     <string name="add_exercise">add exercise</string>
+    <string name="back">back</string>
+    <string name="too_easy">too easy! ^</string>
+    <string name="too_hard">too hard! v</string>
+    <!--menu activity-->
+    <string name="open_nav">open nav</string>
+    <string name="close_nav">close nav</string>
+
 
     <!--recycle view-->
     <string name="exercise_name">exercise  name: </string>
@@ -40,15 +47,8 @@
     <string name="Weight">Weight</string>
     <string name="enter_your_weight">Enter your weight</string>
     <string name="role">Role</string>
-
     <string name="Register">Register</string>
 
-    <!--data activity-->
-    <string name="exercise_data">enter exercise data</string>
-    <string name="save">save</string>
-    <string name="nameField">name</string>
-    <string name="back">back</string>
-    <string name="todo">TODO</string>
 
     <!--quiz activity-->
 
@@ -68,10 +68,9 @@
     <string name="no">NO</string>
     <string name="pain">PAIN</string>
     <string name="gain">GAIN</string>
-
-    <string name="too_easy">too easy! ^</string>
-    <string name="too_hard">too hard! v</string>
-
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo">todo</string>
 
 
 </resources>

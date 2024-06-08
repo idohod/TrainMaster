@@ -1,0 +1,77 @@
+<resources>
+    <string name="app_name">finalProject</string>
+    <!--main activity-->
+    <string name="your_plan">your plan</string>
+    <string name="change_user">change user</string>
+    <string name="add_exercise">add exercise</string>
+
+    <!--recycle view-->
+    <string name="exercise_name">exercise  name: </string>
+    <string name="name">name</string>
+    <string name="_0">0</string>
+    <string name="sets">sets:</string>
+    <string name="reps">reps:</string>
+    <string name="weight">weight: </string>
+
+
+    <!--timer-->
+    <string name="exercise_timer">exercise timer</string>
+    <string name="_00_00_00">00:00:00</string>
+    <string name="start">start</string>
+    <string name="finish">finish</string>
+
+    <!--start page -->
+    <string name="sign_in">Sign In</string>
+    <string name="register">Register</string>
+
+    <!--register and sign in-->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="registration">Registration</string>
+    <string name="Name">Name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="Email">Email</string>
+    <string name="enter_your_email">name@gmail.com</string>
+    <string name="Password">Password</string>
+    <string name="your_password">your password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="height">Height</string>
+    <string name="enter_your_height">Enter your height</string>
+    <string name="Weight">Weight</string>
+    <string name="enter_your_weight">Enter your weight</string>
+    <string name="role">Role</string>
+
+    <string name="Register">Register</string>
+
+    <!--data activity-->
+    <string name="exercise_data">enter exercise data</string>
+    <string name="save">save</string>
+    <string name="nameField">name</string>
+    <string name="back">back</string>
+    <string name="todo">TODO</string>
+
+    <!--quiz activity-->
+
+    <string name="question">Question</string>
+    <string name="submit">Submit</string>
+    <string name="trainee">trainee</string>
+
+    <!--coach activity-->
+    <string name="coach">coach</string>
+    <string name="show_plan">show plan</string>
+    <string name="select_user">Select User</string>
+    <string name="background_image_desc" />
+    <string name="fit_life_is_better">Fit life is better</string>
+    <string name="fit">FIT</string>
+    <string name="life">LIFE</string>
+    <string name="happier">HAPPIER </string>
+    <string name="no">NO</string>
+    <string name="pain">PAIN</string>
+    <string name="gain">GAIN</string>
+
+    <string name="too_easy">too easy! ^</string>
+    <string name="too_hard">too hard! v</string>
+
+
+
+</resources>

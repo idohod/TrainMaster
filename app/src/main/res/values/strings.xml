@@ -40,7 +40,7 @@
     <string name="Email">Email</string>
     <string name="enter_your_email">name@gmail.com</string>
     <string name="Password">Password</string>
-    <string name="your_password">your password</string>
+    <string name="your_password">Your Password: </string>
     <string name="confirm_password">Confirm Password</string>
     <string name="height">Height</string>
     <string name="enter_your_height">Enter your height</string>
@@ -71,6 +71,12 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="todo">todo</string>
+    <string name="user_name">User Name:</string>
+    <string name="the_name">the name</string>
+    <string name="your_name">Your Name: </string>
+    <string name="your_email">Your Email:</string>
+    <string name="yourmail_gmail_com">yourmail@gmail.com</string>
+    <string name="user_password">user password</string>
 
 
 </resources>

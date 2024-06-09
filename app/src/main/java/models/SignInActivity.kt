@@ -50,18 +50,7 @@ class SignInActivity : AppCompatActivity() {
             singIn(email, password)
         else
             return
-        if (checkInput(email, password)) {
-            singIn(email, password)
-
-        } else {
-
-            Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
-            return
-        }
-
     }
-
-
     private fun checkInput(email: String, password: String): Boolean {
         if(email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter your email and password", Toast.LENGTH_SHORT).show()
@@ -79,17 +68,20 @@ class SignInActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { signInTask ->
                 if (signInTask.isSuccessful) {
-                    loadUserData()
+                    loadUserData(password)
                 } else {
                     Toast.makeText(this, " email or password incorrect", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    private fun moveActivity(name: String, role: String) {
+    private fun moveActivity(name: String, role: String, email: String, password: String) {
         if (role == "trainee") {
             val intent = Intent(this, MenuActivity::class.java)
             intent.putExtra("userName", name)
+            intent.putExtra("userEmail", email)
+            intent.putExtra("userPassword", password)
+
             startActivity(intent)
             finish()
 
@@ -101,23 +93,24 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadUserData() {
+    private fun loadUserData(password: String) {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val ref = db.collection("user").document(userId)
 
         ref.get().addOnSuccessListener {
             if (it != null)
-                getUserData(it)
+                getUserData(it,password)
         }
             .addOnFailureListener {exception -> Log.w("TAG", "Error getting documents.", exception)}
     }
 
-    private fun getUserData(it: DocumentSnapshot) {
+    private fun getUserData(it: DocumentSnapshot, password: String) {
         val name = it.data?.get("name")?.toString() ?: return
         val role = it.data?.get("role")?.toString() ?: return
+        val email = it.data?.get("email")?.toString() ?: return
 
-        moveActivity(name, role)
+        moveActivity(name, role,email,password)
 
     }
 

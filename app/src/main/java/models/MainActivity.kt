@@ -19,7 +19,7 @@ import utilities.Exercise
 import utilities.ExerciseAdapter
 
 class MainActivity : AppCompatActivity() {
-
+    /*
     private lateinit var addExerciseButton: ExtendedFloatingActionButton
     private lateinit var changeUserButton: ExtendedFloatingActionButton
     private lateinit var title: MaterialTextView
@@ -244,5 +244,6 @@ class MainActivity : AppCompatActivity() {
         finish()
     }
 }
+*/
 
-
+}

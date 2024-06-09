@@ -30,8 +30,14 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         setContentView(R.layout.activity_menu)
         initViews()
 
+        val userName = intent.getStringExtra("userName")
+        val userEmail = intent.getStringExtra("userEmail")
+        val userPassword = intent.getStringExtra("userPassword")
+
+        val fragment = HomeFragment.newInstance(userName ?: "", userEmail ?: "",userPassword?:"")
+
         if(savedInstanceState ==null){
-            replaceFragment(HomeFragment())
+            replaceFragment(fragment)
             navigationView.setCheckedItem(R.id.nav_home)
         }
     }

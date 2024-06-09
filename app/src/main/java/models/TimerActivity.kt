@@ -36,23 +36,31 @@ class TimerActivity : AppCompatActivity() {
     private var secondsElapsed = 0
     private val handler = Handler(Looper.getMainLooper())
 
+    private lateinit var userName: String
+    private lateinit var userEmail: String
+    private lateinit var userPassword: String
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_timer)
         initializeViews()
         getExerciseData()
         getLinkFromDB()
-        val userName = getUserName()
+        getUserData()
 
         startButton.setOnClickListener { startTimer() }
         finishButton.setOnClickListener { stopTimer() }
-        backButton.setOnClickListener { backToPlan(userName) }
+        backButton.setOnClickListener { backToPlan() }
 
     }
 
-    private fun backToPlan(userName: String) {
-        val intent = Intent(this, MainActivity::class.java)
+    private fun backToPlan() {
+        val intent = Intent(this, MenuActivity::class.java)
         intent.putExtra("userName", userName)
+        intent.putExtra("userEmail", userEmail)
+        intent.putExtra("userPassword", userPassword)
+
         startActivity(intent)
         finish()
 
@@ -80,8 +88,12 @@ class TimerActivity : AppCompatActivity() {
         })
     }
 
-    private fun getUserName(): String {
-        return intent.getStringExtra("userName").toString()
+    private fun getUserData()  {
+
+        userName = intent.getStringExtra("userName").toString()
+        userEmail = intent.getStringExtra("userEmail").toString()
+        userPassword = intent.getStringExtra("userPassword").toString()
+
     }
 
     private fun getExerciseData() {
@@ -147,8 +159,11 @@ class TimerActivity : AppCompatActivity() {
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-        val userName = getUserName()
+
         intent.putExtra("userName", userName)
+        intent.putExtra("userEmail", userEmail)
+        intent.putExtra("userPassword", userPassword)
+
         startActivity(intent)
         finish()
     }

@@ -2,20 +2,15 @@ package fragments
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
-import com.google.android.gms.auth.api.identity.SignInPassword
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,14 +19,12 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import models.SharedViewModel
-import models.StartPage
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter
-
 class HomeFragment : Fragment() {
-    private lateinit var addExerciseButton: ExtendedFloatingActionButton
-    private lateinit var changeUserButton: ExtendedFloatingActionButton
+   // private late init var addExerciseButton: ExtendedFloatingActionButton
+   // private late init var changeUserButton: ExtendedFloatingActionButton
     private lateinit var title: MaterialTextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var exerciseAdapter: ExerciseAdapter
@@ -55,10 +48,7 @@ class HomeFragment : Fragment() {
             return fragment
         }
     }
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         initViews(view)
@@ -68,32 +58,48 @@ class HomeFragment : Fragment() {
         val userEmail = arguments?.getString(ARG_USER_EMAIL)
         val userPassword = arguments?.getString(ARG_USER_PASSWORD)
 
-        setValues(userEmail,userPassword,userName)
+        initValuesFromActivity(userName,userEmail,userPassword)
+        initValuesFromFragment()
 
         return view
     }
+    private fun initValuesFromFragment() {
+        var userName: String? = null
+        var userEmail: String? = null
+        var userPassword: String? = null
 
-    private fun setValues(userEmail: String?, userPassword: String?, userName: String?) {
-        if (userEmail!=null && userPassword!=null){
-            sharedViewModel.userEmail.value = userEmail
-            sharedViewModel.userPassword.value = userPassword
+        sharedViewModel.infoToHomeUserName.observe(viewLifecycleOwner) { data ->
+            "$data's plan".also { title.text = it }
+            userName = data
+            checkAndLoadData(userName, userEmail, userPassword)
         }
-
-        if (userName != null ) {
-            sharedViewModel.homeToInfoUserName.value = userName
-            "$userName's plan".also { title.text = it }
-            loadExercisesFromDb(userName)
+        sharedViewModel.infoToHomeUserEmail.observe(viewLifecycleOwner) { data ->
+            userEmail = data
+            checkAndLoadData(userName, userEmail, userPassword)
         }
+        sharedViewModel.infoToHomeUserPassword.observe(viewLifecycleOwner) { data ->
+            userPassword = data
+            checkAndLoadData(userName, userEmail, userPassword)
+        }
+    }
+    private fun initValuesFromActivity(userName: String?, userEmail: String?, userPassword: String?) {
+        if (userEmail != null && userPassword != null) {
+            sharedViewModel.homeToInfoUserEmail.value = userEmail
+            sharedViewModel.homeToInfoUserPassword.value = userPassword
 
-        if(userName == null) {
-            sharedViewModel.infoToHomeUserName.observe(viewLifecycleOwner) { data ->
-                "$data's plan".also { title.text = it }
-                loadExercisesFromDb(data)
+            if (userName != null) {
+                sharedViewModel.homeToInfoUserName.value = userName
+                "$userName's plan".also { title.text = it }
+                loadExercisesFromDb(userName, userEmail, userPassword)
             }
         }
     }
+    private fun checkAndLoadData(userName: String?, userEmail: String?, userPassword: String?) {
+        if (userName != null && userEmail != null && userPassword != null) {
+            loadExercisesFromDb(userName, userEmail, userPassword)
+        }
+    }
     // val numOfQuiz = getNumOfQuiz()
-
    /*
     private fun getNumOfQuiz(): Int {
         val i = intent
@@ -106,8 +112,6 @@ class HomeFragment : Fragment() {
     }
 
     */
-
-
     private fun initViews(view :View) {
         title = view.findViewById(R.id.title)
         recyclerView = view.findViewById(R.id.exercises_list)
@@ -153,31 +157,31 @@ class HomeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
     }*/
-    private fun loadExercisesFromDb(userName: String) {
+    private fun loadExercisesFromDb(userName: String,userEmail: String,userPassword: String) {
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
         exercisesRef.addValueEventListener(object : ValueEventListener {
 
-            override fun onDataChange(snapshot: DataSnapshot) {
+            override fun onDataChange(snapshot: DataSnapshot,) {
                 if (snapshot.exists()) {
                     if (!isUpdate)
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                             allExercises.add(exercise!!)
                         }
-                    setAdapter(userName)
+                    setAdapter(userName,userEmail,userPassword)
                 }
             }
             override fun onCancelled(error: DatabaseError) {}
         })
     }
-    private fun setAdapter(userName: String) {
+    private fun setAdapter(userName: String,userEmail: String,userPassword: String) {
         exerciseAdapter = ExerciseAdapter(allExercises)
         recyclerView.adapter = exerciseAdapter
         exerciseAdapter.setOnItemClickListener(object :
             ExerciseAdapter.OnItemClickListener {
             override fun itemClick(exercise: Exercise) {
-            //    moveToTimerActivity(exercise, userName)
+                moveToTimerActivity(exercise, userName,userEmail,userPassword)
             }
             override fun update(exercise: Exercise, position: Int, increase: Boolean) {
                 updateExerciseLevel(exercise,position, increase, userName)
@@ -261,14 +265,14 @@ class HomeFragment : Fragment() {
             if (oldLevel <= 4L)
                 return oldLevel.plus(1)
             else {
-             //   Toast.makeText(this, "max level!", Toast.LENGTH_SHORT).show()
+               Toast.makeText(context, "max level!", Toast.LENGTH_SHORT).show()
                 return 0
             }
         } else {
             if (oldLevel > 1L)
                 return oldLevel.minus(1)
             else {
-              //  Toast.makeText(this, "min level!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "min level!", Toast.LENGTH_SHORT).show()
                 return 0
             }
         }
@@ -288,8 +292,13 @@ class HomeFragment : Fragment() {
             isUpdate = true
         }
     }
-  /*  private fun moveToTimerActivity(exercise: Exercise, userName: String) {
-        val intent = Intent(this, TimerActivity::class.java)
+    private fun moveToTimerActivity(
+        exercise: Exercise,
+        userName: String,
+        userEmail: String,
+        userPassword:String
+    ) {
+        val intent = Intent(context, TimerActivity::class.java)
 
         intent.putExtra("exName", exercise.name)
         intent.putExtra("exSet", exercise.numOfSets)
@@ -297,8 +306,9 @@ class HomeFragment : Fragment() {
         intent.putExtra("exWeight", exercise.weight)
 
         intent.putExtra("userName", userName)
-        startActivity(intent)
-        finish()
-    }*/
+        intent.putExtra("userEmail", userEmail)
+        intent.putExtra("userPassword", userPassword)
 
+        startActivity(intent)
+    }
 }

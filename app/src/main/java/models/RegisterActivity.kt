@@ -1,9 +1,7 @@
-
 package models
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
@@ -18,9 +16,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.lang.Exception
-
-
-
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var quizTitle: MaterialTextView
@@ -47,7 +42,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private  var isVisible: Boolean = true
     private  var numOfQuiz =0
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
@@ -74,7 +68,6 @@ class RegisterActivity : AppCompatActivity() {
         val i = intent
         numOfQuiz = i.getIntExtra("numOfQuiz",0)
     }
-
     private fun findViews() {
         quizTitle = findViewById(R.id.quiz_title)
         backButton = findViewById(R.id.back_button)
@@ -103,17 +96,12 @@ class RegisterActivity : AppCompatActivity() {
         registerButton = findViewById(R.id.register_button)
         backButton = findViewById(R.id.back_button)
     }
-
     private fun roleSelected(): String {
-
         val checkedRadioButtonId = radioGroup.checkedRadioButtonId
         if (checkedRadioButtonId != -1)
             return findViewById<RadioButton>(checkedRadioButtonId).text.toString()
-
         return ""
-
     }
-
     private fun signUp() {
         val name = nameField.text.toString()
         val email = emailField.text.toString()
@@ -126,16 +114,7 @@ class RegisterActivity : AppCompatActivity() {
 
         if (!checkInput(name, email, password, confirmPassword, height, weight, role))
             return
-
-        if (isVisible) {
-            val myBMI = calculateBMI(height, weight)
-
-            if (myBMI == 0.0)
-                return
-            else
-                makeToast("your BMI: $myBMI")
-        }
-
+        setBMI(height,weight)
 
         FirebaseAuth.getInstance()
             .createUserWithEmailAndPassword(email, password)
@@ -145,14 +124,20 @@ class RegisterActivity : AppCompatActivity() {
                     saveUserData(name, email, role)
                     moveActivity(name, role)
                 } else {
-
                     val exception = createUserTask.exception
                     myError(exception)
-
                 }
             }
     }
-
+    private fun setBMI(height: String, weight: String) {
+        if (isVisible) {
+            val myBMI = calculateBMI(height, weight)
+            if (myBMI == 0.0)
+                return
+            else
+                makeToast("your BMI: $myBMI")
+        }
+    }
     private fun checkRole(role: String): Boolean {
         if (role == "coach") {
             height.visibility = View.INVISIBLE
@@ -172,40 +157,31 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun calculateBMI(heightInput: String, weightInput: String): Double {
 
-        var height = heightInput.toDoubleOrNull()
-        val weight = weightInput.toDoubleOrNull()
+        var height = heightInput.toDoubleOrNull() ?: return 0.0
+        val weight = weightInput.toDoubleOrNull() ?: return 0.0
 
-        if (weight != null && height != null) {
-            if (height > 100)
-                height /= 100
-            return weight / (height * height)
-        }
-
-        return 0.0
+        if (height > 100)
+            height /= 100
+        return weight / (height * height)
 
     }
-
     private fun myError(exception: Exception?) {
         Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
         return
     }
-
     private fun checkInput(
         name: String, email: String, password: String, confirmPassword: String,
         height: String, weight: String, role: String ): Boolean {
 
         if (!isVisible) {
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
-
-            ) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
                 makeToast("some data is missing")
                 return false
             }
-
         }
-
         if (isVisible) {
-            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || height.isEmpty() || weight.isEmpty()) {
+            if (name.isEmpty() || email.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()
+                || height.isEmpty() || weight.isEmpty()) {
                 makeToast("some data is missing")
                 return false
             }
@@ -218,7 +194,6 @@ class RegisterActivity : AppCompatActivity() {
             makeToast("password must be least 6 character")
             return false
         }
-
         if (password != confirmPassword) {
             makeToast("Passwords do not match")
             return false
@@ -227,19 +202,15 @@ class RegisterActivity : AppCompatActivity() {
             makeToast("no role selected")
             return false
         }
-
         if (isVisible && (height <= 0.toString() || weight <= 0.toString())) {
             makeToast("must be positive number")
             return false
         }
-
         return true
     }
-
     private fun makeToast(message :String){
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
     private fun moveActivity(name: String, role: String) {
         if(role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
@@ -253,9 +224,7 @@ class RegisterActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
         }
-
     }
-
     private fun saveUserData(name: String, email: String, role: String) {
 
         val sName = name.trim()
@@ -263,21 +232,16 @@ class RegisterActivity : AppCompatActivity() {
         val sRole = role.trim()
 
         val userMap = hashMapOf(
-
             "name" to sName,
             "email" to sEmail,
             "role" to sRole
-
         )
-
-
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 
         db.collection("user").document(userId).set(userMap).addOnSuccessListener {
             nameField.text?.clear()
             emailField.text?.clear()
-
             makeToast("Success")
         }
             .addOnFailureListener {

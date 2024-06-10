@@ -84,7 +84,6 @@ class HealthQuizActivity : AppCompatActivity() {
         )
         //13 question
     )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_healthquiz)
@@ -96,10 +95,8 @@ class HealthQuizActivity : AppCompatActivity() {
 
         submitButton.setOnClickListener { selectAnswer(numOfQuiz, userName) }
     }
-
     private fun getNumOfQuiz(): Int {
-        val i = intent
-        return i.getIntExtra("numOfQuiz", 0)
+        return intent.getIntExtra("numOfQuiz", 0)
     }
     private fun initViews() {
         questionTextView = findViewById(R.id.question_text_view)
@@ -108,8 +105,7 @@ class HealthQuizActivity : AppCompatActivity() {
         allExercises = arrayListOf()
     }
     private fun getUserName(): String {
-        val i = intent
-        return i.getStringExtra("userName").toString()
+       return intent.getStringExtra("userName").toString()
     }
     private fun selectAnswer(numOfQuiz: Int, userName: String) {
 
@@ -164,14 +160,12 @@ class HealthQuizActivity : AppCompatActivity() {
             .addOnSuccessListener { result ->
                 for (document in result)
                     getExercisesData(document)
-
                 setExList()
                 exercisesRef.setValue(allExercises)
             }
             .addOnFailureListener { exception ->Log.w("debug", "Error getting documents.", exception)
             }
     }
-
     private fun getExercisesData(document: QueryDocumentSnapshot) {
 
         val level = document.getLong("difficult_level")?: return
@@ -180,7 +174,6 @@ class HealthQuizActivity : AppCompatActivity() {
 
         addExercise(level, name, type)
     }
-
     private fun setExList() {
 
         val max1 = 1; val max2 = 2
@@ -260,7 +253,6 @@ class HealthQuizActivity : AppCompatActivity() {
             }
         }
     }
-
     private fun moveToMainActivity(userName: String, numOfQuiz: Int) {
         val i = Intent(this, MainActivity::class.java)
         i.putExtra("userName", userName)

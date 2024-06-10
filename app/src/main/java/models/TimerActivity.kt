@@ -87,15 +87,11 @@ class TimerActivity : AppCompatActivity() {
             }
         })
     }
-
     private fun getUserData()  {
-
         userName = intent.getStringExtra("userName").toString()
         userEmail = intent.getStringExtra("userEmail").toString()
         userPassword = intent.getStringExtra("userPassword").toString()
-
     }
-
     private fun getExerciseData() {
         val intent = intent
 
@@ -104,7 +100,6 @@ class TimerActivity : AppCompatActivity() {
         repetitionsNumberTextView.text = intent.getStringExtra("exRep").toString()
         weightNumberTextView.text = intent.getStringExtra("exWeight").toString()
     }
-
     private fun initializeViews() {
         exerciseNameTextView = findViewById(R.id.exercise_name)
         theNameTextView = findViewById(R.id.the_name)
@@ -124,7 +119,6 @@ class TimerActivity : AppCompatActivity() {
         finishButton = findViewById(R.id.finish_button)
         backButton = findViewById(R.id.back_button)
     }
-
     private fun getLinkFromDB() {
         val db = FirebaseFirestore.getInstance()
         val exercisesCollection = db.collection("exercises")
@@ -135,17 +129,12 @@ class TimerActivity : AppCompatActivity() {
             }
             .addOnFailureListener {exception ->Log.w("TAG", "Error getting documents.", exception)}
     }
-
     private fun getImage(document: QueryDocumentSnapshot) {
         val name = document.getString("exercise_name") ?: return
         val link = document.getString("link") ?: return
-
         uploadImage(name, link)
-
     }
-
     private fun uploadImage(name: String, link: String) {
-
         if (name == theNameTextView.text)
             Glide
                 .with(this)
@@ -154,16 +143,12 @@ class TimerActivity : AppCompatActivity() {
                 .placeholder(R.drawable.ic_launcher_background)
                 .into(exerciseGif)
     }
-
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         val intent = Intent(this, MainActivity::class.java)
-
         intent.putExtra("userName", userName)
         intent.putExtra("userEmail", userEmail)
         intent.putExtra("userPassword", userPassword)
-
         startActivity(intent)
         finish()
     }

@@ -16,15 +16,11 @@ import fragments.HomeFragment
 import fragments.InfoFragment
 import fragments.SettingFragment
 import fragments.ShareFragment
-
-
 class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var navigationView: NavigationView
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
@@ -54,30 +50,24 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         val toggle = ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open_nav,R.string.close_nav)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
     }
-
     private fun replaceFragment(fragment:Fragment){
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container,fragment)
         transaction.commit()
 
     }
-
     override fun onBackPressed(){
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START)
         else
             onBackPressedDispatcher.onBackPressed()
     }
-
     private fun moveToStart() {
         val intent = Intent(this, StartPage::class.java)
         startActivity(intent)
         finish()
-
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when(item.itemId){

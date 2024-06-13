@@ -14,7 +14,7 @@
         <item
             android:id="@+id/nav_setting"
             android:icon="@drawable/baseline_settings_24"
-            android:title="setting"/>
+            android:title="training History"/>
 
         <item
             android:id="@+id/nav_share"

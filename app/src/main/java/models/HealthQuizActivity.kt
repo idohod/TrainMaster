@@ -27,6 +27,12 @@ class HealthQuizActivity : AppCompatActivity() {
     private var score = 0
     private var temp = 0
 
+    private lateinit var userName: String
+    private lateinit var userEmail: String
+    private lateinit var userPassword:String
+    private  var numOfQuiz: Int = 0
+
+
     // Define your list of questions here
     private val questions = listOf(
         Question(
@@ -89,11 +95,11 @@ class HealthQuizActivity : AppCompatActivity() {
         setContentView(R.layout.activity_healthquiz)
 
         initViews()
-        val userName = getUserName()
-        val numOfQuiz = getNumOfQuiz()
+        getUserData()
+        numOfQuiz = getNumOfQuiz()
         displayQuestion(currentQuestionIndex)
 
-        submitButton.setOnClickListener { selectAnswer(numOfQuiz, userName) }
+        submitButton.setOnClickListener { selectAnswer() }
     }
     private fun getNumOfQuiz(): Int {
         return intent.getIntExtra("numOfQuiz", 0)
@@ -104,16 +110,19 @@ class HealthQuizActivity : AppCompatActivity() {
         submitButton = findViewById(R.id.submit_button)
         allExercises = arrayListOf()
     }
-    private fun getUserName(): String {
-       return intent.getStringExtra("userName").toString()
+    private fun getUserData() {
+         userName = intent.getStringExtra("userName").toString()
+         userEmail = intent.getStringExtra("userEmail").toString()
+         userPassword = intent.getStringExtra("userPassword").toString()
+
     }
-    private fun selectAnswer(numOfQuiz: Int, userName: String) {
+    private fun selectAnswer() {
 
         val selectedRadioButtonId = questionRadioGroup.checkedRadioButtonId
         if (selectedRadioButtonId - temp > 0) {
             temp = selectedRadioButtonId
             findViewById<RadioButton>(selectedRadioButtonId)
-            checkAnswer(numOfQuiz, userName)
+            checkAnswer()
         } else {
             Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
             return
@@ -129,27 +138,27 @@ class HealthQuizActivity : AppCompatActivity() {
             questionRadioGroup.addView(radioButton)
         }
     }
-    private fun checkAnswer(numOfQuiz: Int, userName: String) {
+    private fun checkAnswer() {
         var id = questionRadioGroup.checkedRadioButtonId
         id -= numOfQuiz * 39
         id -= currentQuestionIndex * 3
         score += id
 // score 13 - 39
-        moveQuestion(numOfQuiz, userName)
+        moveQuestion()
     }
-    private fun moveQuestion(numOfQuiz: Int, userName: String) {
+    private fun moveQuestion() {
         currentQuestionIndex++
         if (currentQuestionIndex < questions.size) {
             displayQuestion(currentQuestionIndex)
         } else {
             // Quiz completed
-            numOfQuiz + 1
-            loadExercises(userName)
-            moveToMainActivity(userName, numOfQuiz)
+            numOfQuiz += 1
+            loadExercises()
+            moveToMenuActivity()
         }
     }
 
-    private fun loadExercises(userName: String) {
+    private fun loadExercises() {
         val firestore = FirebaseFirestore.getInstance()
         val exercisesCollection = firestore.collection("exercises")
 
@@ -253,9 +262,11 @@ class HealthQuizActivity : AppCompatActivity() {
             }
         }
     }
-    private fun moveToMainActivity(userName: String, numOfQuiz: Int) {
-        val i = Intent(this, MainActivity::class.java)
+    private fun moveToMenuActivity() {
+        val i = Intent(this, MenuActivity::class.java)
         i.putExtra("userName", userName)
+        i.putExtra("userEmail", userEmail)
+        i.putExtra("userPassword", userPassword)
         i.putExtra("numOfQuiz", numOfQuiz)
         startActivity(i)
         finish()

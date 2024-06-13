@@ -2,23 +2,26 @@ package fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
 import com.google.android.material.textview.MaterialTextView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
-import models.SharedViewModel
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter
@@ -30,88 +33,36 @@ class HomeFragment : Fragment() {
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercises: ArrayList<Exercise>
     private var isUpdate = false
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var userName:String
 
-    companion object {
-        private const val ARG_USER_NAME = "name"
-        private const val ARG_USER_EMAIL = "email"
-        private const val ARG_USER_PASSWORD = "password"
-
-        fun newInstance(userName: String, userEmail: String,userPassword: String): HomeFragment {
-            val fragment = HomeFragment()
-            val args = Bundle()
-            args.putString(ARG_USER_NAME, userName)
-            args.putString(ARG_USER_EMAIL, userEmail)
-            args.putString(ARG_USER_PASSWORD, userPassword)
-
-            fragment.arguments = args
-            return fragment
-        }
-    }
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         initViews(view)
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        val userName = arguments?.getString(ARG_USER_NAME)
-        val userEmail = arguments?.getString(ARG_USER_EMAIL)
-        val userPassword = arguments?.getString(ARG_USER_PASSWORD)
-
-        initValuesFromActivity(userName,userEmail,userPassword)
-        initValuesFromFragment()
+        initValues()
 
         return view
     }
-    private fun initValuesFromFragment() {
-        var userName: String? = null
-        var userEmail: String? = null
-        var userPassword: String? = null
 
-        sharedViewModel.infoToHomeUserName.observe(viewLifecycleOwner) { data ->
-            "$data's plan".also { title.text = it }
-            userName = data
-            checkAndLoadData(userName, userEmail, userPassword)
-        }
-        sharedViewModel.infoToHomeUserEmail.observe(viewLifecycleOwner) { data ->
-            userEmail = data
-            checkAndLoadData(userName, userEmail, userPassword)
-        }
-        sharedViewModel.infoToHomeUserPassword.observe(viewLifecycleOwner) { data ->
-            userPassword = data
-            checkAndLoadData(userName, userEmail, userPassword)
-        }
-    }
-    private fun initValuesFromActivity(userName: String?, userEmail: String?, userPassword: String?) {
-        if (userEmail != null && userPassword != null) {
-            sharedViewModel.homeToInfoUserEmail.value = userEmail
-            sharedViewModel.homeToInfoUserPassword.value = userPassword
+    private fun initValues() {
+        val db = Firebase.firestore
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = db.collection("user").document(userId)
 
-            if (userName != null) {
-                sharedViewModel.homeToInfoUserName.value = userName
-                "$userName's plan".also { title.text = it }
-                loadExercisesFromDb(userName, userEmail, userPassword)
-            }
+        ref.get().addOnSuccessListener {
+            if (it != null)
+                getUserData(it)
         }
-    }
-    private fun checkAndLoadData(userName: String?, userEmail: String?, userPassword: String?) {
-        if (userName != null && userEmail != null && userPassword != null) {
-            loadExercisesFromDb(userName, userEmail, userPassword)
-        }
-    }
-    // val numOfQuiz = getNumOfQuiz()
-   /*
-    private fun getNumOfQuiz(): Int {
-        val i = intent
-        return i.getIntExtra("numOfQuiz", 0)
-    }
-    private fun changeUser(numOfQuiz: Int) {
-        val intent = Intent(this, StartPage::class.java)
-        intent.putExtra("numOfQuiz", numOfQuiz)
-        startActivity(intent)
+            .addOnFailureListener {exception -> Log.w("TAG", "Error getting documents.", exception)}
     }
 
-    */
+    private fun getUserData(it: DocumentSnapshot) {
+         userName= it.data?.get("name")?.toString() ?: return
+        "$userName's plan".also { title.text = it }
+        loadExercisesFromDb(userName)
+
+    }
+
     private fun initViews(view :View) {
         title = view.findViewById(R.id.title)
         recyclerView = view.findViewById(R.id.exercises_list)
@@ -119,12 +70,7 @@ class HomeFragment : Fragment() {
         recyclerView.setHasFixedSize(true)
         allExercises = arrayListOf()
     }
-   /* private fun getUserName(): String {
-        val i = intent
-        val userName = i.getStringExtra("userName").toString()
-        "$userName's plan".also { title.text = it }
-        return userName
-    }*/
+
     /*private fun removeExercisesFromDb(userName: String) {
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
@@ -157,7 +103,7 @@ class HomeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
     }*/
-    private fun loadExercisesFromDb(userName: String,userEmail: String,userPassword: String) {
+    private fun loadExercisesFromDb(userName: String) {
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
         exercisesRef.addValueEventListener(object : ValueEventListener {
@@ -169,19 +115,19 @@ class HomeFragment : Fragment() {
                             val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                             allExercises.add(exercise!!)
                         }
-                    setAdapter(userName,userEmail,userPassword)
+                    setAdapter(userName)
                 }
             }
             override fun onCancelled(error: DatabaseError) {}
         })
     }
-    private fun setAdapter(userName: String,userEmail: String,userPassword: String) {
+    private fun setAdapter(userName: String) {
         exerciseAdapter = ExerciseAdapter(allExercises)
         recyclerView.adapter = exerciseAdapter
         exerciseAdapter.setOnItemClickListener(object :
             ExerciseAdapter.OnItemClickListener {
             override fun itemClick(exercise: Exercise) {
-                moveToTimerActivity(exercise, userName,userEmail,userPassword)
+                moveToTimerActivity(exercise)
             }
             override fun update(exercise: Exercise, position: Int, increase: Boolean) {
                 updateExerciseLevel(exercise,position, increase, userName)
@@ -293,10 +239,8 @@ class HomeFragment : Fragment() {
         }
     }
     private fun moveToTimerActivity(
-        exercise: Exercise,
-        userName: String,
-        userEmail: String,
-        userPassword:String
+        exercise: Exercise
+
     ) {
         val intent = Intent(context, TimerActivity::class.java)
 
@@ -304,11 +248,6 @@ class HomeFragment : Fragment() {
         intent.putExtra("exSet", exercise.numOfSets)
         intent.putExtra("exRep", exercise.numOfReps)
         intent.putExtra("exWeight", exercise.weight)
-
-        intent.putExtra("userName", userName)
-        intent.putExtra("userEmail", userEmail)
-        intent.putExtra("userPassword", userPassword)
-
         startActivity(intent)
     }
 }

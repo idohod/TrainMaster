@@ -57,9 +57,6 @@ class TimerActivity : AppCompatActivity() {
 
     private fun backToPlan() {
         val intent = Intent(this, MenuActivity::class.java)
-        intent.putExtra("userName", userName)
-        intent.putExtra("userEmail", userEmail)
-        intent.putExtra("userPassword", userPassword)
 
         startActivity(intent)
         finish()

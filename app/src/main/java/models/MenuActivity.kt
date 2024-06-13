@@ -14,28 +14,29 @@ import androidx.fragment.app.FragmentTransaction
 import com.example.finalproject.R
 import fragments.HomeFragment
 import fragments.InfoFragment
-import fragments.SettingFragment
+import fragments.HistoryFragment
 import fragments.ShareFragment
 class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener{
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
     private lateinit var navigationView: NavigationView
+    private var numOfQuiz:Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         initViews()
-
-        val userName = intent.getStringExtra("userName")
-        val userEmail = intent.getStringExtra("userEmail")
-        val userPassword = intent.getStringExtra("userPassword")
-
-        val fragment = HomeFragment.newInstance(userName ?: "", userEmail ?: "",userPassword?:"")
+        getNumOfQuiz()
 
         if(savedInstanceState ==null){
-            replaceFragment(fragment)
+            replaceFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_home)
         }
+    }
+
+    private fun getNumOfQuiz() {
+        numOfQuiz = intent.getIntExtra("numOfQuiz",0)
     }
 
     private fun initViews() {
@@ -65,6 +66,7 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     }
     private fun moveToStart() {
         val intent = Intent(this, StartPage::class.java)
+        intent.putExtra("numOfQuiz",numOfQuiz)
         startActivity(intent)
         finish()
     }
@@ -72,7 +74,7 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
 
         when(item.itemId){
             R.id.nav_home->replaceFragment(HomeFragment())
-            R.id.nav_setting->replaceFragment(SettingFragment())
+            R.id.nav_setting->replaceFragment(HistoryFragment())
             R.id.nav_share->replaceFragment(ShareFragment())
             R.id.nav_info->replaceFragment(InfoFragment())
             R.id.nav_logout->moveToStart()
@@ -82,3 +84,4 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         return true
     }
 }
+

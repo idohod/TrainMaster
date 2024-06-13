@@ -66,8 +66,17 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
     }
-    private fun moveActivity(name: String, role: String, email: String, password: String) {
+    private fun moveActivity(
+        name: String,
+        role: String,
+        email: String,
+        password: String,
+        trainingHistory: String
+    ) {
+
         if (role == "trainee") {
+            updateTrainingHistory(trainingHistory)
+
             val intent = Intent(this, MenuActivity::class.java)
             intent.putExtra("userName", name)
             intent.putExtra("userEmail", email)
@@ -80,6 +89,30 @@ class SignInActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    fun updateTrainingHistory(trainingHistory: String) {
+        var temp = trainingHistory.toInt()
+        temp += 1
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            val userId = user.uid
+            val db = Firebase.firestore
+            db.collection("user").document(userId).update("trainingHistory", temp.toString())
+                .addOnSuccessListener {
+                   Log.d("trainingHistory","Field updated successfully")
+                }
+                .addOnFailureListener { e ->
+                    Log.d("trainingHistory","${e.message}")
+                }
+        } else {
+            Log.d("trainingHistory","User is not authenticated")
+        }
+    }
+
+    private fun getUserHistory(it: DocumentSnapshot): String {
+        return it.data?.get("trainingHistory")?.toString() ?: return ""
+    }
+
     private fun loadUserData(password: String) {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -96,7 +129,13 @@ class SignInActivity : AppCompatActivity() {
         val role = it.data?.get("role")?.toString() ?: return
         val email = it.data?.get("email")?.toString() ?: return
 
-        moveActivity(name, role,email,password)
+        if(role == "trainee") {
+            val trainingHistory = it.data?.get("trainingHistory")?.toString() ?: return
+            moveActivity(name, role, email, password, trainingHistory)
+        }
+        else
+            moveActivity(name, role, email, password, "0")
+
     }
     override fun onBackPressed() {
         startActivity(Intent(this,StartPage::class.java))

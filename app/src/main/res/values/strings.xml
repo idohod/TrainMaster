@@ -77,6 +77,8 @@
     <string name="your_email">Your Email:</string>
     <string name="yourmail_gmail_com">yourmail@gmail.com</string>
     <string name="user_password">user password</string>
+    <string name="_1">1</string>
+    <string name="training_history">training History:</string>
 
 
 </resources>

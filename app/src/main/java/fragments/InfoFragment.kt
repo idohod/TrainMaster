@@ -1,56 +1,53 @@
 package fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.ViewModelProvider
 import com.example.finalproject.R
-import models.SharedViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 class InfoFragment : Fragment() {
 
-    private lateinit var yourName:TextView
-    private lateinit var yourEmail:TextView
-    private lateinit var yourPassword:TextView
+    private lateinit var yourName: TextView
+    private lateinit var yourEmail: TextView
+    private lateinit var yourPassword: TextView
 
-    private lateinit var userName:TextView
-    private lateinit var userEmail:TextView
-    private lateinit var userPassword:TextView
+    private lateinit var userName: TextView
+    private lateinit var userEmail: TextView
+    private lateinit var userPassword: TextView
 
-    private lateinit var sharedViewModel: SharedViewModel
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
 
         val view = inflater.inflate(R.layout.fragment_info, container, false)
         findViews(view)
-        initData()
+        initValues()
         return view
     }
-    override fun onPause() {
-        super.onPause()
-        val name = userName.text.toString()
-        sharedViewModel.infoToHomeUserName.value = name
 
-        val email = userEmail.text.toString()
-        sharedViewModel.infoToHomeUserEmail.value = email
+    private fun initValues() {
+        val db = Firebase.firestore
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val ref = db.collection("user").document(userId)
 
-        val password = userPassword.text.toString()
-        sharedViewModel.infoToHomeUserPassword.value = password
+        ref.get().addOnSuccessListener {
+            if (it != null)
+                getUserData(it)
+        }
+            .addOnFailureListener { exception ->Log.w("TAG","Error getting documents.",exception)}
     }
-    private fun initData() {
-        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-
-        sharedViewModel.homeToInfoUserName.observe(viewLifecycleOwner) { data ->
-            userName.text = data
-        }
-        sharedViewModel.homeToInfoUserEmail.observe(viewLifecycleOwner) { data ->
-            userEmail.text = data
-        }
-        sharedViewModel.homeToInfoUserPassword.observe(viewLifecycleOwner) { data ->
-            userPassword.text = data
-        }
+    private fun getUserData(it: DocumentSnapshot) {
+        userName.text = it.data?.get("name")?.toString() ?: return
+        userEmail.text = it.data?.get("email")?.toString() ?: return
+        userPassword.text = it.data?.get("password")?.toString() ?: return
     }
     private fun findViews(view: View) {
         yourName = view.findViewById(R.id.fragment_user_name)

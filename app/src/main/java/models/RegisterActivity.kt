@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
@@ -121,11 +122,10 @@ class RegisterActivity : AppCompatActivity() {
             .addOnCompleteListener { createUserTask ->
                 if (createUserTask.isSuccessful) {
                     // new user
-                    saveUserData(name, email, role)
-                    moveActivity(name, role)
+                    saveUserData(name, email, role,password)
+                    moveActivity(name, role,email,password)
                 } else {
-                    val exception = createUserTask.exception
-                    myError(exception)
+                    makeToast("this email in use")
                 }
             }
     }
@@ -165,10 +165,7 @@ class RegisterActivity : AppCompatActivity() {
         return weight / (height * height)
 
     }
-    private fun myError(exception: Exception?) {
-        Toast.makeText(this, exception.toString(), Toast.LENGTH_SHORT).show()
-        return
-    }
+
     private fun checkInput(
         name: String, email: String, password: String, confirmPassword: String,
         height: String, weight: String, role: String ): Boolean {
@@ -208,33 +205,42 @@ class RegisterActivity : AppCompatActivity() {
         }
         return true
     }
-    private fun makeToast(message :String){
+    private fun makeToast(message :String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-    private fun moveActivity(name: String, role: String) {
+
+    private fun moveActivity(name: String, role: String, email: String, password: String) {
         if(role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
             startActivity(i)
         } else if (role == "trainee") {
             val i = Intent(this, HealthQuizActivity::class.java)
             i.putExtra("userName", name)
+            i.putExtra("userEmail", email)
+            i.putExtra("userPassword", password)
             i.putExtra("numOfQuiz",numOfQuiz)
+
             startActivity(i)
             finish()
         } else {
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
         }
     }
-    private fun saveUserData(name: String, email: String, role: String) {
+    private fun saveUserData(name: String, email: String, role: String, password: String) {
 
         val sName = name.trim()
         val sEmail = email.trim()
         val sRole = role.trim()
+        val sPassword = password.trim()
+        val trainingHistory = "1"
 
         val userMap = hashMapOf(
             "name" to sName,
             "email" to sEmail,
-            "role" to sRole
+            "password" to sPassword,
+            "role" to sRole,
+            "trainingHistory" to trainingHistory
+
         )
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore

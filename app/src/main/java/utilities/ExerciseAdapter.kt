@@ -2,9 +2,9 @@ package utilities
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.finalproject.R
+import com.google.android.material.imageview.ShapeableImageView
 import com.google.android.material.textview.MaterialTextView
 
 class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
@@ -46,8 +46,8 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
 
     inner class ExerciseViewHolder(itemView: View, listener: OnItemClickListener) :
         RecyclerView.ViewHolder(itemView) {
-        private lateinit var increase: TextView
-        private lateinit var decrease: TextView
+        private lateinit var increase: MaterialTextView
+        private lateinit var decrease: MaterialTextView
         private lateinit var exerciseNameText: MaterialTextView
         lateinit var theName: MaterialTextView
         private lateinit var setText: MaterialTextView
@@ -56,7 +56,8 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
         lateinit var theRepetitions: MaterialTextView
         private lateinit var weightText: MaterialTextView
         lateinit var theWeight: MaterialTextView
-
+        private lateinit var increaseImage: ShapeableImageView
+        private lateinit var decreaseImage:ShapeableImageView
         init {
             findViews()
 
@@ -87,6 +88,8 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
             theRepetitions = itemView.findViewById(R.id.repetitions_number)
             weightText = itemView.findViewById(R.id.weight_text)
             theWeight = itemView.findViewById(R.id.weight_number)
+            increaseImage =itemView.findViewById(R.id.upgrade_image)
+            decreaseImage =itemView.findViewById(R.id.downward_image)
         }
     }
 }

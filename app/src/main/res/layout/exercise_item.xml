@@ -71,7 +71,7 @@
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/increase"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -80,6 +80,16 @@
                 android:textSize="16sp"
                 android:layout_marginStart="50dp"
                 android:layout_gravity="center_vertical"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/upgrade_image"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                app:srcCompat="@drawable/baseline_arrow_upward_24"
+
+                />
+
+
 
         </LinearLayout>
 
@@ -109,7 +119,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_gravity="center_vertical"/>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/decrease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -118,6 +128,14 @@
                 android:textSize="16sp"
                 android:layout_marginStart="50dp"
                 android:layout_gravity="center_vertical"/>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/downward_image"
+                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                app:srcCompat="@drawable/baseline_arrow_downward_24"
+
+                />
 
         </LinearLayout>
 

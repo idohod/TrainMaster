@@ -5,8 +5,8 @@
     <string name="change_user">change user</string>
     <string name="add_exercise">add exercise</string>
     <string name="back">back</string>
-    <string name="too_easy">too easy! ^</string>
-    <string name="too_hard">too hard! v</string>
+    <string name="too_easy">too easy!</string>
+    <string name="too_hard">too hard! </string>
     <!--menu activity-->
     <string name="open_nav">open nav</string>
     <string name="close_nav">close nav</string>

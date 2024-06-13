@@ -22,7 +22,6 @@ class SignInActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in)
         findViews()
-
         signInButton.setOnClickListener { start() }
         backButton.setOnClickListener { backToStart() }
     }
@@ -66,13 +65,7 @@ class SignInActivity : AppCompatActivity() {
                 }
             }
     }
-    private fun moveActivity(
-        name: String,
-        role: String,
-        email: String,
-        password: String,
-        trainingHistory: String
-    ) {
+    private fun moveActivity(name: String,role: String,email: String,password: String,trainingHistory: String) {
 
         if (role == "trainee") {
             updateTrainingHistory(trainingHistory)
@@ -89,8 +82,7 @@ class SignInActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    fun updateTrainingHistory(trainingHistory: String) {
+    private fun updateTrainingHistory(trainingHistory: String) {
         var temp = trainingHistory.toInt()
         temp += 1
         val user = FirebaseAuth.getInstance().currentUser
@@ -99,7 +91,7 @@ class SignInActivity : AppCompatActivity() {
             val db = Firebase.firestore
             db.collection("user").document(userId).update("trainingHistory", temp.toString())
                 .addOnSuccessListener {
-                   Log.d("trainingHistory","Field updated successfully")
+                    Log.d("trainingHistory","Field updated successfully")
                 }
                 .addOnFailureListener { e ->
                     Log.d("trainingHistory","${e.message}")
@@ -107,10 +99,6 @@ class SignInActivity : AppCompatActivity() {
         } else {
             Log.d("trainingHistory","User is not authenticated")
         }
-    }
-
-    private fun getUserHistory(it: DocumentSnapshot): String {
-        return it.data?.get("trainingHistory")?.toString() ?: return ""
     }
 
     private fun loadUserData(password: String) {
@@ -135,7 +123,6 @@ class SignInActivity : AppCompatActivity() {
         }
         else
             moveActivity(name, role, email, password, "0")
-
     }
     override fun onBackPressed() {
         startActivity(Intent(this,StartPage::class.java))

@@ -2,7 +2,6 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
@@ -16,7 +15,8 @@ import com.google.android.material.textview.MaterialTextView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import java.lang.Exception
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var quizTitle: MaterialTextView
@@ -124,9 +124,9 @@ class RegisterActivity : AppCompatActivity() {
                     // new user
                     saveUserData(name, email, role,password)
                     moveActivity(name, role,email,password)
-                } else {
+                } else
                     makeToast("this email in use")
-                }
+
             }
     }
     private fun setBMI(height: String, weight: String) {
@@ -223,7 +223,7 @@ class RegisterActivity : AppCompatActivity() {
             startActivity(i)
             finish()
         } else {
-            Toast.makeText(this, "error", Toast.LENGTH_SHORT).show()
+            makeToast("error")
         }
     }
     private fun saveUserData(name: String, email: String, role: String, password: String) {
@@ -234,14 +234,18 @@ class RegisterActivity : AppCompatActivity() {
         val sPassword = password.trim()
         val trainingHistory = "1"
 
+        val dateTime =getTime()
+        val loginTimes = arrayListOf(dateTime)
+
         val userMap = hashMapOf(
             "name" to sName,
             "email" to sEmail,
             "password" to sPassword,
             "role" to sRole,
-            "trainingHistory" to trainingHistory
-
+            "trainingHistory" to trainingHistory,
+            "loginTimes" to loginTimes
         )
+
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 
@@ -250,8 +254,10 @@ class RegisterActivity : AppCompatActivity() {
             emailField.text?.clear()
             makeToast("Success")
         }
-            .addOnFailureListener {
-                makeToast("Failure")
-            }
+    }
+    private fun getTime(): String {
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return currentDateTime.format(formatter)
     }
 }

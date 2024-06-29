@@ -13,8 +13,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-
-
 class HistoryFragment : Fragment() {
     private lateinit var historyNumber: TextView
     private lateinit var historyText: TextView
@@ -34,13 +32,12 @@ class HistoryFragment : Fragment() {
     private fun displayDates() {
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
-        getLoginTimesFromFirestore(userId) { loginTimes ->
+        getLoginTimes(userId) { loginTimes ->
             val allLoginTimes = loginTimes.joinToString(separator = "\n")
             Log.d("dateAndTime", allLoginTimes)
             dates.text = allLoginTimes
         }
     }
-
     private fun getHistoryNumber() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -63,9 +60,7 @@ class HistoryFragment : Fragment() {
         dates = view.findViewById(R.id.date)
         trainingList = view.findViewById(R.id.training_list)
     }
-
-
-    private fun getLoginTimesFromFirestore(userId: String, callback: (List<String>) -> Unit) {
+    private fun getLoginTimes(userId: String, callback: (List<String>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val userDocRef = db.collection("user").document(userId)
 
@@ -79,7 +74,4 @@ class HistoryFragment : Fragment() {
             }
             .addOnFailureListener {callback(emptyList())}
     }
-
-
-
 }

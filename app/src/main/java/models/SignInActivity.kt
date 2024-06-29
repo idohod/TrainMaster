@@ -10,9 +10,15 @@ import com.example.finalproject.R
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
 class SignInActivity : AppCompatActivity() {
     private lateinit var emailField: TextInputEditText
     private lateinit var passwordField: TextInputEditText
@@ -69,6 +75,7 @@ class SignInActivity : AppCompatActivity() {
 
         if (role == "trainee") {
             updateTrainingHistory(trainingHistory)
+            saveDateTime()
 
             val intent = Intent(this, MenuActivity::class.java)
             intent.putExtra("userName", name)
@@ -82,6 +89,40 @@ class SignInActivity : AppCompatActivity() {
             finish()
         }
     }
+
+    private fun saveDateTime() {
+        val db = FirebaseFirestore.getInstance()
+        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        val userDocRef = db.collection("user").document(userId)
+
+        val formattedDateTime = getTime()
+
+        userDocRef.get().addOnSuccessListener { document ->
+            if (document.exists())
+                updateTimes(document, formattedDateTime, userDocRef)
+            else
+                initDocument(userDocRef, formattedDateTime)
+        }
+    }
+
+    private fun getTime(): String {
+        val currentDateTime = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        return currentDateTime.format(formatter)
+    }
+
+    private fun initDocument(userDocRef: DocumentReference, formattedDateTime: String) {
+        val loginTimes = arrayListOf(formattedDateTime)
+        userDocRef.set(mapOf("loginTimes" to loginTimes))
+    }
+
+    private fun updateTimes(document: DocumentSnapshot,formattedDateTime: String,userDocRef: DocumentReference) {
+
+        val loginTimes = document.get("loginTimes") as? ArrayList<String> ?: arrayListOf()
+        loginTimes.add(formattedDateTime)
+        userDocRef.update("loginTimes", loginTimes)
+    }
+
     private fun updateTrainingHistory(trainingHistory: String) {
         var temp = trainingHistory.toInt()
         temp += 1
@@ -90,14 +131,6 @@ class SignInActivity : AppCompatActivity() {
             val userId = user.uid
             val db = Firebase.firestore
             db.collection("user").document(userId).update("trainingHistory", temp.toString())
-                .addOnSuccessListener {
-                    Log.d("trainingHistory","Field updated successfully")
-                }
-                .addOnFailureListener { e ->
-                    Log.d("trainingHistory","${e.message}")
-                }
-        } else {
-            Log.d("trainingHistory","User is not authenticated")
         }
     }
 

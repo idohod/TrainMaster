@@ -28,7 +28,6 @@ class HistoryFragment : Fragment() {
 
         return view
     }
-
     private fun displayDates() {
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
 
@@ -64,14 +63,13 @@ class HistoryFragment : Fragment() {
         val db = FirebaseFirestore.getInstance()
         val userDocRef = db.collection("user").document(userId)
 
-        userDocRef.get()
-            .addOnSuccessListener { document ->
+        userDocRef.get().addOnSuccessListener { document ->
                 if (document.exists()) {
-                    val loginTimes = document.get("loginTimes") as? List<String> ?: emptyList()
-                    callback(loginTimes)
+                    val loginTimes = document.get("loginTimes") as? List<*> ?: emptyList<Any>()
+                    callback(loginTimes.filterIsInstance<String>())
                 } else
                     callback(emptyList())
             }
-            .addOnFailureListener {callback(emptyList())}
+            .addOnFailureListener {callback(emptyList()) }
     }
 }

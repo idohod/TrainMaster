@@ -137,7 +137,7 @@ class TimerActivity : AppCompatActivity() {
                 .with(this)
                 .load(link)
                 .centerCrop()
-                .placeholder(R.drawable.ic_launcher_background)
+                .placeholder(R.drawable.ic_gray_background)
                 .into(exerciseGif)
     }
     @Deprecated("Deprecated in Java")

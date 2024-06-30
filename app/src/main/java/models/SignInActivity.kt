@@ -15,7 +15,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -116,12 +115,15 @@ class SignInActivity : AppCompatActivity() {
         userDocRef.set(mapOf("loginTimes" to loginTimes))
     }
 
-    private fun updateTimes(document: DocumentSnapshot,formattedDateTime: String,userDocRef: DocumentReference) {
+    private fun updateTimes(document: DocumentSnapshot, formattedDateTime: String, userDocRef: DocumentReference) {
 
-        val loginTimes = document.get("loginTimes") as? ArrayList<String> ?: arrayListOf()
-        loginTimes.add(formattedDateTime)
-        userDocRef.update("loginTimes", loginTimes)
+        val loginTimes = document.get("loginTimes") as? List<*> ?: emptyList<Any>()
+        val loginTimesList = ArrayList(loginTimes.filterIsInstance<String>())
+
+        loginTimesList.add(formattedDateTime)
+        userDocRef.update("loginTimes", loginTimesList)
     }
+
 
     private fun updateTrainingHistory(trainingHistory: String) {
         var temp = trainingHistory.toInt()

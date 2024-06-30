@@ -1,9 +1,10 @@
 # TrainMaster 
-TrainMaster is a comprehensive fitness application designed to provide personalized exercise plans and facilitate communication between trainees and coaches. The app tailors exercise routines based on user inputs and allows both trainees and coaches to manage and track training progress effectively.
+TrainMaster is a comprehensive fitness application designed to provide personalized exercise plans and facilitate communication between trainees and coaches.
+The app tailors exercise routines based on user inputs and allows both trainees and coaches to manage and track training progress effectively.
 
 # Features
 ## For Trainees:
-Registration: Create a new account to join TrainMaster.
+Registration: Create a new account to join TrainMaster.\n
 Questionnaire: Fill out a detailed questionnaire to get a personalized exercise plan.
 Exercise Plan: Receive a customized exercise plan based on your questionnaire responses.
 Update Exercise Level: Adjust the difficulty level of exercises as needed.

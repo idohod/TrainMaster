@@ -1,8 +1,8 @@
-# TrainMaster \n
+# TrainMaster 
 TrainMaster is a comprehensive fitness application designed to provide personalized exercise plans and facilitate communication between trainees and coaches. The app tailors exercise routines based on user inputs and allows both trainees and coaches to manage and track training progress effectively.
 
-Features
-For Trainees:
+# Features
+## For Trainees:
 Registration: Create a new account to join TrainMaster.
 Questionnaire: Fill out a detailed questionnaire to get a personalized exercise plan.
 Exercise Plan: Receive a customized exercise plan based on your questionnaire responses.
@@ -11,11 +11,11 @@ Account Details: View and update your personal account information.
 Training History: Track your training sessions, including dates and details.
 Exercise Timer: Use the built-in timer to manage your workout sessions.
 Exercise Examples: Access visual examples and descriptions for each exercise.
-For Coaches:
+## For Coaches:
 Registration: Create a new account to join TrainMaster.
 Trainee Management: Connect with trainees and view their exercise plans.
 Update Plans: Modify and update exercise plans for your trainees as required.
-Usage
+# Usage
 Register: Create a new account by providing the necessary details.
 Questionnaire: Complete the initial questionnaire to receive your personalized exercise plan.
 Follow Plan: Access your exercise plan and start your workout routine.

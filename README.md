@@ -3,7 +3,7 @@ TrainMaster is a comprehensive fitness application designed to provide personali
 
 # Features
 ## For Trainees:
-<b> Registration: <b> Create a new account to join TrainMaster.
+<b Registration: > Create a new account to join TrainMaster.
 <br>
 Questionnaire: Fill out a detailed questionnaire to get a personalized exercise plan.
 <br>

@@ -1,4 +1,4 @@
-TrainMaster
+# TrainMaster \n
 TrainMaster is a comprehensive fitness application designed to provide personalized exercise plans and facilitate communication between trainees and coaches. The app tailors exercise routines based on user inputs and allows both trainees and coaches to manage and track training progress effectively.
 
 Features

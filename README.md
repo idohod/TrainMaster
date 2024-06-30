@@ -4,7 +4,8 @@ The app tailors exercise routines based on user inputs and allows both trainees 
 
 # Features
 ## For Trainees:
-Registration: Create a new account to join TrainMaster.\n
+Registration: Create a new account to join TrainMaster.
+<br>
 Questionnaire: Fill out a detailed questionnaire to get a personalized exercise plan.
 Exercise Plan: Receive a customized exercise plan based on your questionnaire responses.
 Update Exercise Level: Adjust the difficulty level of exercises as needed.

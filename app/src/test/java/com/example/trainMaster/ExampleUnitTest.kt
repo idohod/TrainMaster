@@ -1,4 +1,4 @@
-package com.example.finalproject
+package com.example.trainMaster
 
 import org.junit.Test
 

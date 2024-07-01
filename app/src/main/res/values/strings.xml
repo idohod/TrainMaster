@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">finalProject</string>
+    <string name="app_name">TrainMaster</string>
     <!--main activity-->
     <string name="your_plan">your plan</string>
     <string name="change_user">change user</string>

@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.finalproject'
+    namespace 'com.example.trainMaster'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.finalproject"
+        applicationId "com.example.trainMaster"
         minSdk 26
         targetSdk 33
         versionCode 1

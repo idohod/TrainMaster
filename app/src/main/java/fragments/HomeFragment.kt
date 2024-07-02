@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trainMaster.R
@@ -22,18 +24,24 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import models.CoachActivity
+import models.SharedViewModel
+import models.StartPage
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter
+
 class HomeFragment : Fragment() {
-   // private late init var addExerciseButton: ExtendedFloatingActionButton
-   // private late init var changeUserButton: ExtendedFloatingActionButton
+
     private lateinit var title: MaterialTextView
     private lateinit var recyclerView: RecyclerView
     private lateinit var exerciseAdapter: ExerciseAdapter
     private lateinit var allExercises: ArrayList<Exercise>
     private var isUpdate = false
     private lateinit var userName:String
+    private lateinit var userRole:String
+    private lateinit var traineeName:String
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
 
@@ -43,7 +51,14 @@ class HomeFragment : Fragment() {
 
         return view
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
+            traineeName = newValue
+        })
+    }
     private fun initValues() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -57,10 +72,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun getUserData(it: DocumentSnapshot) {
-         userName= it.data?.get("name")?.toString() ?: return
-        "$userName's plan".also { title.text = it }
-        loadExercisesFromDb(userName)
+        userRole= it.data?.get("role")?.toString() ?: return
 
+        if (userRole == "trainee") {
+            userName = it.data?.get("name")?.toString() ?: return
+            "$userName's plan".also { title.text = it }
+            loadExercisesFromDb(userName)
+        }else{
+            "$traineeName's plan".also { title.text = it }
+            loadExercisesFromDb(traineeName)
+
+        }
     }
 
     private fun initViews(view :View) {
@@ -71,44 +93,13 @@ class HomeFragment : Fragment() {
         allExercises = arrayListOf()
     }
 
-    /*private fun removeExercisesFromDb(userName: String) {
-        val db = FirebaseDatabase.getInstance()
-        val exercisesRef = db.reference.child("users").child(userName).child("exercises")
 
-        exercisesRef.addValueEventListener(object : ValueEventListener {
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-
-                    for (exerciseSnapshot in snapshot.children) {
-                        val exercise = exerciseSnapshot.getValue(Exercise::class.java)
-                        allExercises.remove(exercise!!)
-                    }
-                    exercisesRef.setValue(allExercises)
-
-                    exerciseAdapter = ExerciseAdapter(allExercises)
-                    recyclerView.adapter = exerciseAdapter
-                    exerciseAdapter.setOnItemClickListener(object :
-                        ExerciseAdapter.OnItemClickListener {
-                        override fun itemClick(exercise: Exercise) {
-                            //  moveToTimerActivity(exercise,userName)
-                        }
-
-                        override fun update(exercise: Exercise, increase: Boolean) {
-                            //  updateExerciseLevel(exercise, increase,userName)
-                        }
-                    })
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }*/
     private fun loadExercisesFromDb(userName: String) {
         val db = FirebaseDatabase.getInstance()
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
         exercisesRef.addValueEventListener(object : ValueEventListener {
 
-            override fun onDataChange(snapshot: DataSnapshot,) {
+            override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     if (!isUpdate)
                         for (exerciseSnapshot in snapshot.children) {
@@ -127,7 +118,8 @@ class HomeFragment : Fragment() {
         exerciseAdapter.setOnItemClickListener(object :
             ExerciseAdapter.OnItemClickListener {
             override fun itemClick(exercise: Exercise) {
-                moveToTimerActivity(exercise)
+                if (userRole == "trainee")
+                    moveToTimerActivity(exercise)
             }
             override fun update(exercise: Exercise, position: Int, increase: Boolean) {
                 updateExerciseLevel(exercise,position, increase, userName)
@@ -250,4 +242,5 @@ class HomeFragment : Fragment() {
         intent.putExtra("exWeight", exercise.weight)
         startActivity(intent)
     }
+
 }

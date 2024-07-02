@@ -126,7 +126,6 @@ class RegisterActivity : AppCompatActivity() {
                     moveActivity(name, role,email,password)
                 } else
                     makeToast("this email in use")
-
             }
     }
     private fun setBMI(height: String, weight: String) {
@@ -154,7 +153,6 @@ class RegisterActivity : AppCompatActivity() {
             return true
         }
     }
-
     private fun calculateBMI(heightInput: String, weightInput: String): Double {
 
         var height = heightInput.toDoubleOrNull() ?: return 0.0
@@ -163,9 +161,7 @@ class RegisterActivity : AppCompatActivity() {
         if (height > 100)
             height /= 100
         return weight / (height * height)
-
     }
-
     private fun checkInput(
         name: String, email: String, password: String, confirmPassword: String,
         height: String, weight: String, role: String ): Boolean {
@@ -208,7 +204,6 @@ class RegisterActivity : AppCompatActivity() {
     private fun makeToast(message :String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
-
     private fun moveActivity(name: String, role: String, email: String, password: String) {
         if(role == "coach") {
             val i = Intent(this, CoachActivity::class.java)
@@ -219,7 +214,6 @@ class RegisterActivity : AppCompatActivity() {
             i.putExtra("userEmail", email)
             i.putExtra("userPassword", password)
             i.putExtra("numOfQuiz",numOfQuiz)
-
             startActivity(i)
             finish()
         } else {
@@ -232,20 +226,33 @@ class RegisterActivity : AppCompatActivity() {
         val sEmail = email.trim()
         val sRole = role.trim()
         val sPassword = password.trim()
-        val trainingHistory = "1"
 
         val dateTime =getTime()
-        val loginTimes = arrayListOf(dateTime)
+        val trainingHistory :String
+        val loginTimes:ArrayList<String>
+        val userMap :HashMap<String,*>
 
-        val userMap = hashMapOf(
-            "name" to sName,
-            "email" to sEmail,
-            "password" to sPassword,
-            "role" to sRole,
-            "trainingHistory" to trainingHistory,
-            "loginTimes" to loginTimes
-        )
+        if (role == "trainee") {
+            trainingHistory = "1"
+            loginTimes = arrayListOf(dateTime)
 
+            userMap = hashMapOf(
+                "name" to sName,
+                "email" to sEmail,
+                "password" to sPassword,
+                "role" to sRole,
+                "trainingHistory" to trainingHistory,
+                "loginTimes" to loginTimes
+            )
+        }
+        else{
+            userMap = hashMapOf(
+                "name" to sName,
+                "email" to sEmail,
+                "password" to sPassword,
+                "role" to sRole
+            )
+        }
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val db = Firebase.firestore
 
@@ -256,8 +263,8 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
     private fun getTime(): String {
-        val currentDateTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        return currentDateTime.format(formatter)
+            val currentDateTime = LocalDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            return currentDateTime.format(formatter)
     }
 }

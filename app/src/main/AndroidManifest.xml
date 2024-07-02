@@ -23,9 +23,7 @@
         <activity
             android:name="models.TimerActivity"
             android:exported="false" />
-        <activity
-            android:name="models.MainActivity"
-            android:exported="false" />
+
         <activity
             android:name="models.SignInActivity"
             android:exported="false" />

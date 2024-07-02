@@ -14,7 +14,6 @@ class CoachActivity : AppCompatActivity() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var userNameButton: Button
     private lateinit var title: TextView
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coach)
@@ -35,8 +34,9 @@ class CoachActivity : AppCompatActivity() {
         }
     }
     private fun moveToMainActivity(selectedUserName: String) {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MenuActivity::class.java)
         intent.putExtra("userName", selectedUserName)
+        intent.putExtra("isCoach", true)
         startActivity(intent)
         finish()
     }

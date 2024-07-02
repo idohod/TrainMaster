@@ -13,6 +13,7 @@ import android.widget.TextView
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProvider
 import com.example.trainMaster.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
@@ -22,7 +23,7 @@ import fragments.HomeFragment
 import fragments.InfoFragment
 import fragments.HistoryFragment
 import fragments.ShareFragment
-class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelectedListener {
+class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toolbar: Toolbar
@@ -31,23 +32,32 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     private lateinit var userNameView: TextView
     private lateinit var userEmailView: TextView
     private var numOfQuiz: Int = 0
-
+    private lateinit var traineeName: String
+    private  var isCoach = false
+    private lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
         initViews()
         getNumOfQuiz()
+        getTraineeName()
+
+        sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
+        sharedViewModel.traineeName.value = this.traineeName
 
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_home)
         }
     }
-
+    private fun getTraineeName() {
+        val i = intent
+        isCoach = i.getBooleanExtra("isCoach", false)
+        traineeName = i.getStringExtra("userName").toString()
+    }
     private fun getNumOfQuiz() {
         numOfQuiz = intent.getIntExtra("numOfQuiz", 0)
     }
-
     private fun initViews() {
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
 
@@ -67,7 +77,6 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
     }
-
     private fun replaceFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
@@ -76,17 +85,19 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START)
-        else
-            onBackPressedDispatcher.onBackPressed()
+        else {
+            if (isCoach)
+                startActivity(Intent(this, CoachActivity::class.java))
+            else
+                startActivity(Intent(this, StartPage::class.java))
+        }
     }
-
     private fun moveToStart() {
         val intent = Intent(this, StartPage::class.java)
         intent.putExtra("numOfQuiz", numOfQuiz)
         startActivity(intent)
         finish()
     }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
@@ -95,12 +106,10 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
             R.id.nav_share -> replaceFragment(ShareFragment())
             R.id.nav_info -> replaceFragment(InfoFragment())
             R.id.nav_logout -> moveToStart()
-
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
-
     private fun initValues() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -116,4 +125,3 @@ class MenuActivity : AppCompatActivity() ,NavigationView.OnNavigationItemSelecte
         userEmailView.text = it.data?.get("email")?.toString() ?: return
     }
 }
-

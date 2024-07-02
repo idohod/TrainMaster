@@ -23,6 +23,8 @@ import fragments.HomeFragment
 import fragments.InfoFragment
 import fragments.HistoryFragment
 import fragments.ShareFragment
+import utilities.SharedViewModel
+
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout

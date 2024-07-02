@@ -16,7 +16,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
-import models.SharedViewModel
+import utilities.SharedViewModel
 class HistoryFragment : Fragment() {
     private lateinit var historyNumber: TextView
     private lateinit var historyText: TextView

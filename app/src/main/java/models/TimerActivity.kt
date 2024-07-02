@@ -142,7 +142,7 @@ class TimerActivity : AppCompatActivity() {
     }
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MenuActivity::class.java)
         intent.putExtra("userName", userName)
         intent.putExtra("userEmail", userEmail)
         intent.putExtra("userPassword", userPassword)

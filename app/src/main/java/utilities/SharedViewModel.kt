@@ -1,4 +1,4 @@
-package models
+package utilities
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

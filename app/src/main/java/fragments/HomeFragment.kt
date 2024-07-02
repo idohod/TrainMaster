@@ -24,9 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import models.CoachActivity
-import models.SharedViewModel
-import models.StartPage
+import utilities.SharedViewModel
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter

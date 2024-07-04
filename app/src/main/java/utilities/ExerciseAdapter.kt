@@ -93,4 +93,3 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
         }
     }
 }
-

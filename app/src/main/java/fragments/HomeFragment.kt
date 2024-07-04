@@ -228,10 +228,7 @@ class HomeFragment : Fragment() {
             isUpdate = true
         }
     }
-    private fun moveToTimerActivity(
-        exercise: Exercise
-
-    ) {
+    private fun moveToTimerActivity(exercise: Exercise) {
         val intent = Intent(context, TimerActivity::class.java)
 
         intent.putExtra("exName", exercise.name)
@@ -240,5 +237,4 @@ class HomeFragment : Fragment() {
         intent.putExtra("exWeight", exercise.weight)
         startActivity(intent)
     }
-
 }

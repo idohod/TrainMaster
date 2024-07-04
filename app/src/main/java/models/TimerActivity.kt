@@ -62,12 +62,10 @@ class TimerActivity : AppCompatActivity() {
         finish()
 
     }
-
     private fun stopTimer() {
         isTimerRunning = false
         handler.removeCallbacksAndMessages(null)
     }
-
     private fun startTimer() {
         isTimerRunning = true
         secondsElapsed = 0

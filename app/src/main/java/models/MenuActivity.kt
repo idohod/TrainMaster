@@ -24,7 +24,6 @@ import fragments.InfoFragment
 import fragments.HistoryFragment
 import fragments.ShareFragment
 import utilities.SharedViewModel
-
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -62,13 +61,10 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
     private fun initViews() {
         drawerLayout = findViewById<DrawerLayout>(R.id.drawer)
-
         toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
-
         navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
-
         headerView = navigationView.getHeaderView(0)
         userNameView = headerView.findViewById(R.id.nav_user_name)
         userEmailView = headerView.findViewById(R.id.nav_user_email)

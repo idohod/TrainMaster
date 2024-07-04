@@ -17,7 +17,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-
 class SignInActivity : AppCompatActivity() {
     private lateinit var emailField: TextInputEditText
     private lateinit var passwordField: TextInputEditText
@@ -88,7 +87,6 @@ class SignInActivity : AppCompatActivity() {
             finish()
         }
     }
-
     private fun saveDateTime() {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -114,7 +112,6 @@ class SignInActivity : AppCompatActivity() {
         val loginTimes = arrayListOf(formattedDateTime)
         userDocRef.set(mapOf("loginTimes" to loginTimes))
     }
-
     private fun updateTimes(document: DocumentSnapshot, formattedDateTime: String, userDocRef: DocumentReference) {
 
         val loginTimes = document.get("loginTimes") as? List<*> ?: emptyList<Any>()
@@ -123,8 +120,6 @@ class SignInActivity : AppCompatActivity() {
         loginTimesList.add(formattedDateTime)
         userDocRef.update("loginTimes", loginTimesList)
     }
-
-
     private fun updateTrainingHistory(trainingHistory: String) {
         var temp = trainingHistory.toInt()
         temp += 1
@@ -135,7 +130,6 @@ class SignInActivity : AppCompatActivity() {
             db.collection("user").document(userId).update("trainingHistory", temp.toString())
         }
     }
-
     private fun loadUserData(password: String) {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid

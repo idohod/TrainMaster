@@ -15,7 +15,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import utilities.Exercise
 import utilities.Question
-
 class HealthQuizActivity : AppCompatActivity() {
 
     private lateinit var questionTextView: TextView
@@ -23,17 +22,13 @@ class HealthQuizActivity : AppCompatActivity() {
     private lateinit var submitButton: Button
     private var currentQuestionIndex = 0
     private lateinit var allExercises: ArrayList<Exercise>
-
-    private var score = 0
-    private var temp = 0
-
     private lateinit var userName: String
     private lateinit var userEmail: String
     private lateinit var userPassword:String
+
     private  var numOfQuiz: Int = 0
-
-
-    // Define your list of questions here
+    private var score = 0
+    private var temp = 0
     private val questions = listOf(
         Question(
             "How many hours of sleep do you get per night?",
@@ -88,7 +83,6 @@ class HealthQuizActivity : AppCompatActivity() {
             "How motivated are you to maintain a regular fitness routine?",
             listOf("Not motivated", "Somewhat motivated", "Very motivated")
         )
-        //13 question
     )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -143,7 +137,6 @@ class HealthQuizActivity : AppCompatActivity() {
         id -= numOfQuiz * 39
         id -= currentQuestionIndex * 3
         score += id
-// score 13 - 39
         moveQuestion()
     }
     private fun moveQuestion() {
@@ -157,7 +150,6 @@ class HealthQuizActivity : AppCompatActivity() {
             moveToMenuActivity()
         }
     }
-
     private fun loadExercises() {
         val firestore = FirebaseFirestore.getInstance()
         val exercisesCollection = firestore.collection("exercises")
@@ -210,7 +202,6 @@ class HealthQuizActivity : AppCompatActivity() {
                 ranIndex.clear()
                 counter = 0
             }
-
             if (ex.type in max2List) {
                 isMax2 = true
                 if (counter < max2) {

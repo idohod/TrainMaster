@@ -32,7 +32,6 @@ class InfoFragment : Fragment() {
         initValues()
         return view
     }
-
     private fun initValues() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid

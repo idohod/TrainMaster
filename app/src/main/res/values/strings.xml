@@ -81,6 +81,7 @@
     <string name="training_history">Number of Training:</string>
     <string name="training_list">My Training times:</string>
     <string name="dates">dates</string>
+    <string name="loading_achievements">Loading achievements...</string>
 
 
 </resources>

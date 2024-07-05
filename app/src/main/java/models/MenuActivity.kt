@@ -22,7 +22,7 @@ import com.google.firebase.ktx.Firebase
 import fragments.HomeFragment
 import fragments.InfoFragment
 import fragments.HistoryFragment
-import fragments.ShareFragment
+import ShareFragment
 import utilities.SharedViewModel
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 

@@ -124,12 +124,41 @@ class SignInActivity : AppCompatActivity() {
         var temp = trainingHistory.toInt()
         temp += 1
         val user = FirebaseAuth.getInstance().currentUser
+
         if (user != null) {
             val userId = user.uid
             val db = Firebase.firestore
             db.collection("user").document(userId).update("trainingHistory", temp.toString())
+                .addOnSuccessListener {
+                    checkMilestones(temp)
+                }
+                .addOnFailureListener {
+                    // Handle any errors in updating the document
+                    Log.e("Firestore", "Error updating document", it)
+                }
         }
     }
+
+    private fun checkMilestones(count: Int) {
+        val milestones = mapOf(
+            1 to "Congratulations! You've completed 1 training session!",
+            5 to "Congratulations! You've completed 5 training sessions!",
+            10 to "Congratulations! You've completed 10 training sessions!",
+            25 to "Congratulations! You've completed 25 training sessions!",
+            100 to "Congratulations! You've completed 100 training sessions and are now an official TrainMaster!",
+            500 to "Congratulations! You've completed 500 training sessions and are now an official PRO TrainMaster!"
+        )
+
+        milestones[count]?.let { message ->
+            showAchievementMessage(message)
+        }
+    }
+
+    private fun showAchievementMessage(message: String) {
+        // Assuming this function shows a toast or some form of notification to the user
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
     private fun loadUserData(password: String) {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid

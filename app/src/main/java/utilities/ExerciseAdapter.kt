@@ -62,19 +62,19 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
             findViews()
 
             itemView.setOnClickListener {
-                val position = adapterPosition
+                val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION)
                     listener.itemClick(getItem(position))
             }
             increase.setOnClickListener {
-                val position = adapterPosition
+                val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position),position ,true)
+                    listener.update(getItem(position), position, true)
             }
             decrease.setOnClickListener {
-                val position = adapterPosition
+                val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION)
-                    listener.update(getItem(position),position,false)
+                    listener.update(getItem(position), position, false)
             }
         }
         private fun findViews() {
@@ -92,4 +92,5 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
             decreaseImage =itemView.findViewById(R.id.downward_image)
         }
     }
+
 }

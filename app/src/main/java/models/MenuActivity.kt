@@ -2,28 +2,29 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.drawerlayout.widget.DrawerLayout
-import com.google.android.material.navigation.NavigationView
-import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.trainMaster.R
+import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import fragments.HistoryFragment
 import fragments.HomeFragment
 import fragments.InfoFragment
-import fragments.HistoryFragment
-import ShareFragment
+import fragments.ShareFragment
 import utilities.SharedViewModel
+
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -77,9 +78,22 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
     private fun replaceFragment(fragment: Fragment) {
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
+
+        // Set the transition animation for fragment transactions
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+
+        // Replace the existing fragment with the new one
         transaction.replace(R.id.fragment_container, fragment)
+
+        // Optionally, add the transaction to the back stack
+        // This allows users to navigate back to the previous fragment using the back button
+        transaction.addToBackStack(null)
+
+        // Commit the transaction
         transaction.commit()
     }
+
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
             drawerLayout.closeDrawer(GravityCompat.START)

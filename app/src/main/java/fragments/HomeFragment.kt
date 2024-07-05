@@ -59,9 +59,6 @@ class HomeFragment : Fragment() {
         sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
             traineeName = newValue
         })
-        sharedViewModel.fromTimer.observe(viewLifecycleOwner, Observer { newValue ->
-            fromTimer = newValue
-        })
     }
     private fun initValues() {
         val db = Firebase.firestore
@@ -106,6 +103,7 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     if (!isUpdate) {
+
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                             allExercises.add(exercise!!)
@@ -115,6 +113,7 @@ class HomeFragment : Fragment() {
                         val score = planScore()
                         saveScoreList(score)
                     }
+
                     setAdapter(userName)
                 }
             }
@@ -157,6 +156,7 @@ class HomeFragment : Fragment() {
         val scores = arrayListOf(score)
         userDocRef.set(mapOf("scoreList" to scores))
     }
+
 
     private fun setAdapter(userName: String) {
         exerciseAdapter = ExerciseAdapter(allExercises)

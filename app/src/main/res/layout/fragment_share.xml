@@ -3,11 +3,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="fragments.ShareFragment">
+<<<<<<< HEAD
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/achievementsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+=======
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/achievementsRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+>>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
         android:layout_margin="8dp" />
 
     <TextView
@@ -15,7 +22,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
+<<<<<<< HEAD
 
         android:layout_marginTop="320dp"
+=======
+        android:layout_gravity="center"
+>>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
         android:text="More achievements in the future" />
 </FrameLayout>

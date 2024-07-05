@@ -2,7 +2,10 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+<<<<<<< HEAD
 import android.util.Log
+=======
+>>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -47,19 +50,25 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
         sharedViewModel.traineeName.value = this.traineeName
+<<<<<<< HEAD
         sharedViewModel.fromTimer.value = isTimer()
+=======
+>>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
 
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_home)
         }
     }
+<<<<<<< HEAD
     private fun isTimer():Boolean {
         val i = intent
 
         return i.getBooleanExtra("fromTimer", false)
 
     }
+=======
+>>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
     private fun getTraineeName() {
         val i = intent
         isCoach = i.getBooleanExtra("isCoach", false)

@@ -1,0 +1,82 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="fragments.HomeFragment">
+
+    <LinearLayout
+        android:id="@+id/name_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:padding="16dp"
+        android:gravity="start">
+
+    <TextView
+        android:id="@+id/fragment_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_name"
+        android:textSize="25sp"
+        />
+    <TextView
+        android:id="@+id/fragment_the_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/the_name"
+        android:textSize="25sp"
+        />
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/gmail_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="70dp"
+        android:padding="16dp"
+        android:gravity="start">
+
+    <TextView
+    android:id="@+id/fragment_user_email"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/your_email"
+    android:textSize="25sp"
+   />
+
+    <TextView
+    android:id="@+id/fragment_the_user_email"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/yourmail_gmail_com"
+    android:textSize="25sp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/password_line"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="150dp"
+        android:padding="16dp"
+        android:gravity="start">
+
+        <TextView
+            android:id="@+id/fragment_user_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_password"
+            android:textSize="25sp"
+          />
+
+        <TextView
+            android:id="@+id/fragment_the_user_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/user_password"
+            android:textSize="25sp"
+           />
+    </LinearLayout>
+</FrameLayout>

@@ -15,5 +15,5 @@
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:layout_gravity="center"
-        android:text="Loading achievements..." />
+        android:text="More achievements in the future" />
 </FrameLayout>

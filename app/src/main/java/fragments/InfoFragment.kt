@@ -20,11 +20,14 @@ class InfoFragment : Fragment() {
     private lateinit var yourEmail: TextView
     private lateinit var yourPassword: TextView
     private lateinit var yourFirstLogin: TextView
+    private lateinit var yourHighestScore: TextView
 
     private lateinit var userName: TextView
     private lateinit var userEmail: TextView
     private lateinit var userPassword: TextView
     private lateinit var userFirstLogin: TextView
+    private lateinit var userHighestScore: TextView
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -48,11 +51,12 @@ class InfoFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+
     private fun getUserData(it: DocumentSnapshot) {
         userName.text = it.data?.get("name")?.toString() ?: return
         userEmail.text = it.data?.get("email")?.toString() ?: return
         userPassword.text = it.data?.get("password")?.toString() ?: return
+
         // Safely retrieve the first login time from the 'loginTimes' array
         val loginTimes = it.data?.get("loginTimes") as? List<*>
         if (loginTimes != null && loginTimes.isNotEmpty()) {
@@ -60,17 +64,34 @@ class InfoFragment : Fragment() {
         } else {
             userFirstLogin.text = "No login times available"
         }
+
+        // Handling the scoreList to find the maximum score
+        val scoreList = it.data?.get("scoreList") as? List<*>
+        if (scoreList != null && scoreList.isNotEmpty()) {
+            val scores = scoreList.mapNotNull { it.toString().toIntOrNull() }
+            val maxScore = scores.maxOrNull()
+            if (maxScore != null) {
+                userHighestScore.text = maxScore.toString()
+            } else {
+                userHighestScore.text = "Invalid or empty score list"
+            }
+        } else {
+            userHighestScore.text = "No scores available"
+        }
     }
 
+
     private fun findViews(view: View) {
-        yourName = view.findViewById(R.id.fragment_user_name)  // Check this ID
+        yourName = view.findViewById(R.id.fragment_user_name)
         yourEmail = view.findViewById(R.id.fragment_user_email)
         yourPassword = view.findViewById(R.id.fragment_user_password)
-        yourFirstLogin = view.findViewById(R.id.fragment_user_first_login)  // And this one
+        yourFirstLogin = view.findViewById(R.id.fragment_user_first_login)
+        yourHighestScore = view.findViewById(R.id.fragment_user_highest_score)
 
-        userName = view.findViewById(R.id.fragment_the_user_name)  // Also check this
+        userName = view.findViewById(R.id.fragment_the_user_name)
         userEmail = view.findViewById(R.id.fragment_the_user_email)
         userPassword = view.findViewById(R.id.fragment_the_user_password)
-        userFirstLogin = view.findViewById(R.id.fragment_the_user_first_login)  // And this one
+        userFirstLogin = view.findViewById(R.id.fragment_the_user_first_login)
+        userHighestScore = view.findViewById(R.id.fragment_the_user_highest_score)
     }
 }

@@ -84,6 +84,8 @@
     <string name="loading_achievements">Loading achievements...</string>
     <string name="member_since">Member since:</string>
     <string name="membership_date">Membership date</string>
+    <string name="highest_score">Highest score:</string>
+    <string name="highest_score_lable">Highest score</string>
 
 
 </resources>

@@ -61,6 +61,7 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(Intent(this,StartPage::class.java))
         finish()
     }
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         startActivity(Intent(this,StartPage::class.java))
         finish()
@@ -264,7 +265,7 @@ class RegisterActivity : AppCompatActivity() {
     }
     private fun getTime(): String {
             val currentDateTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+            val formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm:ss")
             return currentDateTime.format(formatter)
     }
 }

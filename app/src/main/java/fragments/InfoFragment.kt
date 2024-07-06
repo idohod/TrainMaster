@@ -25,13 +25,14 @@ class InfoFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View {
+    ): View? {
 
         val view = inflater.inflate(R.layout.fragment_info, container, false)
         findViews(view)
         initValues()
         return view
     }
+
     private fun initValues() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -40,14 +41,17 @@ class InfoFragment : Fragment() {
         ref.get().addOnSuccessListener {
             if (it != null)
                 getUserData(it)
+        }.addOnFailureListener { exception ->
+            Log.w("TAG", "Error getting documents.", exception)
         }
-            .addOnFailureListener { exception ->Log.w("TAG","Error getting documents.",exception)}
     }
+
     private fun getUserData(it: DocumentSnapshot) {
         userName.text = it.data?.get("name")?.toString() ?: return
         userEmail.text = it.data?.get("email")?.toString() ?: return
         userPassword.text = it.data?.get("password")?.toString() ?: return
     }
+
     private fun findViews(view: View) {
         yourName = view.findViewById(R.id.fragment_user_name)
         yourEmail = view.findViewById(R.id.fragment_user_email)

@@ -120,13 +120,13 @@ class HomeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
     }
-    private fun planScore(): Long {
+    private fun planScore(): String {
         var score = 0L
         for (ex in allExercises)
             score += ex.level!!
-        return score
+        return score.toString()
     }
-    private fun saveScoreList(score :Long) {
+    private fun saveScoreList(score :String) {
         val db = FirebaseFirestore.getInstance()
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
         val userDocRef = db.collection("user").document(userId)
@@ -140,11 +140,11 @@ class HomeFragment : Fragment() {
     }
     private fun updateScores(
         document: DocumentSnapshot,
-        score: Long,
+        score: String,
         userDocRef: DocumentReference
     ) {
         val scores = document.get("scoreList") as? List<*> ?: emptyList<Any>()
-        val scoreList = ArrayList(scores.filterIsInstance<Long>())
+        val scoreList = ArrayList(scores.filterIsInstance<String>())
 
         scoreList.add(score)
         userDocRef.update("scoreList", scoreList)
@@ -152,7 +152,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun initDocument(userDocRef: DocumentReference, score: Long) {
+    private fun initDocument(userDocRef: DocumentReference, score: String) {
         val scores = arrayListOf(score)
         userDocRef.set(mapOf("scoreList" to scores))
     }
@@ -249,7 +249,7 @@ class HomeFragment : Fragment() {
             if (oldLevel <= 4L)
                 return oldLevel.plus(1)
             else {
-               Toast.makeText(context, "max level!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "max level!", Toast.LENGTH_SHORT).show()
                 return 0
             }
         } else {

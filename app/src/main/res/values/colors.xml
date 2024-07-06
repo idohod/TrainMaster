@@ -34,6 +34,6 @@
     <color name="background_Grey">#6D6D6D</color>
     <color name="grey_BX_Fill">#3C3B3B</color>
     <color name="light_grey_FT">#787777</color>
-
-
+    <color name="fill_back">#6B6060</color>
+    #6B6060
 </resources>

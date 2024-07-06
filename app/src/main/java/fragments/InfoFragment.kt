@@ -1,5 +1,6 @@
 package fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -18,11 +19,12 @@ class InfoFragment : Fragment() {
     private lateinit var yourName: TextView
     private lateinit var yourEmail: TextView
     private lateinit var yourPassword: TextView
+    private lateinit var yourFirstLogin: TextView
 
     private lateinit var userName: TextView
     private lateinit var userEmail: TextView
     private lateinit var userPassword: TextView
-
+    private lateinit var userFirstLogin: TextView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -46,19 +48,29 @@ class InfoFragment : Fragment() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun getUserData(it: DocumentSnapshot) {
         userName.text = it.data?.get("name")?.toString() ?: return
         userEmail.text = it.data?.get("email")?.toString() ?: return
         userPassword.text = it.data?.get("password")?.toString() ?: return
+        // Safely retrieve the first login time from the 'loginTimes' array
+        val loginTimes = it.data?.get("loginTimes") as? List<*>
+        if (loginTimes != null && loginTimes.isNotEmpty()) {
+            userFirstLogin.text = loginTimes[0]?.toString() ?: "No login time recorded"
+        } else {
+            userFirstLogin.text = "No login times available"
+        }
     }
 
     private fun findViews(view: View) {
-        yourName = view.findViewById(R.id.fragment_user_name)
+        yourName = view.findViewById(R.id.fragment_user_name)  // Check this ID
         yourEmail = view.findViewById(R.id.fragment_user_email)
         yourPassword = view.findViewById(R.id.fragment_user_password)
+        yourFirstLogin = view.findViewById(R.id.fragment_user_first_login)  // And this one
 
-        userName = view.findViewById(R.id.fragment_the_user_name)
+        userName = view.findViewById(R.id.fragment_the_user_name)  // Also check this
         userEmail = view.findViewById(R.id.fragment_the_user_email)
         userPassword = view.findViewById(R.id.fragment_the_user_password)
+        userFirstLogin = view.findViewById(R.id.fragment_the_user_first_login)  // And this one
     }
 }

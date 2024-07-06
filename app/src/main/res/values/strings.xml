@@ -82,6 +82,8 @@
     <string name="training_list">My Training times:</string>
     <string name="dates">dates</string>
     <string name="loading_achievements">Loading achievements...</string>
+    <string name="member_since">Member since:</string>
+    <string name="membership_date">Membership date</string>
 
 
 </resources>

@@ -19,7 +19,6 @@ import kotlin.random.Random
 
 class HealthQuizActivity : AppCompatActivity() {
 
-
     private lateinit var questionTextView: TextView
     private lateinit var questionRadioGroup: RadioGroup
     private lateinit var submitButton: Button
@@ -108,9 +107,9 @@ class HealthQuizActivity : AppCompatActivity() {
         allExercises = arrayListOf()
     }
     private fun getUserData() {
-         userName = intent.getStringExtra("userName").toString()
-         userEmail = intent.getStringExtra("userEmail").toString()
-         userPassword = intent.getStringExtra("userPassword").toString()
+        userName = intent.getStringExtra("userName").toString()
+        userEmail = intent.getStringExtra("userEmail").toString()
+        userPassword = intent.getStringExtra("userPassword").toString()
 
     }
     private fun selectAnswer() {
@@ -192,6 +191,7 @@ class HealthQuizActivity : AppCompatActivity() {
         var exToRemove = ArrayList<Exercise>()
 
         for (ex in allExercises) {
+            Log.d("ex1",ex.toString()+"\n")
             preType = curType
             curType = ex.type!!
             index = allExercises.indexOf(ex)
@@ -201,7 +201,9 @@ class HealthQuizActivity : AppCompatActivity() {
                     val count = ranIndex.size - max2
                     val range = ranIndex[0]..ranIndex[ranIndex.size-1]
                     val uniqueNumbers = generateUniqueRandomNumbers(count, range)
+
                     exToRemove = saveExercisesToRemove(uniqueNumbers, exToRemove)
+
                 }
                 else if (!isMax2 && counter >= 1) {
                     val count = ranIndex.size - max1
@@ -209,11 +211,6 @@ class HealthQuizActivity : AppCompatActivity() {
                     val uniqueNumbers = generateUniqueRandomNumbers(count, range)
                     exToRemove = saveExercisesToRemove(uniqueNumbers, exToRemove)
                 }
-                if (isMax2 && counter >= 2)
-                    exToRemove.add(allExercises[ranIndex.random()])
-                else if (!isMax2 && counter >= 1)
-                    exToRemove.add(allExercises[ranIndex.random()])
-
                 ranIndex.clear()
                 counter = 0
             }
@@ -252,8 +249,9 @@ class HealthQuizActivity : AppCompatActivity() {
         return exToRemove
     }
     private fun removeExercises(exToRemove: ArrayList<Exercise>) {
-        for (ex in exToRemove)
+        for (ex in exToRemove) {
             allExercises.remove(ex)
+        }
     }
     private fun addExercise(level: Long, name: String, type: Long) {
 

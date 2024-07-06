@@ -152,21 +152,21 @@ class AchievementsFragment : Fragment() {
             100 to "100 training sessions",
             500 to "500 training sessions"
         )
-        val achievements: List<String>
+        val achievements: List<Pair<String, Boolean>>
 
         if (userRole == "trainee") {
             achievements = milestones.map { (count, description) ->
                 if (trainingHistory >= count)
-                    "Congratulations! You've completed $description!"
+                    "Congratulations! You've completed $description!" to true
                 else
-                    "Complete $description to unlock this achievement."
+                    "Complete $description to unlock this achievement." to false
             }
         } else {
             achievements = milestones.map { (count, description) ->
                 if (trainingHistory >= count)
-                    "$traineeName completed $description!"
+                    "$traineeName completed $description!" to true
                 else
-                    "$traineeName needs to complete $description to unlock this achievement."
+                    "$traineeName needs to complete $description to unlock this achievement." to false
             }
         }
         achievementsRecyclerView.adapter = AchievementsAdapter(achievements)

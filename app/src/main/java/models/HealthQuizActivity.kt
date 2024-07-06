@@ -287,6 +287,7 @@ class HealthQuizActivity : AppCompatActivity() {
         i.putExtra("userEmail", userEmail)
         i.putExtra("userPassword", userPassword)
         i.putExtra("numOfQuiz", numOfQuiz)
+        i.putExtra("fromFragment",false)
         startActivity(i)
         finish()
     }

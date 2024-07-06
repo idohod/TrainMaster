@@ -61,6 +61,7 @@ class TimerActivity : AppCompatActivity() {
         intent.putExtra("userEmail", userEmail)
         intent.putExtra("userPassword", userPassword)
         intent.putExtra("fromTimer", true)
+        intent.putExtra("fromFragment",false)
         startActivity(intent)
         finish()
 
@@ -148,6 +149,7 @@ class TimerActivity : AppCompatActivity() {
         intent.putExtra("userEmail", userEmail)
         intent.putExtra("userPassword", userPassword)
         intent.putExtra("fromTimer", true)
+        intent.putExtra("fromFragment",false)
 
 
         startActivity(intent)

@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -36,6 +37,8 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var numOfQuiz: Int = 0
     private lateinit var traineeName: String
     private  var isCoach = false
+
+
     private lateinit var sharedViewModel: SharedViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,17 +50,22 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedViewModel = ViewModelProvider(this)[SharedViewModel::class.java]
         sharedViewModel.traineeName.value = this.traineeName
         sharedViewModel.fromTimer.value = isTimer()
+        sharedViewModel.fromFragment.value = fromFragment()
+
 
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_home)
         }
     }
+    private fun fromFragment():Boolean {
+        val i = intent
+        return i.getBooleanExtra("fromFragment", true)
+    }
+
     private fun isTimer():Boolean {
         val i = intent
-
         return i.getBooleanExtra("fromTimer", false)
-
     }
     private fun getTraineeName() {
         val i = intent
@@ -83,22 +91,19 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
     }
-    private fun replaceFragment(fragment: Fragment) {
+    private fun replaceFragment(fragment: Fragment, bundle: Bundle? = null) {
+
+        if (bundle != null) {
+            fragment.arguments = bundle
+        }
         val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
 
-        // Set the transition animation for fragment transactions
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-
-        // Replace the existing fragment with the new one
         transaction.replace(R.id.fragment_container, fragment)
-
-        // Optionally, add the transaction to the back stack
-        // This allows users to navigate back to the previous fragment using the back button
         transaction.addToBackStack(null)
-
-        // Commit the transaction
         transaction.commit()
     }
+
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -120,7 +125,12 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            R.id.nav_home -> replaceFragment(HomeFragment())
+            R.id.nav_home -> {
+                val bundle = Bundle().apply {
+                    putBoolean("fromFragment", true)
+                }
+                replaceFragment(HomeFragment(), bundle)
+            }
             R.id.nav_setting -> replaceFragment(HistoryFragment())
             R.id.nav_share -> replaceFragment(AchievementsFragment())
             R.id.nav_info -> replaceFragment(InfoFragment())

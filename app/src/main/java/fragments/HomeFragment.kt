@@ -29,6 +29,7 @@ import utilities.SharedViewModel
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter
+import kotlin.math.log
 
 class HomeFragment : Fragment() {
 
@@ -38,6 +39,7 @@ class HomeFragment : Fragment() {
     private lateinit var allExercises: ArrayList<Exercise>
     private var isUpdate = false
     private var fromTimer = false
+    private var fromFragment = true
 
     private lateinit var userName:String
     private lateinit var userRole:String
@@ -59,6 +61,16 @@ class HomeFragment : Fragment() {
         sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
             traineeName = newValue
         })
+        sharedViewModel.fromTimer.observe(viewLifecycleOwner, Observer { newValue ->
+            fromTimer = newValue
+        })
+        sharedViewModel.fromFragment.observe(viewLifecycleOwner, Observer { newValue ->
+            fromFragment = newValue
+        })
+
+        if (!fromFragment)
+            fromFragment = arguments?.getBoolean("fromFragment", false) ?: false
+
     }
     private fun initValues() {
         val db = Firebase.firestore
@@ -103,17 +115,15 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     if (!isUpdate) {
-
                         for (exerciseSnapshot in snapshot.children) {
                             val exercise = exerciseSnapshot.getValue(Exercise::class.java)
                             allExercises.add(exercise!!)
                         }
                     }
-                    if (!fromTimer) {
+                    if (!fromTimer && !fromFragment) {
                         val score = planScore()
                         saveScoreList(score)
                     }
-
                     setAdapter(userName)
                 }
             }
@@ -124,7 +134,9 @@ class HomeFragment : Fragment() {
         var score = 0L
         for (ex in allExercises)
             score += ex.level!!
-        return score.toString()
+        val s = score.toString()
+        Log.d("score",s)
+        return s
     }
     private fun saveScoreList(score :String) {
         val db = FirebaseFirestore.getInstance()
@@ -169,6 +181,8 @@ class HomeFragment : Fragment() {
             }
             override fun update(exercise: Exercise, position: Int, increase: Boolean) {
                 updateExerciseLevel(exercise,position, increase, userName)
+                fromFragment =false
+                fromTimer=false
             }
         })
     }

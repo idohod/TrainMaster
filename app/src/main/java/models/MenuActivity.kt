@@ -19,10 +19,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import fragments.AchievementsFragment
 import fragments.HistoryFragment
 import fragments.HomeFragment
 import fragments.InfoFragment
-import fragments.AchievementsFragment
 import utilities.SharedViewModel
 
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {

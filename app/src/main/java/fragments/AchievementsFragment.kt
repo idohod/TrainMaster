@@ -1,6 +1,5 @@
 package fragments
 
-import AchievementsAdapter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
+import utilities.AchievementsAdapter
 import utilities.SharedViewModel
 
 class AchievementsFragment : Fragment() {
@@ -55,6 +55,7 @@ class AchievementsFragment : Fragment() {
             Log.e("Firestore", "Error loading user achievements", it)
         }
     }
+
     private fun getScores(userId: String, callback: (List<String>) -> Unit) {
         val db = FirebaseFirestore.getInstance()
         val userDocRef = db.collection("user").document(userId)
@@ -107,7 +108,7 @@ class AchievementsFragment : Fragment() {
             val trainingHistoryStr = document.data?.get("trainingHistory")?.toString() ?: return
             val trainingHistory = trainingHistoryStr.toIntOrNull() ?: 0
             displayScores()
-            updateAchievementsDisplay(trainingHistory,userRole)
+            updateAchievementsDisplay(trainingHistory, userRole)
         } else {
             getTraineeDataByName(traineeName) { traineeData ->
                 if (traineeData != null) {
@@ -142,7 +143,7 @@ class AchievementsFragment : Fragment() {
         }
     }
 
-    private fun updateAchievementsDisplay(trainingHistory: Int,userRole:String) {
+    private fun updateAchievementsDisplay(trainingHistory: Int, userRole: String) {
         val milestones = listOf(
             1 to "1 training session",
             5 to "5 training sessions",
@@ -151,7 +152,7 @@ class AchievementsFragment : Fragment() {
             100 to "100 training sessions",
             500 to "500 training sessions"
         )
-        val achievements :List<String>
+        val achievements: List<String>
 
         if (userRole == "trainee") {
             achievements = milestones.map { (count, description) ->
@@ -160,13 +161,12 @@ class AchievementsFragment : Fragment() {
                 else
                     "Complete $description to unlock this achievement."
             }
-        }
-        else {
+        } else {
             achievements = milestones.map { (count, description) ->
                 if (trainingHistory >= count)
                     "$traineeName completed $description!"
                 else
-                    "$traineeName need to Complete $description to unlock this achievement."
+                    "$traineeName needs to complete $description to unlock this achievement."
             }
         }
         achievementsRecyclerView.adapter = AchievementsAdapter(achievements)

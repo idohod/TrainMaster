@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:padding="16dp"
-    android:background="@drawable/instrument"
+    android:background="@drawable/health_composition"
     tools:context="models.CoachActivity">
 
     <TextView

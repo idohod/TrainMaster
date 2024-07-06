@@ -108,6 +108,7 @@ class HistoryFragment : Fragment() {
         historyNumber = view.findViewById(R.id.fragment_training_history_number)
         dates = view.findViewById(R.id.date)
         trainingList = view.findViewById(R.id.training_list)
+
     }
     private fun getLoginTimes(userId: String, callback: (List<String>) -> Unit) {
         val db = FirebaseFirestore.getInstance()

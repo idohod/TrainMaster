@@ -12,9 +12,10 @@ import com.example.trainMaster.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class ShareFragment : Fragment() {
+class AchievementsFragment : Fragment() {
 
     private lateinit var achievementsRecyclerView: RecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -15,12 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import utilities.Exercise
 import utilities.Question
-<<<<<<< HEAD
 import kotlin.random.Random
 
-=======
->>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
 class HealthQuizActivity : AppCompatActivity() {
+
 
     private lateinit var questionTextView: TextView
     private lateinit var questionRadioGroup: RadioGroup
@@ -191,11 +189,7 @@ class HealthQuizActivity : AppCompatActivity() {
         val max2List = arrayOf(1L, 4L, 5L)
 
         val ranIndex = mutableListOf<Int>()
-<<<<<<< HEAD
         var exToRemove = ArrayList<Exercise>()
-=======
-        val exToRemove = ArrayList<Exercise>()
->>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
 
         for (ex in allExercises) {
             preType = curType
@@ -203,7 +197,6 @@ class HealthQuizActivity : AppCompatActivity() {
             index = allExercises.indexOf(ex)
 
             if (curType != preType) {
-<<<<<<< HEAD
                 if (isMax2 && counter >= 2) {
                     val count = ranIndex.size - max2
                     val range = ranIndex[0]..ranIndex[ranIndex.size-1]
@@ -216,13 +209,11 @@ class HealthQuizActivity : AppCompatActivity() {
                     val uniqueNumbers = generateUniqueRandomNumbers(count, range)
                     exToRemove = saveExercisesToRemove(uniqueNumbers, exToRemove)
                 }
-=======
                 if (isMax2 && counter >= 2)
                     exToRemove.add(allExercises[ranIndex.random()])
                 else if (!isMax2 && counter >= 1)
                     exToRemove.add(allExercises[ranIndex.random()])
 
->>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
                 ranIndex.clear()
                 counter = 0
             }
@@ -245,7 +236,6 @@ class HealthQuizActivity : AppCompatActivity() {
         }
         removeExercises(exToRemove)
     }
-<<<<<<< HEAD
 
     private fun generateUniqueRandomNumbers(count: Int, range: IntRange): Set<Int> {
         val uniqueNumbers = mutableSetOf<Int>()
@@ -261,10 +251,6 @@ class HealthQuizActivity : AppCompatActivity() {
 
         return exToRemove
     }
-
-
-=======
->>>>>>> 40332ada2b62502366380b0ac10d49a1e22ecce6
     private fun removeExercises(exToRemove: ArrayList<Exercise>) {
         for (ex in exToRemove)
             allExercises.remove(ex)

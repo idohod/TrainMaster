@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.RadioButton
@@ -209,6 +210,7 @@ class RegisterActivity : AppCompatActivity() {
         when (role) {
             "coach" -> {
                 val i = Intent(this, CoachActivity::class.java)
+
                 i.putExtra("numOfQuiz",numOfQuiz)
                 startActivity(i)
             }
@@ -218,6 +220,7 @@ class RegisterActivity : AppCompatActivity() {
                 i.putExtra("userEmail", email)
                 i.putExtra("userPassword", password)
                 i.putExtra("numOfQuiz",numOfQuiz)
+
                 startActivity(i)
                 finish()
             }

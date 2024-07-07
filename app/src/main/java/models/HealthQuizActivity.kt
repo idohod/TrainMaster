@@ -138,6 +138,7 @@ class HealthQuizActivity : AppCompatActivity() {
         var id = questionRadioGroup.checkedRadioButtonId
         id -= numOfQuiz * 39
         id -= currentQuestionIndex * 3
+
         score += id
         moveQuestion()
     }
@@ -148,6 +149,7 @@ class HealthQuizActivity : AppCompatActivity() {
         } else {
             // Quiz completed
             numOfQuiz += 1
+
             loadExercises()
             moveToMenuActivity()
         }

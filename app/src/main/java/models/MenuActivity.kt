@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
@@ -103,7 +104,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         transaction.commit()
     }
 
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START))
@@ -118,6 +118,7 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun moveToStart() {
         val intent = Intent(this, StartPage::class.java)
         intent.putExtra("numOfQuiz", numOfQuiz)
+
         startActivity(intent)
         finish()
     }

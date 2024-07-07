@@ -2,6 +2,7 @@ package models
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.trainMaster.R
 import com.google.android.material.button.MaterialButton
@@ -27,6 +28,7 @@ class StartPage : AppCompatActivity() {
     private fun moveToRegisterActivity(numOfQuiz: Int) {
         val intent = Intent(this, RegisterActivity::class.java)
         intent.putExtra("numOfQuiz",numOfQuiz)
+
         startActivity(intent)
         finish()
     }

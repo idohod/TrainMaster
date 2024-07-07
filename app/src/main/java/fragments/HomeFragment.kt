@@ -8,7 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +28,6 @@ import utilities.SharedViewModel
 import models.TimerActivity
 import utilities.Exercise
 import utilities.ExerciseAdapter
-import kotlin.math.log
 
 class HomeFragment : Fragment() {
 
@@ -58,18 +56,20 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-        sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
+        sharedViewModel.traineeName.observe(viewLifecycleOwner) { newValue ->
             traineeName = newValue
-        })
-        sharedViewModel.fromTimer.observe(viewLifecycleOwner, Observer { newValue ->
+        }
+        sharedViewModel.fromTimer.observe(viewLifecycleOwner) { newValue ->
             fromTimer = newValue
-        })
-        sharedViewModel.fromFragment.observe(viewLifecycleOwner, Observer { newValue ->
-            fromFragment = newValue
-        })
+        }
 
-        if (!fromFragment)
-            fromFragment = arguments?.getBoolean("fromFragment", false) ?: false
+        sharedViewModel.fromFragment.observe(viewLifecycleOwner) { newValue ->
+            fromFragment = newValue
+            if (!fromFragment) {
+                fromFragment = arguments?.getBoolean("fromFragment", false) ?: false
+            }
+        }
+
 
     }
     private fun initValues() {
@@ -83,21 +83,6 @@ class HomeFragment : Fragment() {
         }
             .addOnFailureListener {exception -> Log.w("TAG", "Error getting documents.", exception)}
     }
-
-    private fun getUserData(it: DocumentSnapshot) {
-        userRole= it.data?.get("role")?.toString() ?: return
-
-        if (userRole == "trainee") {
-            userName = it.data?.get("name")?.toString() ?: return
-            "$userName's plan".also { title.text = it }
-            loadExercisesFromDb(userName)
-        }else{
-            "$traineeName's plan".also { title.text = it }
-            loadExercisesFromDb(traineeName)
-
-        }
-    }
-
     private fun initViews(view :View) {
         title = view.findViewById(R.id.title)
         recyclerView = view.findViewById(R.id.exercises_list)
@@ -106,9 +91,35 @@ class HomeFragment : Fragment() {
         allExercises = arrayListOf()
     }
 
+    private fun getUserData(it: DocumentSnapshot) {
+        userRole = it.data?.get("role")?.toString() ?: return
 
-    private fun loadExercisesFromDb(userName: String) {
+        if (userRole == "trainee") {
+            userName = it.data?.get("name")?.toString() ?: return
+            "$userName's plan".also { title.text = it }
+            loadExercisesFromDb(userName)
+        } else {
+            "$traineeName's plan".also { title.text = it }
+            // Assuming you have a way to get the trainee's ID, replace 'traineeId' with the actual ID
+            getTraineeIdByName(traineeName) { traineeId ->
+                if (traineeId.isNotEmpty()) {
+                        Log.d("userid","get $traineeId")
+                    loadExercisesFromDb(traineeName, traineeId)
+                } else {
+                    Log.e("Firestore", "Trainee with name $traineeName not found.")
+                    // Handle case where traineeId is empty (no match found)
+                }
+            }
+        }
+    }
+
+
+
+
+    private fun loadExercisesFromDb(userName: String, traineeId: String? = null) {
         val db = FirebaseDatabase.getInstance()
+        Log.d("userId","load traineeId $traineeId")
+
         val exercisesRef = db.reference.child("users").child(userName).child("exercises")
         exercisesRef.addValueEventListener(object : ValueEventListener {
 
@@ -122,7 +133,7 @@ class HomeFragment : Fragment() {
                     }
                     if (!fromTimer && !fromFragment) {
                         val score = planScore()
-                        saveScoreList(score)
+                        saveScoreList(score, traineeId)
                     }
                     setAdapter(userName)
                 }
@@ -130,26 +141,35 @@ class HomeFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {}
         })
     }
+
     private fun planScore(): String {
         var score = 0L
         for (ex in allExercises)
             score += ex.level!!
-        val s = score.toString()
-        Log.d("score",s)
-        return s
+        return score.toString()
     }
-    private fun saveScoreList(score :String) {
+
+    private fun saveScoreList(score: String, traineeId: String? = null) {
         val db = FirebaseFirestore.getInstance()
-        val userId = FirebaseAuth.getInstance().currentUser!!.uid
+        Log.d("userId","traineeId $traineeId")
+
+        val userId = traineeId ?: FirebaseAuth.getInstance().currentUser!!.uid
+        Log.d("userId",userId.toString())
         val userDocRef = db.collection("user").document(userId)
 
         userDocRef.get().addOnSuccessListener { document ->
-            if (document.exists())
+            if (document.exists()) {
                 updateScores(document, score, userDocRef)
-            else
+            } else {
+                Log.d("Firestore", "Document for user $userId does not exist.")
                 initDocument(userDocRef, score)
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("Firestore", "Error fetching document for user $userId: ", exception)
         }
     }
+
+
     private fun updateScores(
         document: DocumentSnapshot,
         score: String,
@@ -160,14 +180,35 @@ class HomeFragment : Fragment() {
 
         scoreList.add(score)
         userDocRef.update("scoreList", scoreList)
-
-
     }
 
     private fun initDocument(userDocRef: DocumentReference, score: String) {
         val scores = arrayListOf(score)
         userDocRef.set(mapOf("scoreList" to scores))
     }
+
+    private fun getTraineeIdByName(name: String, callback: (String) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .whereEqualTo("name", name)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val traineeId = document.id
+                    callback(traineeId)
+                    return@addOnSuccessListener // Exit the loop after finding the first match
+                }
+                // Handle case where no document matches the name
+                callback("") // Return empty string if no match is found
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
+                callback("") // Return empty string on failure
+            }
+    }
+// Example usage:
+
+
 
 
     private fun setAdapter(userName: String) {
@@ -186,6 +227,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
     private fun updateExerciseLevel(exercise: Exercise,position: Int,increase: Boolean,userName: String) {
 
         val firestore = FirebaseFirestore.getInstance()

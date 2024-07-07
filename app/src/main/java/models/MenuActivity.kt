@@ -26,6 +26,7 @@ import fragments.HomeFragment
 import fragments.InfoFragment
 import utilities.SharedViewModel
 
+
 class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
@@ -51,7 +52,6 @@ class MenuActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedViewModel.traineeName.value = this.traineeName
         sharedViewModel.fromTimer.value = isTimer()
         sharedViewModel.fromFragment.value = fromFragment()
-
 
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment())

@@ -1,6 +1,5 @@
 package fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import com.example.trainMaster.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import utilities.SharedViewModel
 
 class InfoFragment : Fragment() {
 
@@ -27,6 +29,8 @@ class InfoFragment : Fragment() {
     private lateinit var userPassword: TextView
     private lateinit var userFirstLogin: TextView
     private lateinit var userHighestScore: TextView
+    private lateinit var traineeName:String
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -37,7 +41,14 @@ class InfoFragment : Fragment() {
         initValues()
         return view
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.traineeName.observe(viewLifecycleOwner) { newValue ->
+            traineeName = newValue
+        }
+    }
     private fun initValues() {
         val db = Firebase.firestore
         val userId = FirebaseAuth.getInstance().currentUser!!.uid
@@ -56,7 +67,6 @@ class InfoFragment : Fragment() {
         userName.text = it.data?.get("name")?.toString() ?: return
         userEmail.text = it.data?.get("email")?.toString() ?: return
         userPassword.text = it.data?.get("password")?.toString() ?: return
-
         // Safely retrieve the first login time from the 'loginTimes' array
         val loginTimes = it.data?.get("loginTimes") as? List<*>
         if (loginTimes != null && loginTimes.isNotEmpty()) {
@@ -64,12 +74,43 @@ class InfoFragment : Fragment() {
         } else {
             userFirstLogin.text = "No login times available"
         }
+        val userRole = it.data?.get("role")?.toString()
+        Log.d("role",userRole.toString())
 
-        // Handling the scoreList to find the maximum score
-        val scoreList = it.data?.get("scoreList") as? List<*>
-        if (scoreList != null && scoreList.isNotEmpty()) {
+        if (userRole == "trainee") {
+            // If user is a trainee, calculate their own highest score
+            calculateHighestScore(it,userRole)
+        } else if (userRole == "coach") {
+
+                getTraineeIdByName(traineeName) { traineeId ->
+                    if (traineeId.isNotEmpty()) {
+                        val db = FirebaseFirestore.getInstance()
+                        val userDocRef = db.collection("user").document(traineeId)
+                        userDocRef.get().addOnSuccessListener { traineeDoc ->
+                            calculateHighestScore(traineeDoc,userRole)
+                        }.addOnFailureListener { exception ->
+                            Log.e("Firestore", "Error fetching trainee document: ", exception)
+                            userHighestScore.text = "Failed to fetch trainee data"
+                        }
+                    } else {
+                        userHighestScore.text = "Trainee not found"
+                    }
+                }
+            } else {
+                userHighestScore.text = "No trainee assigned"
+            }
+
+    }
+
+    private fun calculateHighestScore(doc: DocumentSnapshot, userRole: String) {
+        val scoreList = doc.data?.get("scoreList") as? List<*>
+
+        if (scoreList != null && scoreList.isNotEmpty() ) {
             val scores = scoreList.mapNotNull { it.toString().toIntOrNull() }
             val maxScore = scores.maxOrNull()
+            if (userRole == "coach")
+                yourHighestScore.text = "$traineeName's Highest Score:"
+
             if (maxScore != null) {
                 userHighestScore.text = maxScore.toString()
             } else {
@@ -79,6 +120,26 @@ class InfoFragment : Fragment() {
             userHighestScore.text = "No scores available"
         }
     }
+    private fun getTraineeIdByName(name: String, callback: (String) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("user")
+            .whereEqualTo("name", name)
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    val traineeId = document.id
+                    callback(traineeId)
+                    return@addOnSuccessListener // Exit the loop after finding the first match
+                }
+                // Handle case where no document matches the name
+                callback("") // Return empty string if no match is found
+            }
+            .addOnFailureListener { exception ->
+                Log.w("TAG", "Error getting documents: ", exception)
+                callback("") // Return empty string on failure
+            }
+    }
+
 
 
     private fun findViews(view: View) {

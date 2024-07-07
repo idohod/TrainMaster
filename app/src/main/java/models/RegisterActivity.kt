@@ -247,10 +247,12 @@ class RegisterActivity : AppCompatActivity() {
             )
         }
         else{
+            loginTimes = arrayListOf(dateTime)
             userMap = hashMapOf(
                 "name" to sName,
                 "email" to sEmail,
                 "password" to sPassword,
+                "loginTimes" to loginTimes,
                 "role" to sRole
             )
         }

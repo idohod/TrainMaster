@@ -79,6 +79,7 @@ class SignInActivity : AppCompatActivity() {
             intent.putExtra("userName", name)
             intent.putExtra("userEmail", email)
             intent.putExtra("userPassword", password)
+
             startActivity(intent)
             finish()
         } else {

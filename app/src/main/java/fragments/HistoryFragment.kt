@@ -22,6 +22,8 @@ import utilities.TrainingTimesAdapter
 
 class HistoryFragment : Fragment() {
     private lateinit var historyNumber: TextView
+    private lateinit var trainHistory: TextView
+
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var traineeName: String
     private lateinit var recyclerView: RecyclerView
@@ -76,6 +78,7 @@ class HistoryFragment : Fragment() {
             getTraineeDataByName(traineeName) { traineeData ->
                 if (traineeData != null) {
                     historyNumber.text = traineeData["trainingHistory"].toString()
+                    "$traineeName's Training times:".also { trainHistory.text = it }
                     val loginTimes = traineeData["loginTimes"] as? List<*>
                     if (loginTimes != null) {
                         val formattedDates = loginTimes.filterIsInstance<String>()
@@ -108,6 +111,7 @@ class HistoryFragment : Fragment() {
     }
 
     private fun findViews(view: View) {
+        trainHistory =view.findViewById(R.id.training_list)
         historyNumber = view.findViewById(R.id.fragment_training_history_number)
         recyclerView = view.findViewById(R.id.recycler_view_training_times)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())

@@ -209,6 +209,7 @@ class RegisterActivity : AppCompatActivity() {
         when (role) {
             "coach" -> {
                 val i = Intent(this, CoachActivity::class.java)
+                i.putExtra("numOfQuiz",numOfQuiz)
                 startActivity(i)
             }
             "trainee" -> {

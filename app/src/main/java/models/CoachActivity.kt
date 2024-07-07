@@ -14,29 +14,37 @@ class CoachActivity : AppCompatActivity() {
     private lateinit var radioGroup: RadioGroup
     private lateinit var userNameButton: Button
     private lateinit var title: TextView
+    private var numOfQuiz: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_coach)
         findViews()
+        getNumOfQuiz()
         getUserNamesFromDB()
 
         userNameButton.setOnClickListener { selectUser() }
+    }
+    private fun getNumOfQuiz() {
+        numOfQuiz = intent.getIntExtra("numOfQuiz", 0)
     }
     private fun selectUser() {
         val checkedRadioButtonId = radioGroup.checkedRadioButtonId
         if (checkedRadioButtonId != -1) {
             val radioButton = radioGroup.findViewById<RadioButton>(checkedRadioButtonId)
             val selectedUserName = radioButton.text.toString()
-            moveToMainActivity(selectedUserName)
+            moveToMenuActivity(selectedUserName)
         } else {
             Toast.makeText(this, "no user selected", Toast.LENGTH_SHORT).show()
             return
         }
     }
-    private fun moveToMainActivity(selectedUserName: String) {
+    private fun moveToMenuActivity(selectedUserName: String) {
         val intent = Intent(this, MenuActivity::class.java)
         intent.putExtra("userName", selectedUserName)
         intent.putExtra("isCoach", true)
+        intent.putExtra("numOfQuiz",numOfQuiz)
+
         startActivity(intent)
         finish()
     }

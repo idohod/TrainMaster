@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,10 +18,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import utilities.SharedViewModel
+import utilities.TrainingTimesAdapter
 
 class HistoryFragment : Fragment() {
     private lateinit var historyNumber: TextView
-    private lateinit var dates: TextView
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var traineeName: String
     private lateinit var recyclerView: RecyclerView
@@ -39,10 +38,10 @@ class HistoryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
+        sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
+        sharedViewModel.traineeName.observe(viewLifecycleOwner) { newValue ->
             traineeName = newValue
-        })
+        }
     }
 
     private fun displayDates() {

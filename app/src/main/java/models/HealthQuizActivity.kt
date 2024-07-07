@@ -191,7 +191,6 @@ class HealthQuizActivity : AppCompatActivity() {
         var exToRemove = ArrayList<Exercise>()
 
         for (ex in allExercises) {
-            Log.d("ex1",ex.toString()+"\n")
             preType = curType
             curType = ex.type!!
             index = allExercises.indexOf(ex)
@@ -257,26 +256,26 @@ class HealthQuizActivity : AppCompatActivity() {
 
         if (score in 13..19) { //easy
             if (level == 1L) {
-                val ex = Exercise(name, "3", "8", "0", type, level)
+                val ex = Exercise(name, "3", "8",  type, level)
                 allExercises.add(ex)
             }
         } else if (score in 20..26) { //mid
 
             if (level == 2L) {
-                val ex = Exercise(name, "3", "10", "0", type, level)
+                val ex = Exercise(name, "3", "10",  type, level)
                 allExercises.add(ex)
             }
 
         } else if (score in 27..32) { //HARD
 
             if (level == 3L) {
-                val ex = Exercise(name, "3", "12", "0", type, level)
+                val ex = Exercise(name, "3", "12", type, level)
                 allExercises.add(ex)
             }
 
         } else { //expert
             if (level >= 4L) {
-                val ex = Exercise(name, "4", "12", "0", type, level)
+                val ex = Exercise(name, "4", "12",  type, level)
                 allExercises.add(ex)
             }
         }

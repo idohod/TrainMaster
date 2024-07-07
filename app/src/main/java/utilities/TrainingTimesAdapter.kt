@@ -1,4 +1,4 @@
-package fragments
+package utilities
 
 import android.view.LayoutInflater
 import android.view.View

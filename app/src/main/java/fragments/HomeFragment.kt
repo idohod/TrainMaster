@@ -69,8 +69,6 @@ class HomeFragment : Fragment() {
                 fromFragment = arguments?.getBoolean("fromFragment", false) ?: false
             }
         }
-
-
     }
     private fun initValues() {
         val db = Firebase.firestore
@@ -100,15 +98,13 @@ class HomeFragment : Fragment() {
             loadExercisesFromDb(userName)
         } else {
             "$traineeName's plan".also { title.text = it }
-            // Assuming you have a way to get the trainee's ID, replace 'traineeId' with the actual ID
             getTraineeIdByName(traineeName) { traineeId ->
                 if (traineeId.isNotEmpty()) {
                         Log.d("userid","get $traineeId")
                     loadExercisesFromDb(traineeName, traineeId)
-                } else {
+                } else
                     Log.e("Firestore", "Trainee with name $traineeName not found.")
-                    // Handle case where traineeId is empty (no match found)
-                }
+
             }
         }
     }
@@ -151,10 +147,8 @@ class HomeFragment : Fragment() {
 
     private fun saveScoreList(score: String, traineeId: String? = null) {
         val db = FirebaseFirestore.getInstance()
-        Log.d("userId","traineeId $traineeId")
 
         val userId = traineeId ?: FirebaseAuth.getInstance().currentUser!!.uid
-        Log.d("userId",userId.toString())
         val userDocRef = db.collection("user").document(userId)
 
         userDocRef.get().addOnSuccessListener { document ->
@@ -266,38 +260,34 @@ class HomeFragment : Fragment() {
         }
     }
     private fun setNewExercise(oldExercise: Exercise,name: String,type: Long,newLevel: Long,increase: Boolean): Exercise {
-        val newReps: Int; val newSets: Int; val newWeight: Int
+        val newReps: Int; val newSets: Int
 
         if (increase) {
 
             if (newLevel < 4L) {
                 newReps = oldExercise.numOfReps?.toInt()?.plus(2)!!
                 newSets = oldExercise.numOfSets?.toInt()!!
-                newWeight = oldExercise.weight?.toInt()!!
-                return Exercise(name,newSets.toString(),newReps.toString(),newWeight.toString(),type,newLevel)
+                return Exercise(name,newSets.toString(),newReps.toString(),type,newLevel)
             }
             else if (newLevel == 4L) {
                 newReps = oldExercise.numOfReps?.toInt()!!
                 newSets = oldExercise.numOfSets?.toInt()?.plus(1)!!
-                newWeight = oldExercise.weight?.toInt()!!
-                return Exercise(name,newSets.toString(),newReps.toString(),newWeight.toString(),type,newLevel)
+                return Exercise(name,newSets.toString(),newReps.toString(),type,newLevel)
             }
-            return Exercise(name,oldExercise.numOfSets,oldExercise.numOfReps,oldExercise.weight,type,oldExercise.level?.plus(1))
+            return Exercise(name,oldExercise.numOfSets,oldExercise.numOfReps,type,oldExercise.level?.plus(1))
 
         } else {
             if (newLevel < 3L) {
                 newReps = oldExercise.numOfReps?.toInt()?.minus(2)!!
                 newSets = oldExercise.numOfSets?.toInt()!!
-                newWeight = oldExercise.weight?.toInt()!!
-                return Exercise(name,newSets.toString(),newReps.toString(),newWeight.toString(),type,newLevel)
+                return Exercise(name,newSets.toString(),newReps.toString(),type,newLevel)
             }
             else if (newLevel == 3L) {
                 newReps = oldExercise.numOfReps?.toInt()!!
                 newSets = oldExercise.numOfSets?.toInt()?.minus(1)!!
-                newWeight = oldExercise.weight?.toInt()!!
-                return Exercise(name,newSets.toString(),newReps.toString(),newWeight.toString(),type,newLevel)
+                return Exercise(name,newSets.toString(),newReps.toString(),type,newLevel)
             }
-            return Exercise(name,oldExercise.numOfSets,oldExercise.numOfReps,oldExercise.weight,type,oldExercise.level?.minus(1))
+            return Exercise(name,oldExercise.numOfSets,oldExercise.numOfReps,oldExercise.level?.minus(1))
         }
     }
     private fun setNewLevel(oldLevel: Long, increase: Boolean): Long {
@@ -338,7 +328,6 @@ class HomeFragment : Fragment() {
         intent.putExtra("exName", exercise.name)
         intent.putExtra("exSet", exercise.numOfSets)
         intent.putExtra("exRep", exercise.numOfReps)
-        intent.putExtra("exWeight", exercise.weight)
         startActivity(intent)
     }
 }

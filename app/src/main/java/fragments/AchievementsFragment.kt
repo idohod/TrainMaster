@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,9 +35,9 @@ class AchievementsFragment : Fragment() {
         scoresList = view.findViewById(R.id.achievements_text_view)
 
         sharedViewModel = ViewModelProvider(requireActivity())[SharedViewModel::class.java]
-        sharedViewModel.traineeName.observe(viewLifecycleOwner, Observer { newValue ->
+        sharedViewModel.traineeName.observe(viewLifecycleOwner) { newValue ->
             traineeName = newValue
-        })
+        }
 
 
         loadUserAchievements()
@@ -139,7 +138,6 @@ class AchievementsFragment : Fragment() {
             val scoreText = scoreList.mapIndexed { index, score ->
                 "Score number ${index + 1}: $score"
             }.joinToString(separator = "\n")
-            Log.d("Scores", "User Scores:\n$scoreText")
             scoresList.text = scoreText
         }
     }

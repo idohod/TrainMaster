@@ -33,7 +33,6 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
         holder.theName.text = exercise.name
         "${exercise.numOfSets}   ".also { holder.theSet.text = it }
         holder.theRepetitions.text = exercise.numOfReps
-        holder.theWeight.text = exercise.weight
     }
 
     override fun getItemCount(): Int {
@@ -54,8 +53,6 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
         lateinit var theSet: MaterialTextView
         private lateinit var repetitionsText: MaterialTextView
         lateinit var theRepetitions: MaterialTextView
-        private lateinit var weightText: MaterialTextView
-        lateinit var theWeight: MaterialTextView
         private lateinit var increaseImage: ShapeableImageView
         private lateinit var decreaseImage:ShapeableImageView
         init {
@@ -86,11 +83,8 @@ class ExerciseAdapter(private var exerciseList: ArrayList<Exercise>) :
             theSet = itemView.findViewById(R.id.set_number)
             repetitionsText = itemView.findViewById(R.id.repetitions_text)
             theRepetitions = itemView.findViewById(R.id.repetitions_number)
-            weightText = itemView.findViewById(R.id.weight_text)
-            theWeight = itemView.findViewById(R.id.weight_number)
             increaseImage =itemView.findViewById(R.id.upgrade_image)
             decreaseImage =itemView.findViewById(R.id.downward_image)
         }
     }
-
 }

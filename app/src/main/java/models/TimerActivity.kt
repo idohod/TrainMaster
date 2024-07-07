@@ -22,8 +22,7 @@ class TimerActivity : AppCompatActivity() {
     private lateinit var setNumberTextView: MaterialTextView
     private lateinit var repetitionsTextTextView: MaterialTextView
     private lateinit var repetitionsNumberTextView: MaterialTextView
-    private lateinit var weightTextTextView: MaterialTextView
-    private lateinit var weightNumberTextView: MaterialTextView
+
 
     private lateinit var exerciseGif: ImageView
 
@@ -97,7 +96,6 @@ class TimerActivity : AppCompatActivity() {
         theNameTextView.text = intent.getStringExtra("exName").toString()
         setNumberTextView.text = intent.getStringExtra("exSet").toString()
         repetitionsNumberTextView.text = intent.getStringExtra("exRep").toString()
-        weightNumberTextView.text = intent.getStringExtra("exWeight").toString()
     }
     private fun initializeViews() {
         exerciseNameTextView = findViewById(R.id.exercise_name)
@@ -108,9 +106,6 @@ class TimerActivity : AppCompatActivity() {
 
         repetitionsTextTextView = findViewById(R.id.repetitions_text)
         repetitionsNumberTextView = findViewById(R.id.repetitions_number)
-
-        weightTextTextView = findViewById(R.id.weight_text)
-        weightNumberTextView = findViewById(R.id.weight_number)
 
         timerTextView = findViewById(R.id.timer)
         exerciseGif = findViewById(R.id.imageView)

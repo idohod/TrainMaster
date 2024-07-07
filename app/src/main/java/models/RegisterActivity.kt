@@ -206,19 +206,23 @@ class RegisterActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
     private fun moveActivity(name: String, role: String, email: String, password: String) {
-        if(role == "coach") {
-            val i = Intent(this, CoachActivity::class.java)
-            startActivity(i)
-        } else if (role == "trainee") {
-            val i = Intent(this, HealthQuizActivity::class.java)
-            i.putExtra("userName", name)
-            i.putExtra("userEmail", email)
-            i.putExtra("userPassword", password)
-            i.putExtra("numOfQuiz",numOfQuiz)
-            startActivity(i)
-            finish()
-        } else {
-            makeToast("error")
+        when (role) {
+            "coach" -> {
+                val i = Intent(this, CoachActivity::class.java)
+                startActivity(i)
+            }
+            "trainee" -> {
+                val i = Intent(this, HealthQuizActivity::class.java)
+                i.putExtra("userName", name)
+                i.putExtra("userEmail", email)
+                i.putExtra("userPassword", password)
+                i.putExtra("numOfQuiz",numOfQuiz)
+                startActivity(i)
+                finish()
+            }
+            else -> {
+                makeToast("error")
+            }
         }
     }
     private fun saveUserData(name: String, email: String, role: String, password: String) {
@@ -267,7 +271,7 @@ class RegisterActivity : AppCompatActivity() {
     }
     private fun getTime(): String {
             val currentDateTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
+            val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
             return currentDateTime.format(formatter)
     }
 }

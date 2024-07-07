@@ -67,39 +67,42 @@ class InfoFragment : Fragment() {
         userName.text = it.data?.get("name")?.toString() ?: return
         userEmail.text = it.data?.get("email")?.toString() ?: return
         userPassword.text = it.data?.get("password")?.toString() ?: return
-        // Safely retrieve the first login time from the 'loginTimes' array
-        val loginTimes = it.data?.get("loginTimes") as? List<*>
-        if (loginTimes != null && loginTimes.isNotEmpty()) {
-            userFirstLogin.text = loginTimes[0]?.toString() ?: "No login time recorded"
-        } else {
-            userFirstLogin.text = "No login times available"
-        }
-        val userRole = it.data?.get("role")?.toString()
-        Log.d("role",userRole.toString())
 
-        if (userRole == "trainee") {
-            // If user is a trainee, calculate their own highest score
-            calculateHighestScore(it,userRole)
-        } else if (userRole == "coach") {
+        loginTimes(it)
 
-                getTraineeIdByName(traineeName) { traineeId ->
-                    if (traineeId.isNotEmpty()) {
-                        val db = FirebaseFirestore.getInstance()
-                        val userDocRef = db.collection("user").document(traineeId)
-                        userDocRef.get().addOnSuccessListener { traineeDoc ->
-                            calculateHighestScore(traineeDoc,userRole)
-                        }.addOnFailureListener { exception ->
-                            Log.e("Firestore", "Error fetching trainee document: ", exception)
-                            userHighestScore.text = "Failed to fetch trainee data"
-                        }
-                    } else {
-                        userHighestScore.text = "Trainee not found"
-                    }
-                }
-            } else {
-                userHighestScore.text = "No trainee assigned"
+        when (val userRole = it.data?.get("role")?.toString()) {
+            "trainee" -> {
+                calculateHighestScore(it, userRole)
             }
+            "coach" -> {
+                getTraineeData(userRole)
+            }
+            else -> "No trainee assigned".also { userHighestScore.text = it }
+        }
+    }
 
+    private fun getTraineeData(userRole: String) {
+        getTraineeIdByName(traineeName) { traineeId ->
+            if (traineeId.isNotEmpty()) {
+                val db = FirebaseFirestore.getInstance()
+                val userDocRef = db.collection("user").document(traineeId)
+                userDocRef.get().addOnSuccessListener { traineeDoc ->
+                    calculateHighestScore(traineeDoc,userRole)
+                }.addOnFailureListener { exception ->
+                    Log.e("Firestore", "Error fetching trainee document: ", exception)
+                    "Failed to fetch trainee data".also { userHighestScore.text = it }
+                }
+            } else
+                "Trainee not found".also { userHighestScore.text = it }
+        }
+    }
+
+    private fun loginTimes(it: DocumentSnapshot) {
+        val loginTimes = it.data?.get("loginTimes") as? List<*>
+        if (loginTimes != null && loginTimes.isNotEmpty())
+            userFirstLogin.text = loginTimes[0]?.toString() ?: "No login time recorded"
+         else
+            "No login times available".also { userFirstLogin.text = it }
     }
 
     private fun calculateHighestScore(doc: DocumentSnapshot, userRole: String) {
@@ -109,15 +112,15 @@ class InfoFragment : Fragment() {
             val scores = scoreList.mapNotNull { it.toString().toIntOrNull() }
             val maxScore = scores.maxOrNull()
             if (userRole == "coach")
-                yourHighestScore.text = "$traineeName's Highest Score:"
+                "$traineeName's Highest Score:".also { yourHighestScore.text = it }
 
             if (maxScore != null) {
                 userHighestScore.text = maxScore.toString()
             } else {
-                userHighestScore.text = "Invalid or empty score list"
+                "Invalid or empty score list".also { userHighestScore.text = it }
             }
         } else {
-            userHighestScore.text = "No scores available"
+            "No scores available".also { userHighestScore.text = it }
         }
     }
     private fun getTraineeIdByName(name: String, callback: (String) -> Unit) {
@@ -129,19 +132,12 @@ class InfoFragment : Fragment() {
                 for (document in documents) {
                     val traineeId = document.id
                     callback(traineeId)
-                    return@addOnSuccessListener // Exit the loop after finding the first match
+                    return@addOnSuccessListener
                 }
-                // Handle case where no document matches the name
-                callback("") // Return empty string if no match is found
+                callback("")
             }
-            .addOnFailureListener { exception ->
-                Log.w("TAG", "Error getting documents: ", exception)
-                callback("") // Return empty string on failure
-            }
+            .addOnFailureListener {callback("") }
     }
-
-
-
     private fun findViews(view: View) {
         yourName = view.findViewById(R.id.fragment_user_name)
         yourEmail = view.findViewById(R.id.fragment_user_email)

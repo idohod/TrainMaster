@@ -105,7 +105,7 @@ class SignInActivity : AppCompatActivity() {
 
     private fun getTime(): String {
         val currentDateTime = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
         return currentDateTime.format(formatter)
     }
 
@@ -183,6 +183,7 @@ class SignInActivity : AppCompatActivity() {
         else
             moveActivity(name, role, email, password, "0")
     }
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         startActivity(Intent(this,StartPage::class.java))
         finish()

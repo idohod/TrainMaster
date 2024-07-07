@@ -267,7 +267,7 @@ class RegisterActivity : AppCompatActivity() {
     }
     private fun getTime(): String {
             val currentDateTime = LocalDateTime.now()
-            val formatter = DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm:ss")
+        val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
             return currentDateTime.format(formatter)
     }
 }

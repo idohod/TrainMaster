@@ -278,4 +278,5 @@ class RegisterActivity : AppCompatActivity() {
             val formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")
             return currentDateTime.format(formatter)
     }
+
 }

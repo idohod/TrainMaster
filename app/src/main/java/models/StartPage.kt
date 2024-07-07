@@ -39,4 +39,10 @@ class StartPage : AppCompatActivity() {
     private fun getNumOfQuiz(): Int {
         return intent.getIntExtra("numOfQuiz", 0)
     }
+
+    override fun onBackPressed() {
+        finishAffinity()
+
+    }
+
 }

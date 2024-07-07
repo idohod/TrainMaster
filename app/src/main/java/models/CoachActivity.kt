@@ -75,4 +75,9 @@ class CoachActivity : AppCompatActivity() {
         radioButton.id = View.generateViewId()
         radioGroup.addView(radioButton)
     }
+
+    override fun onBackPressed() {
+        startActivity(Intent(this,StartPage::class.java))
+        finish()
+    }
 }

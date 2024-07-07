@@ -20,17 +20,21 @@
         android:textStyle="bold"
         android:layout_marginBottom="16dp" />
 
-    <RadioGroup
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleTextView"
+        android:layout_above="@+id/button">
+
+        <RadioGroup
         android:id="@+id/radioGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/titleTextView"
-        android:layout_above="@id/button">
+        android:orientation="vertical">
 
         <!-- Dynamically added RadioButtons will appear here -->
-
-    </RadioGroup>
+        </RadioGroup>
+    </ScrollView>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 
@@ -45,6 +49,8 @@
         app:cornerRadius="16dp"
         style="@style/Widget.MaterialComponents.Button"
         android:text="@string/show_plan" />
+
+
 
 
 </RelativeLayout>

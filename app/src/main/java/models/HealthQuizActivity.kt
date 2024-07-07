@@ -292,4 +292,8 @@ class HealthQuizActivity : AppCompatActivity() {
         startActivity(i)
         finish()
     }
+    override fun onBackPressed() {
+        startActivity(Intent(this,HealthQuizActivity::class.java))
+        finish()
+    }
 }

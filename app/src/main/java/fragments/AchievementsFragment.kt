@@ -40,6 +40,7 @@ class AchievementsFragment : Fragment() {
             traineeName = newValue
         })
 
+
         loadUserAchievements()
         return view
     }
